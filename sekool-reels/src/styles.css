@@ -52,12 +52,10 @@ html, body { height: 100%; overflow: hidden; background: #000; }
 .c-h span { display: block; }
 .c-sub { margin-top: 34px; font-size: 44px; font-weight: 500; letter-spacing: -0.02em; color: rgba(255, 255, 255, .9); }
 .c-sub b { display: inline-block; margin-top: 12px; font-weight: 600; color: var(--accent); background: #fff; padding: 2px 22px 6px; border-radius: 16px; }
-.btn { position: relative; overflow: hidden; margin-top: 60px; background: #fff; color: #000; font-size: 44px; font-weight: 600;
+.btn { position: relative; overflow: hidden; margin-top: 64px; background: #fff; color: var(--accent); font-size: 50px; font-weight: 700;
   padding: 28px 54px 30px; border-radius: 999px; white-space: nowrap; box-shadow: 0 30px 60px -20px rgba(20, 10, 80, .6); }
-.btn b { color: #ff3b30; font-weight: 700; }
 .sheen { position: absolute; top: 0; bottom: 0; left: -40%; width: 30%; background: linear-gradient(100deg, transparent, rgba(79, 70, 229, .22), transparent); }
-.link { margin-top: 34px; font-size: 44px; font-weight: 600; letter-spacing: -0.01em; }
-.arrow { width: 56px; height: 56px; margin-top: 10px; color: #fff; }
+.arrow { width: 64px; height: 64px; margin-top: 28px; color: #fff; }
 .t-cta.fast .c-stack { top: 460px; }
 .t-cta.fast .c-h { font-size: 110px; }
 

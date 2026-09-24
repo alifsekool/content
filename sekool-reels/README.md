@@ -4,11 +4,11 @@ Short 9:16 video ads (1080×1920, 30 fps, sound on) built from real SEKOOL custo
 
 | Ad | Length | Story |
 |----|--------|-------|
-| `class-at-home` | 17 s | "Tuition class. From the living room floor." Live 1 to 1 with a Cikgu Sekolah Kebangsaan, then "Dinner's cooking. Class is on." (a pan from mum's selfie to the laptop) |
+| `class-at-home` | 17 s | "Personal class. From the living room floor." Live 1 to 1 with a Cikgu Sekolah Kebangsaan, then "Dinner's cooking. Class is on." (a pan from mum's selfie to the laptop) |
 | `report-card-day` | 14 s | Results slip (with a close-up of the marks), the "No. 1 Dalam Kelas" plaque and the Anugerah Kecemerlangan Akademik trophy, then "Moments like this start at home." |
 | `quick-cut` | 10 s | Seven photos cut on the beat: Live classes / 1 to 1 / From home / While dinner cooks / Report card day / No. 1 Dalam Kelas / Anugerah Kecemerlangan |
 
-All three end on a simple indigo card: the SEKOOL logo, a headline, the "Get a FREE Learning Roadmap" button, then "Click link down below" with a bouncing arrow pointing at the ad's own link button. The captions stay between y = 260 and y = 1250, so the Reels and Stories interface doesn't cover them.
+All three end on a simple indigo card: the SEKOOL logo, a headline, then a white "Click down below" pill with a bouncing arrow pointing at the ad's own link button. The captions stay between y = 260 and y = 1250, so the Reels and Stories interface doesn't cover them.
 
 ## Photos stay out of git
 

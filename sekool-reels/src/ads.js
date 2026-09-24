@@ -5,8 +5,8 @@
  *          or `pan` [from, to] to slide across the photo during the scene.
  *          `zoom` [from, to] with `origin` animates a slow push-in across the scene.
  *   card   landscape photo as a rounded card over its own blurred copy (photos/N-bg.jpg).
- *   cta    SEKOOL indigo end card: logo, headline `lines`, optional `sub`, `button`,
- *          then "Click link down below".
+ *   cta    SEKOOL indigo end card: logo, headline `lines`, optional `sub`, then a
+ *          "Click down below" pill with an arrow pointing at the ad's link button.
  * A photo scene can pop in `insert`: a close-up (photos/<src>.jpg, made by
  * prepare_photos.py) at `at` s, `y` px from the top, rotated `rot` degrees.
  * Captions: [start (s, relative to the scene), html, size ('xl' | 'l' | 'm')].
@@ -14,8 +14,6 @@
  *
  * Keep captions between y = 260 and y = 1250: Reels and Stories cover the top ~14%
  * and bottom ~35% of the frame with their own UI. */
-const BUTTON = 'Get a <b>FREE</b> Learning Roadmap';
-
 window.ADS = {
   // 17 s · the class-at-home moment
   'class-at-home': {
@@ -23,7 +21,7 @@ window.ADS = {
     music: { end: 14, arps: 4 },
     scenes: [
       { type: 'photo', src: 5, from: 0, to: 3.8, pos: '100% 50%', zoom: [1, 1.1], origin: '70% 45%',
-        captions: [[0.1, 'Tuition class.', 'xl'], [0.75, 'From the living room floor.', 'l'], [1.9, 'No traffic. No tuition centre.', 'm']] },
+        captions: [[0.1, 'Personal class.', 'xl'], [0.75, 'From the living room floor.', 'l'], [1.9, 'No traffic. No travelling.', 'm']] },
       { type: 'card', src: 3, from: 3.6, to: 6.8, zoom: [1, 1.06], origin: '72% 45%',
         captions: [[0.3, 'Live 1 to 1 class', 'l'], [0.8, 'with a <b>Cikgu Sekolah Kebangsaan</b>', 'm']] },
       { type: 'card', src: 2, from: 6.6, to: 9.8, zoom: [1, 1.06], origin: '75% 40%',
@@ -31,7 +29,7 @@ window.ADS = {
       { type: 'photo', src: 7, from: 9.6, to: 13.0, pan: ['0% 50%', '100% 50%'], zoom: [1, 1.05], origin: '75% 55%',
         captions: [[0.3, 'Dinner\'s cooking.', 'xl'], [1.0, '<b>Class is on.</b>', 'xl']] },
       { type: 'cta', from: 12.8, to: 17,
-        lines: ['Personalized 1 to 1', 'Online Learning'], sub: 'with <b>Cikgu Sekolah Kebangsaan</b>', button: BUTTON },
+        lines: ['Personalized 1 to 1', 'Online Learning'], sub: 'with <b>Cikgu Sekolah Kebangsaan</b>' },
     ],
   },
 
@@ -48,7 +46,7 @@ window.ADS = {
       { type: 'photo', src: 6, from: 6.7, to: 10.0, pos: '100% 50%', zoom: [1, 1.15], origin: '72% 78%',
         captions: [[0.3, 'Awards day.', 'xl'], [1.1, '<b>Anugerah Kecemerlangan Akademik</b>', 'm']] },
       { type: 'cta', from: 9.8, to: 14,
-        lines: ['Moments like this', 'start at home.'], sub: '1 to 1 with <b>Cikgu Sekolah Kebangsaan</b>', button: BUTTON },
+        lines: ['Moments like this', 'start at home.'], sub: '1 to 1 with <b>Cikgu Sekolah Kebangsaan</b>' },
     ],
   },
 
@@ -72,7 +70,7 @@ window.ADS = {
       { type: 'photo', src: 6, from: 6.0, to: 7.05, pos: '100% 50%', zoom: [1.04, 1.12], origin: '72% 78%', cut: true,
         captions: [[0.05, 'Anugerah Kecemerlangan.', 'xl']] },
       { type: 'cta', from: 7.0, to: 10, fast: true,
-        lines: ['1 to 1 with', 'Cikgu Sekolah', 'Kebangsaan.'], button: BUTTON },
+        lines: ['1 to 1 with', 'Cikgu Sekolah', 'Kebangsaan.'] },
     ],
   },
 };
