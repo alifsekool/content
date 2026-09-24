@@ -3,7 +3,9 @@
 **Format:** 1920×1080, **60 fps**, 42 s · **Language:** English · **Audience:** parents
 **Look:** Apple-keynote style: big semibold type, black / white / indigo scenes, floating device mockups, soft blur-and-slide transitions, a slow continuous camera push on every shot. No cartoon characters.
 **Audio:** music + sound effects, no voiceover. A warm electric-piano house groove (Fmaj7 · Am7 · Dm9 · Bbmaj7, 120 BPM) with deep sub-bass, and cinematic sub booms, air whooshes and soft glass tones.
-**Core message:** speed. Your child can **stop being average in 1 mo| # | Time | Scene | On-screen text | Visuals |
+**Core message:** speed. Your child can **stop being average in 1 month** (stated 4 times).
+**CTA:** the **FREE** Learning Roadmap at sekool.my. FREE is always red.
+
 |---|------|-------|----------------|---------|
 | 1 | 0:00–0:02 | **Hook** (black) | "Struggling" → "to score in" → "**UASA & MPT4?**" | Fast kinetic type, about 0.6 s per phrase, with a sub boom on each |
 | 2 | 0:02–0:06 | **Problem** (black) | "Big tuition classes." → "One pace for everyone." → "Your child stays *average.*" | A dot matrix where one dot glows, then the camera dives into it (riser into the drop) |
@@ -17,8 +19,6 @@
 | 10 | 0:34–0:42 | **CTA** (black) | "Stop being average in **1 month.** Start with a **FREE** Learning Roadmap." · Year 1 – Year 6 · KSSR / KSSM · "Get it free at **sekool.my**" | A red FREE block, a sheen across the button, the logo lockup; the music ends on an Fmaj9 chord |
 
 Each feature section cuts to the next about 1 second after its demo finishes.
-
-on, the logo lockup | Hit in the breakdown, then the groove returns and ends on an Fmaj9 chord |
 
 ## Notes
 
