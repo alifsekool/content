@@ -14,6 +14,9 @@
  *
  * Keep captions between y = 260 and y = 1250: Reels and Stories cover the top ~14%
  * and bottom ~35% of the frame with their own UI. */
+// the same end card on every ad
+const CTA = { type: 'cta', fast: true, lines: ['1 to 1 with', 'Cikgu Sekolah', 'Kebangsaan.'] };
+
 window.ADS = {
   // 17 s · the class-at-home moment
   'class-at-home': {
@@ -28,8 +31,7 @@ window.ADS = {
         captions: [[0.3, 'One Cikgu. One child.', 'l'], [0.8, 'Taught at <b>your child\'s pace</b>.', 'm']] },
       { type: 'photo', src: 7, from: 9.6, to: 13.0, pan: ['0% 50%', '100% 50%'], zoom: [1, 1.05], origin: '75% 55%',
         captions: [[0.3, 'Dinner\'s cooking.', 'xl'], [1.0, '<b>Class is on.</b>', 'xl']] },
-      { type: 'cta', from: 12.8, to: 17,
-        lines: ['Personalized 1 to 1', 'Online Learning'], sub: 'with <b>Cikgu Sekolah Kebangsaan</b>' },
+      { ...CTA, from: 12.8, to: 17 },
     ],
   },
 
@@ -45,8 +47,7 @@ window.ADS = {
         captions: [[0.3, 'Appreciation day.', 'xl'], [1.1, '<b>No. 1 Dalam Kelas</b>', 'l']] },
       { type: 'photo', src: 6, from: 6.7, to: 10.0, pos: '100% 50%', zoom: [1, 1.15], origin: '72% 78%',
         captions: [[0.3, 'Awards day.', 'xl'], [1.1, '<b>Anugerah Kecemerlangan Akademik</b>', 'm']] },
-      { type: 'cta', from: 9.8, to: 14,
-        lines: ['Moments like this', 'start at home.'], sub: '1 to 1 with <b>Cikgu Sekolah Kebangsaan</b>' },
+      { ...CTA, from: 9.8, to: 14 },
     ],
   },
 
@@ -69,8 +70,7 @@ window.ADS = {
         captions: [[0.05, 'No. 1 Dalam Kelas.', 'xl']] },
       { type: 'photo', src: 6, from: 6.0, to: 7.05, pos: '100% 50%', zoom: [1.04, 1.12], origin: '72% 78%', cut: true,
         captions: [[0.05, 'Anugerah Kecemerlangan.', 'xl']] },
-      { type: 'cta', from: 7.0, to: 10, fast: true,
-        lines: ['1 to 1 with', 'Cikgu Sekolah', 'Kebangsaan.'] },
+      { ...CTA, from: 7.0, to: 10 },
     ],
   },
 };
