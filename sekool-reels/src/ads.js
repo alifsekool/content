@@ -5,6 +5,8 @@
  *          or `pan` [from, to] to slide across the photo during the scene.
  *          `zoom` [from, to] with `origin` animates a slow push-in across the scene.
  *   card   landscape photo as a rounded card over its own blurred copy (photos/N-bg.jpg).
+ *   roadmap  what the Learning Roadmap does: headline `lines`, two roadmap `pages`
+ *          (src/assets/roadmap/), `sub`, three numbered `points` and a `note`.
  *   cta    SEKOOL indigo end card: logo (or an envelope with `mail`), headline `lines`
  *          (<em> = white highlight), optional `sub`, then a pill (`button`, default
  *          "Click down below") with an arrow pointing at the ad's link button.
@@ -39,10 +41,11 @@ window.ADS = {
     ],
   },
 
-  // 14 s · results and awards. Uses real results: run only with the parents' consent.
+  // 20 s · results and awards, then what the Learning Roadmap does, then the Roadmap offer.
+  // Uses real results: run only with the parents' consent.
   'report-card-day': {
-    duration: 14,
-    music: { end: 12, arps: 2 },
+    duration: 20,
+    music: { end: 18, arps: 2 },
     scenes: [
       { type: 'photo', src: 1, from: 0, to: 3.8, pos: '58% 50%', zoom: [1, 1.22], origin: '78% 86%',
         insert: { src: '1-slip', at: 1.4, y: 650, rot: -2.5 },
@@ -51,7 +54,11 @@ window.ADS = {
         captions: [[0.3, 'Appreciation day.', 'xl'], [1.1, '<b>No. 1 Dalam Kelas</b>', 'l']] },
       { type: 'photo', src: 6, from: 6.7, to: 10.0, pos: '100% 50%', zoom: [1, 1.15], origin: '72% 78%',
         captions: [[0.3, 'Awards day.', 'xl'], [1.1, '<b>Anugerah Kecemerlangan Akademik</b>', 'm']] },
-      { ...ROADMAP_CTA, from: 9.8, to: 14 },
+      { type: 'roadmap', from: 9.8, to: 16.0, pages: ['stage2-p1.jpg', 'stage2-p3.jpg'],
+        lines: ['Kami dah design', 'Learning Roadmap'], sub: 'yang jelaskan 3 perkara ini:',
+        points: ['Di mana kelemahan pelajar', 'Kenapa pelajar lemah', 'Cara pembelajaran yang sesuai untuk improve'],
+        note: 'berdasarkan <b>tahap penguasaan pelajar</b>.' },
+      { ...ROADMAP_CTA, from: 15.8, to: 20 },
     ],
   },
 

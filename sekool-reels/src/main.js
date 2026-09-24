@@ -25,6 +25,12 @@
       el.innerHTML = `<div class="cam"><img class="ph" src="${photo(s.src)}" style="object-position:${s.pan ? s.pan[0] : s.pos}"></div><div class="shade"></div>${ins}${caps(s.captions)}`;
     } else if (s.type === 'card') {
       el.innerHTML = `<img class="bg" src="${photo(s.src, true)}"><div class="card"><img src="${photo(s.src)}"></div>${caps(s.captions)}`;
+    } else if (s.type === 'roadmap') {
+      el.innerHTML = `<h2 class="rm-h">${s.lines.map((l, k) => `<span class="${k ? 'b' : 'a'}">${l}</span>`).join('')}</h2>
+        <div class="rm-page p1"><img src="assets/roadmap/${s.pages[0]}"></div><div class="rm-page p2"><img src="assets/roadmap/${s.pages[1]}"></div>
+        <div class="rm-body"><p class="rm-sub">${s.sub}</p>
+          <div class="rm-list">${s.points.map((pt, k) => `<div class="rm-row"><i>${k + 1}</i><span>${pt}</span></div>`).join('')}</div>
+          <p class="rm-note">${s.note}</p></div>`;
     } else {
       el.innerHTML = `<div class="glow"></div><div class="c-stack">
         ${s.mail ? `<div class="env"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 6.5l8.5 6.5 8.5-6.5"/></svg></div>`
@@ -80,6 +86,22 @@
           sfx(from + 0.4, 'notif', 0.9);
         }
         sfx(from - 0.1, 'whoosh', 0.6); sfx(from + 0.35 * k, 'hit', 0.7); sfx(btnAt, 'glint', 0.7);
+        return;
+      }
+
+      if (s.type === 'roadmap') {
+        tl.fromTo(el, { opacity: 0, scale: 1.1, filter: B(16) }, { opacity: 1, scale: 1, filter: B(0), duration: 0.4, ease: 'power2.out' }, from);
+        tl.fromTo($$(`${el} .rm-h span`), { y: 50, opacity: 0, filter: B(12) }, { y: 0, opacity: 1, filter: B(0), duration: 0.9, stagger: 0.14 }, from + 0.2);
+        tl.fromTo(`${el} .p1`, { y: 500, rotation: -16, opacity: 0 }, { y: 0, rotation: -7, opacity: 1, duration: 1.0 }, from + 0.7);
+        tl.fromTo(`${el} .p2`, { y: 500, rotation: 16, opacity: 0 }, { y: 0, rotation: 6, opacity: 1, duration: 1.0 }, from + 0.9);
+        tl.fromTo(`${el} .rm-sub`, { y: 30, opacity: 0, filter: B(10) }, { y: 0, opacity: 1, filter: B(0), duration: 0.8 }, from + 1.2);
+        $$(`${el} .rm-row`).forEach((r, k) => {
+          tl.fromTo(r, { x: -60, opacity: 0 }, { x: 0, opacity: 1, duration: 0.6 }, from + 1.7 + k * 0.6);
+          tl.fromTo(r.querySelector('i'), { scale: 0.3 }, { scale: 1, duration: 0.5, ease: 'back.out(2.5)' }, from + 1.7 + k * 0.6);
+          sfx(from + 1.7 + k * 0.6, 'tick', 0.7);
+        });
+        tl.fromTo(`${el} .rm-note`, { y: 30, opacity: 0, filter: B(10) }, { y: 0, opacity: 1, filter: B(0), duration: 0.8 }, from + 3.6);
+        sfx(from - 0.12, 'whoosh', 0.55); sfx(from + 0.3, 'glint', 0.7); sfx(from + 0.7, 'swish', 0.4); sfx(from + 0.9, 'swish', 0.4);
         return;
       }
 
