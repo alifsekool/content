@@ -251,6 +251,39 @@ def SFX_notif():
     return out
 
 
+def SFX_count(pitch=1.0):
+    """Soft glassy counter tick; pitch rises as the number climbs."""
+    t = T(0.06)
+    f = 1500 * pitch
+    y = (np.sin(2 * np.pi * f * t) + 0.3 * np.sin(2 * np.pi * 2 * f * t)) * np.exp(-t * 140) * np.minimum(1, t / 0.0015)
+    return fade(y * 0.22)
+
+
+def SFX_select(pitch=1.0):
+    """Soft UI tap."""
+    t = T(0.08)
+    y = filt(noise(0.08), 'bandpass', [1500, 6000]) * np.exp(-t * 400) * 0.9
+    y += np.sin(2 * np.pi * 1100 * pitch * t) * np.exp(-t * 90) * 0.5
+    return fade(y * 0.8)
+
+
+def SFX_correct(pitch=1.0):
+    """Success: two soft glass notes a fifth apart (E6 -> B6), like a confirmation chime."""
+    out = np.zeros(int(1.4 * SR))
+    for o, f in ((0.0, 1318.5), (0.085, 1975.5)):
+        y = glass([(f * pitch, 1), (f * pitch * 2, 0.12)], 1.2, 1.0)
+        i = int(o * SR)
+        out[i:i + len(y)] += y
+    return out * 1.1
+
+
+def SFX_page(pitch=1.0):
+    """A soft page flick for the roadmap scroll."""
+    t = T(0.3)
+    y = filt(noise(0.3), 'bandpass', [900, 5000]) * np.sin(np.pi * np.clip(t / 0.22, 0, 1)) ** 2 * np.exp(-t * 6)
+    return fade(y * 0.35)
+
+
 SFX = {n[4:]: f for n, f in globals().items() if n.startswith('SFX_')}
 
 
@@ -372,17 +405,15 @@ def main(cue_path, out_path):
     mL, mR, verb = music(dur, drop, end, mus.get('bpm', 120), tuple(mus.get('breakdown', (34.0, 36.0))), mus.get('arps', 30.0))
 
     fx = Bus(dur)
-    bell_like = {'glint', 'shimmer', 'notif', 'hit', 'boom', 'fail'}
+    bell_like = {'glint', 'shimmer', 'notif', 'hit', 'boom', 'fail', 'correct'}
     for c in cfg['cues']:
         name = c['name']
         if name not in SFX:
             print('unknown sfx', name, file=sys.stderr)
             continue
         g = c.get('gain', 1.0)
-        if name == 'scribble':
-            sig, g = SFX_scribble(g), 1.0
-        else:
-            sig = SFX[name]()
+        pitch = c.get('pitch', 1.0)
+        sig = SFX[name](pitch) if name in ('count', 'select', 'correct', 'page') else SFX[name]()
         fx.add(c['t'], sig, g)
         if name in bell_like:
             verb.add(c['t'], sig if not isinstance(sig, tuple) else sig[0], g * 0.6)

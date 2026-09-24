@@ -26,7 +26,7 @@ The hook is fast. From the problem scene onward the pacing is about 20% more rel
 - **Three motion primitives:** headlines slide up behind a mask; supporting content fades in with a small rise (no blur); scenes lift out. Blur is used only for hero moments (hook words, the sk → SEKOOL morph). The dive is the one signature transition. After the logo, indigo dissolves to white; after the recap, the video cuts to black on the beat.
 - **Type scale:** 200 (hook) / 128 (speed, CTA) / 100 (feature + recap headlines) / 48 (tagline) / 40 (equation captions, tile titles) / 32 (body) / 24 (labels). Body copy breaks by hand into 2 balanced lines, and "Cikgu Sekolah Kebangsaan" never splits.
 - **Device frame:** every device is centred at x≈1390, at least 180 px from the text column, and at least 110 px from the frame edge. Devices are solid within 0.35 s, rise 40 px, and keep a fixed 3D angle (no swing). The headline leads; the device follows 0.25 s later.
-- **Sound:** 18 cues (was 34). Scene whooshes, the "stuck" sting, the brand hit, the notification and the CTA hit, with no UI ticks.
+- **Sound:** scene whooshes, the "stuck" sting, the brand hit and the CTA hit, plus **demo sounds only where something happens**: soft glassy ticks that follow the Day 1→30 and 0→85% counters (rising in pitch), a soft tap when an answer or notification is pressed, a two-note success chime for each correct answer (a fourth higher for the TP4→TP5 level-up), and a soft page flick on the roadmap. Each sits about 6–18 dB above the music in its frequency band.
 
 ## Notes
 

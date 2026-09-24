@@ -53,7 +53,21 @@
 
   // ================================================================ timeline
   const cues = [];
-  const sfx = (t, name, gain = 1) => cues.push({ t: +t.toFixed(3), name, gain });
+  const sfx = (t, name, gain = 1, pitch = 1) => cues.push({ t: +t.toFixed(3), name, gain, pitch: +pitch.toFixed(3) });
+  // Counter ticks that follow the number on screen: one soft tick each time the displayed
+  // integer changes (never closer than 45 ms), rising in pitch as the value climbs.
+  const counterTicks = (t0, dur, from, to, ease, gain = 0.5) => {
+    const e = gsap.parseEase(ease);
+    let last = Math.round(from), lastT = -1;
+    for (let ms = 0; ms <= dur * 1000; ms++) {
+      const p = ms / 1000 / dur, v = Math.round(from + (to - from) * e(p));
+      if (v !== last) {
+        const t = t0 + ms / 1000;
+        if (t - lastT >= 0.045) { sfx(t, 'count', gain, 1 + 0.6 * (v - from) / (to - from)); lastT = t; }
+        last = v;
+      }
+    }
+  };
   let tl;
 
   function build() {
@@ -172,6 +186,7 @@
     tl.fromTo('#s3b .sp-fill', { scaleX: 0.02 }, { scaleX: 1, duration: 1.5, ease: 'expo.inOut' }, 12.1);
     tl.fromTo('#s3b .sp-head', { left: '1%' }, { left: '100%', duration: 1.5, ease: 'expo.inOut' }, 12.1);
     tl.to(days, { d: 30, duration: 1.5, ease: 'expo.inOut', onUpdate: () => { dayEl.textContent = Math.round(days.d); } }, 12.1);
+    counterTicks(12.1, 1.5, 1, 30, 'expo.inOut', 0.7);
     tl.to('#s3b .sp-from', { opacity: 0.35, duration: 0.4 }, 12.5);
     tl.fromTo('#s3b .sp-to', { scale: 0.85, opacity: 0.4 }, { scale: 1, opacity: 1, duration: 0.7 }, 13.4);
     sfx(13.45, 'glint', 0.6);
@@ -194,6 +209,7 @@
       tl.fromTo(`#s4 .eq${c}`, { clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0% 0 0)', duration: d, ease: 'power1.inOut' }, t);
     });
     tl.fromTo('#s4 .eq.e3 .ok', { scale: 0.4, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.5 }, at(T4, 2.8));
+    sfx(at(T4, 2.8), 'correct', 0.3);
     featureOut('s4', T5 - 0.45);
 
     // S5 · Roadmap: the real PDF
@@ -204,6 +220,7 @@
     const PAGE = 854 + 14;
     [[at(T5, 1.0), 1], [at(T5, 2.3), 2], [at(T5, 3.6), 3]].forEach(([t, n]) => {
       tl.to('#s5 .pages', { y: -PAGE * n, duration: 0.75, ease: 'expo.inOut' }, t);
+      sfx(t + 0.12, 'page', 1.0);
     });
     // page caption under the iPad, synced to the scroll
     [['.cp1', at(T5, 1.4), at(T5, 2.2)], ['.cp2', at(T5, 2.7), at(T5, 3.5)], ['.cp3', at(T5, 4.0), null]].forEach(([c, a, b]) => {
@@ -219,8 +236,10 @@
     tl.fromTo('#s6 .q-prog i', { scaleX: 0.6 }, { scaleX: 1, duration: 0.8 }, at(T6, 0.5));
     blurIn($$('#s6 .opt'), at(T6, 0.55), { y: 24, blur: 6, stagger: 0.05, d: 0.6 });
     tl.to('#s6 .opt.pick', { borderColor: '#4f46e5', backgroundColor: '#eef0fd', duration: 0.25, ease: 'power2.out' }, at(T6, 1.35));
+    sfx(at(T6, 1.35), 'select', 0.8);
     tl.to('#s6 .opt.pick b', { backgroundColor: '#4f46e5', color: '#ffffff', duration: 0.25, ease: 'power2.out' }, at(T6, 1.35));
     tl.fromTo('#s6 .opt .ok', { scale: 0.4, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.5 }, at(T6, 1.65));
+    sfx(at(T6, 1.65), 'correct', 0.3);
     tl.to('#s6 .opt.pick', { borderColor: '#22c55e', backgroundColor: '#f0fdf4', duration: 0.25, ease: 'power2.out' }, at(T6, 1.65));
     tl.to('#s6 .opt.pick b', { backgroundColor: '#22c55e', duration: 0.25, ease: 'power2.out' }, at(T6, 1.65));
     tl.to('#s6 .q-state', { x: -60, opacity: 0, duration: 0.4, ease: 'power2.in' }, at(T6, 2.1));
@@ -228,6 +247,7 @@
     tl.fromTo('#s6 .ring-fg', { strokeDashoffset: 1 }, { strokeDashoffset: 0.15, duration: 1.2, ease: 'expo.out' }, at(T6, 2.45));
     const pct = { v: 0 }, pctEl = $('#s6 .pct');
     tl.to(pct, { v: 85, duration: 1.2, ease: 'expo.out', onUpdate: () => { pctEl.textContent = `${Math.round(pct.v)}%`; } }, at(T6, 2.45));
+    counterTicks(at(T6, 2.45), 1.2, 0, 85, 'expo.out', 0.7);
     blurIn('#s6 .r-lvl', at(T6, 2.7), { y: 20, blur: 8, d: 0.7 });
     blurIn($$('#s6 .r-row'), at(T6, 2.9), { y: 20, blur: 8, stagger: 0.08, d: 0.6 });
     featureOut('s6', T7 - 0.45);
@@ -239,10 +259,12 @@
     tl.fromTo('#s7 .notif', { y: -40, scale: 0.96, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.7 }, at(T7, 0.6));
     sfx(at(T7, 0.6), 'notif', 0.8);
     tl.to('#s7 .notif', { scale: 0.96, duration: 0.1, yoyo: true, repeat: 1, ease: 'power2.inOut' }, at(T7, 1.35));
+    sfx(at(T7, 1.35), 'select', 0.7);
     tl.to('#s7 .lock', { scale: 1.05, opacity: 0, duration: 0.5, ease: 'power2.inOut' }, at(T7, 1.5));
     tl.fromTo('#s7 .report', { scale: 0.86, opacity: 0, borderRadius: 60 }, { scale: 1, opacity: 1, borderRadius: 0, duration: 0.7 }, at(T7, 1.55));
     const tp = { n: 4 }, tpEl = $('#s7 .tp-n');
     tl.to(tp, { n: 5, duration: 0.01, onUpdate: () => { tpEl.textContent = Math.round(tp.n); } }, at(T7, 2.3));
+    sfx(at(T7, 2.3), 'correct', 0.32, 1.335); // level up: the success chime a fourth higher
     tl.fromTo('#s7 .rp-tp', { scale: 1 }, { scale: 1.06, duration: 0.18, yoyo: true, repeat: 1, ease: 'power2.inOut', transformOrigin: '0% 50%' }, at(T7, 2.25));
     tl.fromTo('#s7 .up', { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.5 }, at(T7, 2.4));
     tl.fromTo('#s7 .spark polyline', { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 1.0, ease: 'expo.out' }, at(T7, 2.0));
