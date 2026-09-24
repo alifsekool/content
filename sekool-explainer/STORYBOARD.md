@@ -6,6 +6,7 @@
 **Core message:** speed. Your child can **stop being average in 1 month** (stated 4 times).
 **CTA:** the **FREE** Learning Roadmap at sekool.my. FREE is always red.
 
+| # | Time | Scene | On-screen text | Visuals |
 |---|------|-------|----------------|---------|
 | 1 | 0:00–0:02 | **Hook** (black) | "Struggling" → "to score in" → "**UASA & MPT4?**" | Fast kinetic type, about 0.6 s per phrase, with a sub boom on each |
 | 2 | 0:02–0:06 | **Problem** (black) | "Big tuition classes." → "One pace for everyone." → "Your child stays *average.*" | A dot matrix where one dot glows, then the camera dives into it (riser into the drop) |
