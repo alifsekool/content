@@ -1,7 +1,7 @@
-# SEKOOL.my: Explainer Storyboard (v5)
+# SEKOOL.my: Explainer Storyboard (v6)
 
 **Format:** 1920×1080, **60 fps**, 48 s · **Language:** English · **Audience:** parents
-**Look:** Apple-keynote style: big semibold type, black / white / indigo scenes, floating device mockups, soft blur-and-slide transitions, a slow continuous camera push on every shot. No cartoon characters.
+**Look:** Apple-keynote style: big semibold type, black / white / indigo scenes, floating device mockups, soft blur-and-slide transitions. Holds are rock-steady, with no slow camera creep (sub-pixel drift read as shake), and every animated layer stays on the GPU. No cartoon characters.
 **Audio:** music + sound effects, no voiceover. A warm electric-piano house groove (Fmaj7 · Am7 · Dm9 · Bbmaj7, 120 BPM) with deep sub-bass, and cinematic sub booms, air whooshes and soft glass tones.
 **Core messages:** speed (**stop being average in 1 month**, stated 4 times) and trust (**Cikgu Sekolah Kebangsaan**, stated 4 times).
 **CTA:** Free Personalized Learning Roadmap at sekool.my (plain white in the CTA; red FREE tags stay on the roadmap scene and the recap tile).
@@ -9,7 +9,7 @@
 | # | Time | Scene | On-screen text | Visuals |
 |---|------|-------|----------------|---------|
 | 1 | 0:00–0:02 | **Hook** (black) | "Struggling" → "to score in" → "**UASA & MPT4?**" | Fast kinetic type with a sub boom on each phrase |
-| 2 | 0:02–0:07 | **Problem as an equation** (black) | **Big Tuition Classes** + **One Pace for Everyone** = **Your Child Stays** **Average.** | Three cards: a packed grid of students **+** students moving in lockstep **=** a bell curve where "Your child · Stuck" is a **red** warning dot at *Average* (the card glows red). The camera dives into the red dot and SEKOOL indigo blooms out of it: problem → solution. |
+| 2 | 0:02–0:07 | **Problem as an equation** (black) | **Big Tuition Classes** + **One Pace for Everyone** = **Your Child Stays** **Average.** | Three cards: a packed grid of students **+** students moving in lockstep **=** a bell curve where "Your child · Stuck" is a **red** warning dot at *Average* (the card glows red). A dark, sinking "stuck" sting plays as the dot lands, with the music dipping under it. The camera then dives into the red dot and SEKOOL indigo blooms out of it: problem → solution. |
 | 3 | 0:07–0:11 | **Brand** (indigo) | **sk SEKOOL** · "**Personalized 1 to 1 Online Learning** with **Cikgu Sekolah Kebangsaan**" · Year 1 – Year 6 · KSSR / KSSM · UASA & MPT4 Prep | The logo resolves from a blur and the music drops. "Cikgu Sekolah Kebangsaan" turns into a white highlight. |
 | 4 | 0:11–0:15 | **Speed** | "Stop Being Average. **In Just 1 Month.**" | A Week 1 → Week 4 bar fills from *Average* to *Excellent* while the counter runs from Day 1 to Day 30 |
 | 5 | 0:15–0:20 | **Live 1 to 1 Classes** | "One Cikgu. One Child." · "Every class is taught live by an experienced **Cikgu Sekolah Kebangsaan**." · "No part-timers. No university students." | Laptop with a live class. A "✓ Cikgu Sekolah Kebangsaan" badge sits on the teacher tile, and a fractions problem is solved. |

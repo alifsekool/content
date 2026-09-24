@@ -57,6 +57,10 @@
   let tl;
 
   function build() {
+    // Keep animated elements on their own GPU layers for the whole timeline. With the default
+    // force3D:'auto', GSAP drops layers when a tween ends, text re-rasterises at a new pixel
+    // grid and the frame visibly jumps. A permanent layer moves as one smooth bitmap.
+    gsap.config({ force3D: true });
     // measure the "your child" dot before any tween offsets the cards
     let youX, youY;
     { const st = $('#stage').getBoundingClientRect(), k = st.width / 1920, r = $('#s2 .you').getBoundingClientRect();
@@ -70,11 +74,11 @@
     const blurOut = (el, t, o = {}) => tl.to(el,
       { y: o.y ?? -50, opacity: 0, filter: B(o.blur ?? 14), scale: o.scale ?? 1, duration: o.d ?? 0.45, ease: 'power3.in' }, t);
     const linesIn = (el, t) => tl.fromTo($$('.lni', $(el)), { yPercent: 110 }, { yPercent: 0, duration: 1.1, stagger: 0.09, ease: 'expo.out' }, t);
-    const drift = (id, a, b, to = 1.04) => tl.fromTo(`#${id} .cam`, { scale: 1 }, { scale: to, duration: b - a, ease: 'none' }, a);
-    const deviceIn = (el, t, holdTo) => {
+    // Deliberately no slow 'camera drift' on holds: sub-pixel creeping motion steps between
+    // pixels and reads as judder. Motion happens in the transitions; holds stay rock-steady.
+    const deviceIn = (el, t) => {
       tl.fromTo(el, { x: 300, rotationY: -26, rotationX: 8, opacity: 0, scale: 0.92 },
         { x: 0, rotationY: -10, rotationX: 3, opacity: 1, scale: 1, duration: 1.3, ease: 'expo.out' }, t);
-      tl.to(el, { rotationY: -4, rotationX: 1, y: -14, duration: holdTo - t - 1.3, ease: 'sine.inOut' }, t + 1.3);
     };
     const featureIn = (id, t0) => {
       blurIn(`#${id} .eyebrow`, t0, { y: 30, d: 0.9 });
@@ -87,7 +91,6 @@
 
     // ------------------------------------------------ S1 · Hook (0 – 2.3), fast kinetic type
     show('#s1', 0, 2.35);
-    drift('s1', 0, 2.35, 1.06);
     [['.k1', 0.04, 0.6], ['.k2', 0.66, 1.22]].forEach(([k, a, b]) => {
       blurIn(`#s1 ${k}`, a, { y: 60, blur: 18, scale: 1.08, d: 0.6 });
       blurOut(`#s1 ${k}`, b, { y: -60, blur: 18, d: 0.26 });
@@ -99,7 +102,6 @@
     // ------------------------------------------------ S2 · Problem as an equation (2.1 – 7.0)
     //   Big Tuition Classes + One Pace for Everyone = Your Child Stays Average
     show('#s2', 2.1, 7.05);
-    tl.fromTo('#s2 .eqn', { scale: 1.04 }, { scale: 1, duration: 4.5, ease: 'power2.out' }, 2.1);
     blurIn('#s2 .tm1 .card-d', 2.2, { y: 50, blur: 16, d: 0.8 });
     tl.fromTo($$('#s2 .crowd i'), { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.5, stagger: { each: 0.012, from: 'center', grid: [7, 7] } }, 2.3);
     blurIn('#s2 .tm1 p', 2.5, { y: 20, blur: 10, d: 0.7 });
@@ -121,7 +123,7 @@
     tl.to('#s2 .bell', { stroke: '#5a5a5f', duration: 0.6 }, 5.3);
     tl.to(['#s2 .tm1', '#s2 .tm2', '#s2 .o1', '#s2 .o2'], { opacity: 0.25, duration: 0.5, ease: 'power2.out' }, 5.85);
     sfx(2.2, 'swish', 0.4); sfx(3.15, 'tick', 0.5); sfx(3.35, 'swish', 0.4); sfx(4.35, 'tick', 0.5); sfx(4.55, 'swish', 0.4);
-    sfx(5.05, 'boom', 0.6); sfx(2.6, 'riser', 1);
+    sfx(5.05, 'fail', 1.0); sfx(2.6, 'riser', 1);
     // dive into "your child"
     gsap.set('#s2 .zoomer', { left: youX, top: youY, scale: 0 });
     tl.to('#s2 .cam', { scale: 12, transformOrigin: `${youX}px ${youY}px`, duration: 0.8, ease: 'power3.in' }, 6.2);
@@ -129,7 +131,6 @@
 
     // ------------------------------------------------ S3 · Brand (7.0 – 10.9)
     show('#s3', 6.98, 11.3);
-    drift('s3', 7.0, 11.3, 1.03);
     const mark = $('#s3 .mark'), wm = $('#s3 .wordmark');
     gsap.set(mark, { x: 960 - (mark.offsetLeft + mark.offsetWidth / 2) });
     tl.fromTo(mark, { scale: 2, opacity: 0, filter: B(30) }, { scale: 1, opacity: 1, filter: B(0), duration: 1.0 }, 7.0);
@@ -147,7 +148,6 @@
 
     // ------------------------------------------------ S3b · Speed: average -> excellent in 1 month (10.7 – 15.0)
     show('#s3b', 10.65, 15.05);
-    drift('s3b', 10.65, 15.05, 1.04);
     linesIn('#s3b .sp-h', 10.8);
     sfx(10.7, 'whoosh', 0.55);
     blurIn('#s3b .sp-track-wrap', 11.65, { y: 30, blur: 10, d: 0.8 });
@@ -167,9 +167,8 @@
 
     // S4 · 1 to 1 class with Cikgu Sekolah Kebangsaan
     show('#s4', T4 - 0.05, T5 + 0.1);
-    drift('s4', T4 - 0.05, T5 + 0.1, 1.03);
     featureIn('s4', T4 + 0.1);
-    deviceIn('#s4 .laptop', T4, T5 - 0.4);
+    deviceIn('#s4 .laptop', T4);
     blurIn($$('#s4 .chips span'), at(T4, 0.7), { y: 20, blur: 8, stagger: 0.05, d: 0.7 });
     blurIn('#s4 .note', at(T4, 1.0), { y: 20, blur: 8, d: 0.7 });
     tl.fromTo('#s4 .sk-badge', { scale: 0.7, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.7, transformOrigin: '0% 50%' }, at(T4, 0.8));
@@ -192,9 +191,8 @@
 
     // S5 · Roadmap: the real PDF
     show('#s5', T5 - 0.05, T6 + 0.1);
-    drift('s5', T5 - 0.05, T6 + 0.1, 1.03);
     featureIn('s5', T5 + 0.1);
-    deviceIn('#s5 .ipad', T5, T6 - 0.4);
+    deviceIn('#s5 .ipad', T5);
     tl.fromTo('#s5 .free-pill', { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.7 }, at(T5, 0.4));
     tl.fromTo('#s5 .sticker', { scale: 1.5, rotation: -24, opacity: 0, filter: B(10) }, { scale: 1, rotation: -8, opacity: 1, filter: B(0), duration: 0.7 }, at(T5, 0.7));
     sfx(at(T5, 0.7), 'boom', 0.45);
@@ -211,9 +209,8 @@
 
     // S6 · Monthly test
     show('#s6', T6 - 0.05, T7 + 0.1);
-    drift('s6', T6 - 0.05, T7 + 0.1, 1.03);
     featureIn('s6', T6 + 0.1);
-    deviceIn('#s6 .win', T6, T7 - 0.4);
+    deviceIn('#s6 .win', T6);
     tl.fromTo('#s6 .q-prog i', { scaleX: 0.6 }, { scaleX: 1, duration: 0.8 }, at(T6, 0.5));
     blurIn($$('#s6 .opt'), at(T6, 0.55), { y: 24, blur: 6, stagger: 0.05, d: 0.6 });
     tl.to('#s6 .opt.pick', { borderColor: '#4f46e5', backgroundColor: '#eef0fd', duration: 0.25, ease: 'power2.out' }, at(T6, 1.35));
@@ -235,9 +232,8 @@
 
     // S7 · Progress report
     show('#s7', T7 - 0.05, T8 + 0.1);
-    drift('s7', T7 - 0.05, T8 + 0.1, 1.03);
     featureIn('s7', T7 + 0.1);
-    deviceIn('#s7 .iphone', T7, T8 - 0.4);
+    deviceIn('#s7 .iphone', T7);
     tl.fromTo('#s7 .notif', { y: -70, scale: 0.92, opacity: 0, filter: B(8) }, { y: 0, scale: 1, opacity: 1, filter: B(0), duration: 0.7 }, at(T7, 0.6));
     sfx(at(T7, 0.6), 'notif', 0.8);
     tl.to('#s7 .notif', { scale: 0.96, duration: 0.1, yoyo: true, repeat: 1, ease: 'power2.inOut' }, at(T7, 1.35));
@@ -258,7 +254,6 @@
 
     // S8 · Bento recap
     show('#s8', T8 - 0.05, T9 + 0.1);
-    drift('s8', T8 - 0.05, T9 + 0.1, 1.04);
     linesIn('#s8 .bento-h', T8 + 0.1);
     blurIn($$('#s8 .tile-b'), at(T8, 0.5), { y: 80, blur: 10, stagger: 0.08, d: 0.9 });
     sfx(T8 - 0.1, 'whoosh', 0.55);
@@ -267,7 +262,6 @@
     // S9 · CTA: short and clean
     show('#s9', T9);
     tl.fromTo('#s9', { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' }, T9);
-    drift('s9', T9, DURATION, 1.03);
     tl.fromTo('#s9 .cta-glow', { scale: 0.7, opacity: 0 }, { scale: 1, opacity: 1, duration: 3 }, T9 + 0.2);
     linesIn('#s9 .c2', T9 + 0.2);
     sfx(T9 + 0.25, 'hit', 0.6);
@@ -293,7 +287,7 @@
     duration: DURATION,
     fps: FPS,
     cues,
-    music: { bpm: 120, drop: 7.0, end: 45.0, breakdown: [41.0, 43.0], arps: 37.0 },
+    music: { bpm: 120, drop: 7.0, end: 45.0, breakdown: [41.0, 43.0], arps: 37.0, duck: [[4.95, 6.2]] },
     ready,
     seek: (t) => { tl.seek(t, false); },
   };

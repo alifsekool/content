@@ -197,6 +197,22 @@ def SFX_riser():
     return fade(y, 0.2, 0.015)
 
 
+def SFX_fail():
+    """'Stuck at average': a dark, detuned cluster that sinks two semitones, over a sub hit."""
+    d = 2.2
+    t = T(d)
+    bend = 2 ** (-2 * np.minimum(t, 1.3) / 1.3 / 12)
+    y = np.zeros_like(t)
+    for f0, a in ((110.0, 1.0), (116.54, 0.8), (155.56, 0.6), (220.0, 0.35)):  # A2, Bb2, Eb3, A3: minor 2nd + tritone
+        ph = 2 * np.pi * np.cumsum(f0 * bend) / SR
+        y += a * (np.sin(ph) + 0.5 * np.sin(2 * ph) + 0.25 * np.sin(3 * ph))
+    env = np.minimum(1, t / 0.03) * np.exp(-t * 1.5)
+    y = filt(y * env, 'lowpass', 1100, 2) * 0.22
+    sub_hit = np.sin(2 * np.pi * np.cumsum(55 * 2 ** (-t * 0.8)) / SR) * np.exp(-t * 3) * np.minimum(1, t / 0.01) * 0.6
+    y += sub_hit + filt(noise(d), 'lowpass', 300) * np.exp(-t * 14) * 0.25
+    return fade(y, 0.005, 0.2)
+
+
 def glass(freqs, d=1.4, g=1.0):
     t = T(d)
     y = sum(np.sin(2 * np.pi * f * t) * a for f, a in freqs)
@@ -356,7 +372,7 @@ def main(cue_path, out_path):
     mL, mR, verb = music(dur, drop, end, mus.get('bpm', 120), tuple(mus.get('breakdown', (34.0, 36.0))), mus.get('arps', 30.0))
 
     fx = Bus(dur)
-    bell_like = {'glint', 'shimmer', 'notif', 'hit', 'boom'}
+    bell_like = {'glint', 'shimmer', 'notif', 'hit', 'boom', 'fail'}
     for c in cfg['cues']:
         name = c['name']
         if name not in SFX:
@@ -370,6 +386,14 @@ def main(cue_path, out_path):
         fx.add(c['t'], sig, g)
         if name in bell_like:
             verb.add(c['t'], sig if not isinstance(sig, tuple) else sig[0], g * 0.6)
+
+    # duck the music under key moments (e.g. the 'stuck at average' sting)
+    for a, b in mus.get('duck', []):
+        n_ = len(mL); tt = np.arange(n_) / SR
+        g = np.ones(n_)
+        down = np.clip((tt - a) / 0.15, 0, 1); up = np.clip((tt - b) / 0.4, 0, 1)
+        g = 1 - 0.7 * down * (1 - up)
+        mL = mL * g; mR = mR * g
 
     irl, irr = reverb_ir()
     wet_src = (verb.L + verb.R) * 0.5

@@ -27,6 +27,7 @@ const opt = (name, def) => { const i = args.indexOf(`--${name}`); return i >= 0 
 const STILLS = opt('stills', null);
 const WORKERS = +opt('workers', 3);
 const AUDIO_ONLY = args.includes('--audio-only');
+const RANGE = opt('range', null); // e.g. --range 17,20 renders a silent test clip to build/range.mp4
 const FFMPEG = process.env.FFMPEG || execFileSync('python3', ['-c', 'import imageio_ffmpeg as f; print(f.get_ffmpeg_exe())']).toString().trim();
 
 const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.woff2': 'font/woff2', '.woff': 'font/woff',
@@ -80,7 +81,9 @@ try {
     if (AUDIO_ONLY) process.exit(0);
 
     // 2) video segments in parallel
-    const total = Math.round(duration * fps);
+    const [r0, r1] = RANGE ? RANGE.split(',').map(Number) : [0, duration];
+    const f0 = Math.round(r0 * fps);
+    const total = Math.round((r1 - r0) * fps);
     const per = Math.ceil(total / WORKERS);
     const started = Date.now();
     let done = 0;
@@ -95,7 +98,7 @@ try {
       // seek in order from 0 so every tween records its start values the same way
       await page.evaluate(() => window.SEKOOL.seek(0));
       for (let f = a; f < b; f++) {
-        const buf = await snap(page, f / fps, 'jpeg');
+        const buf = await snap(page, (f0 + f) / fps, 'jpeg');
         if (!ff.stdin.write(buf)) await new Promise((r) => ff.stdin.once('drain', r));
         if (++done % 150 === 0) console.log(`frames ${done}/${total}  (${((Date.now() - started) / 1000).toFixed(0)}s)`);
       }
@@ -104,6 +107,13 @@ try {
       return file;
     }));
 
+    if (RANGE) {
+      const list = path.join(BUILD, 'segments.txt');
+      fs.writeFileSync(list, segs.map((s) => `file '${s}'`).join('\n'));
+      await run(FFMPEG, ['-y', '-loglevel', 'error', '-f', 'concat', '-safe', '0', '-i', list, '-c', 'copy', path.join(BUILD, 'range.mp4')]);
+      console.log('range clip: build/range.mp4');
+      process.exit(0);
+    }
     // 3) concat + mux + loudness normalise
     const list = path.join(BUILD, 'segments.txt');
     fs.writeFileSync(list, segs.map((s) => `file '${s}'`).join('\n'));
