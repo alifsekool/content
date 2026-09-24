@@ -176,6 +176,7 @@
     tl.to('#s3 .cam', { y: -40, opacity: 0, duration: 0.4, ease: 'power2.in' }, 10.5);
     tl.to('#s3', { backgroundColor: 'rgba(79,70,229,0)', duration: 0.45, ease: 'sine.inOut' }, 10.72);
     sfx(7.0, 'hit', 1); sfx(7.95, 'shimmer', 0.5);
+    sfx(9.55, 'highlight', 0.5); // 'Cikgu Sekolah Kebangsaan' lights up
 
     // ------------------------------------------------ S3b · Speed: average -> excellent in 1 month (10.7 – 15.0)
     show('#s3b', 10.65, 15.05);

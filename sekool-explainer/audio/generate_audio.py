@@ -277,6 +277,17 @@ def SFX_correct(pitch=1.0):
     return out * 1.1
 
 
+def SFX_highlight(pitch=1.0):
+    """'Lights up': a quick airy swell that blooms into a soft F-major glass chord (F6, A6, C7)."""
+    d = 1.8
+    t = T(d)
+    swell = filt(noise(d), 'bandpass', [3000, 9000]) * np.clip(t / 0.18, 0, 1) ** 2 * np.exp(-np.clip(t - 0.18, 0, None) * 9) * 0.25
+    chord = np.zeros_like(t)
+    for f, a in ((1396.9, 1.0), (1760.0, 0.7), (2093.0, 0.55)):
+        chord += a * np.sin(2 * np.pi * f * pitch * t) * np.minimum(1, t / 0.12) * np.exp(-t * 2.2)
+    return fade(swell + chord * 0.12, 0.005, 0.1)
+
+
 def SFX_page(pitch=1.0):
     """A soft page flick for the roadmap scroll."""
     t = T(0.3)
@@ -405,7 +416,7 @@ def main(cue_path, out_path):
     mL, mR, verb = music(dur, drop, end, mus.get('bpm', 120), tuple(mus.get('breakdown', (34.0, 36.0))), mus.get('arps', 30.0))
 
     fx = Bus(dur)
-    bell_like = {'glint', 'shimmer', 'notif', 'hit', 'boom', 'fail', 'correct'}
+    bell_like = {'glint', 'shimmer', 'notif', 'hit', 'boom', 'fail', 'correct', 'highlight'}
     for c in cfg['cues']:
         name = c['name']
         if name not in SFX:
