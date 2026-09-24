@@ -1,0 +1,70 @@
+/* SEKOOL Reels · 1080x1920. Brand: indigo #4f46e5, Poppins. */
+:root {
+  --ink: #111114;
+  --accent: #4f46e5;
+  --violet: #8b5cf6;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; overflow: hidden; background: #000; }
+#stage {
+  position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; overflow: hidden;
+  background: #000; font-family: 'Poppins', sans-serif; color: var(--ink);
+  transform-origin: 0 0; -webkit-font-smoothing: antialiased;
+}
+.scene { position: absolute; inset: 0; overflow: hidden; visibility: hidden; opacity: 0; }
+.scene, .cam, .card, .card img, .cap, .c-el { will-change: transform, opacity; backface-visibility: hidden; }
+.cam { position: absolute; inset: 0; }
+.ph { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+/* soft top shade keeps white caption chips from blending into bright ceilings */
+.shade { position: absolute; left: 0; right: 0; top: 0; height: 900px;
+  background: linear-gradient(rgba(0, 0, 0, .28), rgba(0, 0, 0, 0)); }
+
+/* landscape photo as a card over its own blurred copy */
+.bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.card { position: absolute; left: 40px; top: 700px; width: 1000px; height: 750px; border-radius: 40px; overflow: hidden;
+  box-shadow: 0 50px 90px -30px rgba(0, 0, 0, .7), 0 0 0 2px rgba(255, 255, 255, .12); }
+.card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* captions: white Reels-style chips */
+.caps { position: absolute; left: 40px; right: 40px; top: 300px; display: flex; flex-direction: column; align-items: center; gap: 18px; }
+.cap { display: inline-block; max-width: 1000px; text-align: center; background: #fff; color: var(--ink);
+  letter-spacing: -0.03em; line-height: 1.12; box-shadow: 0 16px 40px -12px rgba(0, 0, 0, .45); }
+.cap b { color: var(--accent); font-weight: 700; }
+.cap.xl { font-size: 96px; font-weight: 700; padding: 14px 36px 20px; border-radius: 30px; }
+.cap.l { font-size: 64px; font-weight: 700; padding: 12px 30px 16px; border-radius: 24px; }
+.cap.m { font-size: 48px; font-weight: 600; padding: 12px 28px 14px; border-radius: 20px; }
+
+/* CTA end card */
+/* close-up of a detail in the photo (e.g. the marks on a results slip) */
+.insert { position: absolute; left: 110px; width: 860px; padding: 14px; background: #fff; border-radius: 28px;
+  box-shadow: 0 50px 90px -30px rgba(0, 0, 0, .75); }
+.insert img { display: block; width: 100%; border-radius: 16px; }
+
+.t-cta { background: var(--accent); color: #fff; }
+.glow { position: absolute; left: 50%; top: 42%; width: 1800px; height: 1800px; margin: -900px 0 0 -900px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, .24), rgba(255, 255, 255, 0) 58%); }
+.c-stack { position: absolute; left: 50px; right: 50px; top: 400px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+.lockup { display: flex; align-items: center; gap: 30px; color: #fff; margin-bottom: 70px; }
+.mark { width: 170px; height: 120px; }
+.wordmark { width: 470px; height: 98px; }
+[data-logo] > svg { display: block; width: 100%; height: 100%; }
+.c-h { font-size: 100px; font-weight: 700; letter-spacing: -0.045em; line-height: 1.04; }
+.c-h span { display: block; }
+.c-sub { margin-top: 34px; font-size: 44px; font-weight: 500; letter-spacing: -0.02em; color: rgba(255, 255, 255, .9); }
+.c-sub b { display: inline-block; margin-top: 12px; font-weight: 600; color: var(--accent); background: #fff; padding: 2px 22px 6px; border-radius: 16px; }
+.c-meta { margin-top: 34px; display: flex; align-items: center; gap: 20px; font-size: 32px; font-weight: 500; color: rgba(255, 255, 255, .75); }
+.c-meta i { width: 7px; height: 7px; border-radius: 50%; background: currentColor; opacity: .7; display: block; }
+.btn { position: relative; overflow: hidden; margin-top: 60px; background: #fff; color: #000; font-size: 44px; font-weight: 600;
+  padding: 28px 54px 30px; border-radius: 999px; white-space: nowrap; box-shadow: 0 30px 60px -20px rgba(20, 10, 80, .6); }
+.btn b { color: #ff3b30; font-weight: 700; }
+.sheen { position: absolute; top: 0; bottom: 0; left: -40%; width: 30%; background: linear-gradient(100deg, transparent, rgba(79, 70, 229, .22), transparent); }
+.url { margin-top: 30px; font-size: 44px; font-weight: 600; letter-spacing: -0.01em; }
+.t-cta.fast .c-stack { top: 460px; }
+.t-cta.fast .c-h { font-size: 110px; }
+
+/* preview controls */
+#controls { position: fixed; left: 0; right: 0; bottom: 0; height: 48px; display: flex; gap: 14px; align-items: center;
+  padding: 0 16px; background: rgba(0, 0, 0, .75); color: #fff; font: 14px/1 system-ui, sans-serif; }
+#controls input { flex: 1; }
+#controls button, #controls select { padding: 6px 14px; border-radius: 6px; border: 0; background: #4f46e5; color: #fff; font-weight: 600; }
+body.render #controls { display: none; }

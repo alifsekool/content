@@ -2,3 +2,7 @@ node_modules/
 sekool-explainer/build/
 __pycache__/
 .DS_Store
+# ad photos of real children and the videos made from them stay out of this public repo
+sekool-reels/photos/
+sekool-reels/output/
+sekool-reels/build/
