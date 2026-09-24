@@ -1,0 +1,4 @@
+node_modules/
+sekool-explainer/build/
+__pycache__/
+.DS_Store
