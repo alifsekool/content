@@ -6,7 +6,7 @@
   const RENDER = new URLSearchParams(location.search).has('render');
   if (RENDER) document.body.classList.add('render');
 
-  const DURATION = 50;
+  const DURATION = 48;
   const FPS = 60;
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -36,7 +36,7 @@
   $('.btn').insertAdjacentHTML('beforeend', '<i class="sheen"></i>');
 
   // ---------------------------------------------------------------- headline lines
-  $$('.h, .bento-h, .sp-h').forEach((h) => {
+  $$('.h, .bento-h, .sp-h, .c2').forEach((h) => {
     h.innerHTML = h.innerHTML.split(/<br\s*\/?>/).map((l) => `<span class="ln"><span class="lni">${l}</span></span>`).join('');
   });
 
@@ -116,9 +116,12 @@
     tl.fromTo('#s2 .you i', { y: 140, scale: 0.4, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.9 }, 5.05);
     blurIn('#s2 .you span', 5.35, { y: 12, blur: 6, d: 0.5 });
     blurIn('#s2 .tm3 p', 5.2, { y: 20, blur: 10, d: 0.7 });
+    tl.fromTo('#s2 .you .pulse', { scale: 1, opacity: 0.9 }, { scale: 3.2, opacity: 0, duration: 0.9, ease: 'power2.out', repeat: 1 }, 5.35);
+    tl.to('#s2 .tm3 .card-d', { boxShadow: 'inset 0 0 0 2px rgba(255,59,48,.55), 0 0 60px -10px rgba(255,59,48,.35)', duration: 0.6, ease: 'power2.out' }, 5.3);
+    tl.to('#s2 .bell', { stroke: '#5a5a5f', duration: 0.6 }, 5.3);
     tl.to(['#s2 .tm1', '#s2 .tm2', '#s2 .o1', '#s2 .o2'], { opacity: 0.25, duration: 0.5, ease: 'power2.out' }, 5.85);
     sfx(2.2, 'swish', 0.4); sfx(3.15, 'tick', 0.5); sfx(3.35, 'swish', 0.4); sfx(4.35, 'tick', 0.5); sfx(4.55, 'swish', 0.4);
-    sfx(5.05, 'glint', 0.7); sfx(2.6, 'riser', 1);
+    sfx(5.05, 'boom', 0.6); sfx(2.6, 'riser', 1);
     // dive into "your child"
     gsap.set('#s2 .zoomer', { left: youX, top: youY, scale: 0 });
     tl.to('#s2 .cam', { scale: 12, transformOrigin: `${youX}px ${youY}px`, duration: 0.8, ease: 'power3.in' }, 6.2);
@@ -261,20 +264,17 @@
     sfx(T8 - 0.1, 'whoosh', 0.55);
     tl.to('#s8 .cam', { opacity: 0, filter: B(14), scale: 1.06, duration: 0.4, ease: 'power3.in' }, T9 - 0.4);
 
-    // S9 · CTA
+    // S9 · CTA: short and clean
     show('#s9', T9);
     tl.fromTo('#s9', { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' }, T9);
     drift('s9', T9, DURATION, 1.03);
     tl.fromTo('#s9 .cta-glow', { scale: 0.7, opacity: 0 }, { scale: 1, opacity: 1, duration: 3 }, T9 + 0.2);
-    blurIn('#s9 .c1', T9 + 0.2, { y: 30, d: 0.8 });
-    tl.fromTo('#s9 .free-big', { scale: 1.35, opacity: 0, filter: B(24) }, { scale: 1, opacity: 1, filter: B(0), duration: 1.0 }, T9 + 0.7);
-    blurIn('#s9 .c2r', T9 + 0.85, { x: 40, y: 0, blur: 16, d: 0.9 });
-    sfx(T9 + 0.7, 'hit', 0.65);
-    blurIn('#s9 .c3', T9 + 1.5, { y: 24, d: 0.8 });
-    tl.fromTo('#s9 .btn', { y: 30, opacity: 0, filter: B(10) }, { y: 0, opacity: 1, filter: B(0), duration: 0.9 }, T9 + 2.0);
-    blurIn('#s9 .endlock', T9 + 2.5, { y: 20, d: 0.8 });
-    tl.fromTo('#s9 .sheen', { left: '-40%' }, { left: '120%', duration: 1.0, ease: 'power2.inOut' }, T9 + 3.2);
-    tl.fromTo('#s9 .sheen', { left: '-40%' }, { left: '120%', duration: 1.0, ease: 'power2.inOut', immediateRender: false }, T9 + 5.4);
+    linesIn('#s9 .c2', T9 + 0.2);
+    sfx(T9 + 0.25, 'hit', 0.6);
+    tl.fromTo('#s9 .btn', { y: 30, opacity: 0, filter: B(10) }, { y: 0, opacity: 1, filter: B(0), duration: 0.9 }, T9 + 1.0);
+    blurIn('#s9 .endlock', T9 + 1.5, { y: 20, d: 0.8 });
+    tl.fromTo('#s9 .sheen', { left: '-40%' }, { left: '120%', duration: 1.0, ease: 'power2.inOut' }, T9 + 2.2);
+    tl.fromTo('#s9 .sheen', { left: '-40%' }, { left: '120%', duration: 1.0, ease: 'power2.inOut', immediateRender: false }, T9 + 4.2);
 
     tl.set({}, {}, DURATION);
   }
@@ -293,7 +293,7 @@
     duration: DURATION,
     fps: FPS,
     cues,
-    music: { bpm: 120, drop: 7.0, end: 47.0, breakdown: [41.0, 43.0], arps: 37.0 },
+    music: { bpm: 120, drop: 7.0, end: 45.0, breakdown: [41.0, 43.0], arps: 37.0 },
     ready,
     seek: (t) => { tl.seek(t, false); },
   };

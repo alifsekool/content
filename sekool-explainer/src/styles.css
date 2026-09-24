@@ -59,10 +59,13 @@ svg.ic { width: 1em; height: 1em; display: block; }
 .c-lbl { position: absolute; top: 352px; font-size: 20px; font-weight: 500; color: #6e6e73; }
 .c-lbl.l { left: 40px; } .c-lbl.r { right: 40px; } .c-lbl.m { left: 50%; transform: translateX(-50%); color: #d1d1d6; }
 .you { position: absolute; left: 220px; top: 110px; width: 0; height: 0; }
-.you i { position: absolute; left: -16px; top: -16px; width: 32px; height: 32px; border-radius: 50%; background: var(--accent);
-  box-shadow: 0 0 30px 8px rgba(79, 70, 229, .8); display: block; }
+.you i { position: absolute; left: -16px; top: -16px; width: 32px; height: 32px; border-radius: 50%; background: var(--red);
+  box-shadow: 0 0 30px 8px rgba(255, 59, 48, .75); display: block; z-index: 1; }
+.you .pulse { position: absolute; left: -16px; top: -16px; width: 32px; height: 32px; border-radius: 50%; border: 3px solid var(--red); display: block; }
 .you span { position: absolute; left: 0; top: -66px; transform: translateX(-50%); white-space: nowrap; font-size: 20px; font-weight: 600;
-  color: #fff; background: var(--accent); padding: 4px 12px; border-radius: 8px; }
+  color: #fff; background: var(--red); padding: 4px 12px; border-radius: 8px; }
+.term p .bad { color: var(--red); }
+.tm3 .card-d { box-shadow: inset 0 0 0 1px #2a2a2f; }
 .zoomer { position: absolute; left: 0; top: 0; width: 40px; height: 40px; margin: -20px 0 0 -20px; border-radius: 50%; background: var(--accent); }
 
 /* ---------- S3 brand ---------- */
@@ -279,16 +282,10 @@ svg.ic { width: 1em; height: 1em; display: block; }
 /* ---------- S9 CTA ---------- */
 .cta-glow { position: absolute; left: 50%; top: 52%; width: 1800px; height: 1100px; margin: -550px 0 0 -900px;
   background: radial-gradient(ellipse at center, rgba(79, 70, 229, .45), rgba(79, 70, 229, 0) 62%); }
-.c1 { position: absolute; top: 250px; white-space: nowrap; width: 100%; text-align: center; font-size: 54px; font-weight: 500; color: #a1a1a6;
-  letter-spacing: -0.02em; }
-.c2 { position: absolute; top: 340px; width: 100%; text-align: center; font-size: 132px; font-weight: 600;
-  letter-spacing: -0.05em; line-height: 1.1; white-space: nowrap; }
-.free-big { display: inline-block; background: var(--red); color: #fff; padding: 0 30px; border-radius: 28px; margin-right: 10px;
-  box-shadow: 0 30px 80px -20px rgba(255, 59, 48, .65); }
-.c2r { display: inline-block; }
-.c3 { position: absolute; top: 540px; width: 100%; display: flex; justify-content: center; align-items: center; gap: 22px;
-  font-size: 34px; color: #a1a1a6; font-weight: 500; }
-.btn { position: absolute; left: 50%; top: 650px; transform: translateX(-50%); display: flex; align-items: center; gap: 14px;
+.c2 { position: absolute; top: 230px; width: 100%; text-align: center; font-size: 140px; font-weight: 600;
+  letter-spacing: -0.05em; line-height: 1.04; }
+.c2 .ln { display: block; }
+.btn { position: absolute; left: 50%; top: 640px; transform: translateX(-50%); display: flex; align-items: center; gap: 14px;
   background: #fff; color: #000; font-size: 40px; font-weight: 500; padding: 26px 50px; border-radius: 999px; white-space: nowrap; }
 .btn b { font-weight: 700; color: var(--accent); }
 .btn { overflow: hidden; }
