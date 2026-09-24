@@ -30,7 +30,7 @@ const AUDIO_ONLY = args.includes('--audio-only');
 const FFMPEG = process.env.FFMPEG || execFileSync('python3', ['-c', 'import imageio_ffmpeg as f; print(f.get_ffmpeg_exe())']).toString().trim();
 
 const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.woff2': 'font/woff2', '.woff': 'font/woff',
-  '.png': 'image/png', '.svg': 'image/svg+xml', '.wav': 'audio/wav', '.json': 'application/json' };
+  '.png': 'image/png', '.jpg': 'image/jpeg', '.svg': 'image/svg+xml', '.wav': 'audio/wav', '.json': 'application/json' };
 const server = http.createServer((req, res) => {
   const p = path.join(ROOT, decodeURIComponent(new URL(req.url, 'http://x').pathname));
   if (!p.startsWith(ROOT) || !fs.existsSync(p) || fs.statSync(p).isDirectory()) { res.writeHead(404); return res.end(); }
@@ -49,9 +49,9 @@ async function openPage() {
   await page.evaluate(() => window.SEKOOL.ready);
   return page;
 }
-const snap = async (page, t) => {
+const snap = async (page, t, type = 'png') => {
   await page.evaluate((t) => window.SEKOOL.seek(t), t);
-  return page.screenshot({ type: 'png', clip: { x: 0, y: 0, width: 1920, height: 1080 } });
+  return page.screenshot({ type, ...(type === 'jpeg' ? { quality: 95 } : {}), clip: { x: 0, y: 0, width: 1920, height: 1080 } });
 };
 
 const run = (cmd, a) => new Promise((res, rej) => {
@@ -88,14 +88,14 @@ try {
     const segs = await Promise.all(pages.map(async (page, w) => {
       const a = w * per, b = Math.min(total, a + per);
       const file = path.join(BUILD, `seg${w}.mp4`);
-      const ff = spawn(FFMPEG, ['-y', '-loglevel', 'error', '-f', 'image2pipe', '-framerate', String(fps), '-c:v', 'png', '-i', '-',
-        '-c:v', 'libx264', '-preset', 'medium', '-crf', '17', '-pix_fmt', 'yuv420p', '-r', String(fps), file],
+      const ff = spawn(FFMPEG, ['-y', '-loglevel', 'error', '-f', 'image2pipe', '-framerate', String(fps), '-c:v', 'mjpeg', '-i', '-',
+        '-c:v', 'libx264', '-preset', 'medium', '-tune', 'animation', '-crf', '16', '-pix_fmt', 'yuv420p', '-r', String(fps), file],
       { stdio: ['pipe', 'inherit', 'inherit'] });
       const closed = new Promise((res, rej) => ff.on('exit', (c) => (c === 0 ? res() : rej(new Error('ffmpeg segment failed')))));
       // seek in order from 0 so every tween records its start values the same way
       await page.evaluate(() => window.SEKOOL.seek(0));
       for (let f = a; f < b; f++) {
-        const buf = await snap(page, f / fps);
+        const buf = await snap(page, f / fps, 'jpeg');
         if (!ff.stdin.write(buf)) await new Promise((r) => ff.stdin.once('drain', r));
         if (++done % 150 === 0) console.log(`frames ${done}/${total}  (${((Date.now() - started) / 1000).toFixed(0)}s)`);
       }

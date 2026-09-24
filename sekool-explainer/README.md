@@ -1,6 +1,6 @@
 # SEKOOL.my Explainer Video
 
-A 78-second, 1080p motion-graphics explainer for **SEKOOL.my** (1-to-1 online classes for primary school, KSSR/KSSM, UASA & MPT4 prep), aimed at parents.
+A 53-second, 1080p / 60 fps premium motion-graphics explainer for **SEKOOL.my** (1-to-1 online classes for primary school, KSSR/KSSM, UASA & MPT4 prep), aimed at parents.
 
 - **Final video:** [`output/sekool-explainer.mp4`](output/sekool-explainer.mp4)
 - **Script and scene breakdown:** [`STORYBOARD.md`](STORYBOARD.md)
@@ -14,7 +14,7 @@ src/
   index.html        scene markup (all on-screen copy lives here)
   styles.css        layout + SEKOOL brand tokens
   main.js           the timeline: every animation and every sound-effect cue
-  assets/           official logos (vector traces) + the source bitmaps they came from
+  assets/           official logos (vector traces + source bitmaps), real Learning Roadmap pages
 audio/
   generate_audio.py music bed + SFX synthesiser (reads cues exported by the page)
 render/
@@ -32,7 +32,7 @@ output/             rendered video
 ## Commands
 
 ```bash
-npm run render                 # full render -> output/sekool-explainer.mp4 (about 5 min on 4 cores)
+npm run render                 # full render -> output/sekool-explainer.mp4 (about 4 min on 4 cores)
 npm run stills -- 3,16,36      # PNG stills at those seconds -> build/stills/
 node render/render.mjs --audio-only   # regenerate build/soundtrack.wav only
 npm run preview                # then open http://localhost:8080/src/index.html

@@ -7,8 +7,11 @@ cues.json is exported by the page (src/main.js) at render time, so every sound
 effect lands exactly on the frame that triggers it. Everything here is synthesised
 from scratch (no samples), so the audio is royalty-free by construction.
 
-Music: 120 BPM. A tense D-minor intro under the "struggling" hook, a riser into the
-brand reveal (drop at 14 s), then a bright F-major groove (F-C-Dm-Bb) to the end.
+Music: 120 BPM, premium and understated. A dark Dm9 swell with a sub heartbeat under
+the hook, a riser into the brand reveal (drop at 8 s), then a warm electric-piano
+house groove (Fmaj7 - Am7 - Dm9 - Bbmaj7) with deep sub bass, a short breakdown for
+the call to action, and an Fmaj9 ring-out. Sound effects are cinematic (sub booms,
+air whooshes, soft glass tones) rather than cartoon pops.
 """
 import json
 import sys
@@ -71,44 +74,6 @@ class Bus:
 
 
 # --------------------------------------------------------------------------- instruments
-def kick(g=1.0):
-    t = T(0.42)
-    f = 46 + 115 * np.exp(-t * 32)
-    y = np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-t * 7)
-    y += filt(noise(0.42), 'highpass', 1500) * np.exp(-t * 260) * 0.35
-    return fade(y * g)
-
-
-def clap(g=1.0):
-    t = T(0.3)
-    env = np.zeros_like(t)
-    for o in (0.0, 0.011, 0.023):
-        env += (t >= o) * np.exp(-np.clip(t - o, 0, None) * 160)
-    env += (t >= 0.023) * np.exp(-np.clip(t - 0.023, 0, None) * 16) * 0.55
-    y = filt(noise(0.3), 'bandpass', [900, 3200]) * env
-    return fade(y * g * 1.3)
-
-
-def snare(g=1.0):
-    t = T(0.18)
-    y = filt(noise(0.18), 'bandpass', [1200, 7000]) * np.exp(-t * 28) * 0.8
-    y += np.sin(2 * np.pi * 185 * t) * np.exp(-t * 30) * 0.6
-    return fade(y * g)
-
-
-def hat(g=1.0, open_=False):
-    d = 0.3 if open_ else 0.06
-    t = T(d)
-    y = filt(noise(d), 'highpass', 7500, 4) * np.exp(-t * (11 if open_ else 75))
-    return fade(y * g * 0.8)
-
-
-def bass(f, d, g=1.0):
-    t = T(d)
-    y = np.sin(2 * np.pi * f * t) + 0.35 * np.sin(4 * np.pi * f * t) + 0.12 * np.sin(6 * np.pi * f * t)
-    y = np.tanh(1.6 * y) / np.tanh(1.6)
-    env = 0.6 + 0.4 * np.exp(-t * 9)
-    return fade(y * env * g, 0.004, 0.03)
 
 
 def saw(f, t):
@@ -130,37 +95,51 @@ def pad(notes, d, g=1.0, cutoff=1500):
     return fade(L * k), fade(R * k)
 
 
-def pluck(f, d=0.7, g=1.0, bright=0.996):
-    n = int(d * SR)
-    p = max(2, int(SR / f))
-    y = np.zeros(n + p + 1)
-    y[:p + 1] = RNG.uniform(-1, 1, p + 1)
-    s = p + 1
-    while s < len(y):
-        e = min(s + p, len(y))
-        y[s:e] = bright * 0.5 * (y[s - p:e - p] + y[s - p - 1:e - p - 1])
-        s = e
-    y = filt(y[:n], 'lowpass', 4200)
-    return fade(y * g * 0.55, 0.001, 0.05)
+def ep(f, d, g=1.0):
+    """FM electric piano (Rhodes-like): bell-ish attack that mellows out."""
+    t = T(d + 0.35)
+    idx = 1.6 * np.exp(-t * 5)
+    y = np.sin(2 * np.pi * f * t + idx * np.sin(2 * np.pi * f * t))
+    y += 0.08 * np.sin(2 * np.pi * f * 14 * t) * np.exp(-t * 35)
+    env = np.exp(-t * 1.6) * np.minimum(1, t / 0.003) * np.where(t > d, np.exp(-(t - d) * 14), 1)
+    return fade(y * env * g * 0.3, 0.002, 0.03)
 
 
-def mallet(f, d=1.0, g=1.0):
+def sub(f, d, g=1.0):
     t = T(d)
-    y = (np.sin(2 * np.pi * f * t) * np.exp(-t * 4.5)
-         + 0.45 * np.sin(2 * np.pi * 4.0 * f * t) * np.exp(-t * 15)
-         + 0.15 * np.sin(2 * np.pi * 9.8 * f * t) * np.exp(-t * 40))
-    return fade(y * g * 0.5, 0.002, 0.05)
+    y = np.sin(2 * np.pi * f * t) + 0.18 * np.sin(4 * np.pi * f * t)
+    env = np.minimum(1, t / 0.006) * (0.75 + 0.25 * np.exp(-t * 6))
+    return fade(y * env * g * 0.8, 0.004, 0.04)
 
 
-def bell(f, d=1.2, g=1.0, decay=1.0):
+def deep_kick(g=1.0):
+    t = T(0.5)
+    f = 42 + 80 * np.exp(-t * 28)
+    y = np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-t * 6.5)
+    y += filt(noise(0.5), 'bandpass', [1500, 5000]) * np.exp(-t * 400) * 0.12
+    return fade(y * g)
+
+
+def snap(g=1.0):
+    t = T(0.25)
+    env = np.exp(-t * 55) + (t > 0.008) * np.exp(-np.clip(t - 0.008, 0, None) * 35) * 0.6
+    y = filt(noise(0.25), 'bandpass', [1400, 6000]) * env
+    return fade(y * g * 0.9)
+
+
+def shaker(g=1.0):
+    t = T(0.07)
+    y = filt(noise(0.07), 'bandpass', [5000, 11000]) * np.minimum(1, t / 0.008) * np.exp(-t * 60)
+    return fade(y * g)
+
+
+def soft_pluck(f, d=0.5, g=1.0):
     t = T(d)
-    y = np.zeros_like(t)
-    for r, a, k in ((1, 1, 3), (2.0, 0.35, 5), (2.76, 0.3, 7), (5.4, 0.14, 12), (8.93, 0.06, 18)):
-        y += a * np.sin(2 * np.pi * f * r * t) * np.exp(-t * k * decay)
-    return fade(y * g * 0.35, 0.001, 0.05)
+    y = (np.sin(2 * np.pi * f * t) + 0.2 * np.sin(4 * np.pi * f * t)) * np.exp(-t * 7) * np.minimum(1, t / 0.004)
+    return fade(y * g * 0.4)
 
 
-# --------------------------------------------------------------------------- sound effects
+# --------------------------------------------------------------------------- sound effects (cinematic, restrained)
 def sweep_noise(d, f0, f1, q_hp=150):
     """Noise through a one-pole low-pass whose cutoff glides f0 -> f1 -> f0*0.6."""
     x = noise(d)
@@ -176,270 +155,173 @@ def sweep_noise(d, f0, f1, q_hp=150):
     return filt(y, 'highpass', q_hp)
 
 
-def whoosh(d=0.55, f0=300, f1=4200, g=1.0):
+def air(d, f0, f1, g):
     y = sweep_noise(d, f0, f1)
     ph = np.linspace(0, 1, len(y))
-    env = np.sin(np.pi * np.clip(ph / 0.62, 0, 1) * 0.5) ** 2 * np.where(ph > 0.62, np.cos((ph - 0.62) / 0.38 * np.pi / 2) ** 2, 1)
-    y = y * env * g * 1.6
-    pan = np.linspace(-0.7, 0.7, len(y))
+    env = np.sin(np.pi * np.clip(ph / 0.6, 0, 1) * 0.5) ** 2 * np.where(ph > 0.6, np.cos((ph - 0.6) / 0.4 * np.pi / 2) ** 2, 1)
+    y = y * env * g
+    pan = np.linspace(-0.6, 0.6, len(y))
     a = (pan + 1) * np.pi / 4
     return fade(y * np.cos(a) * 1.4), fade(y * np.sin(a) * 1.4)
 
 
-def SFX_whoosh(): return whoosh(0.55, 350, 4200, 0.9)
-def SFX_swipe(): return whoosh(0.32, 900, 6500, 0.7)
+def SFX_whoosh(): return air(0.75, 250, 2400, 1.0)
+def SFX_swish(): return air(0.4, 600, 3600, 0.8)
 
 
-def SFX_whooshBig():
-    l, r = whoosh(1.0, 200, 3600, 1.1)
-    t = T(1.4)
-    boom = np.sin(2 * np.pi * np.cumsum(38 + 40 * np.exp(-t * 6)) / SR) * np.exp(-t * 3.5) * (t > 0) * 0.9
-    boom = np.roll(np.pad(boom, (0, 0)), 0)
-    out_l = np.zeros(len(t)); out_r = np.zeros(len(t))
-    out_l[:len(l)] += l; out_r[:len(r)] += r
-    i = int(0.85 * SR)
-    out_l[i:] += boom[:len(t) - i]; out_r[i:] += boom[:len(t) - i]
-    return out_l, out_r
+def SFX_boom():
+    t = T(1.6)
+    y = np.sin(2 * np.pi * np.cumsum(38 + 26 * np.exp(-t * 7)) / SR) * np.exp(-t * 2.4) * np.minimum(1, t / 0.008)
+    y += filt(noise(1.6), 'lowpass', 280) * np.exp(-t * 16) * 0.5
+    y += filt(noise(1.6), 'highpass', 4000) * np.exp(-t * 7) * 0.04
+    return fade(y * 0.9)
 
 
-def SFX_pop():
-    t = T(0.12)
-    f = 350 + 800 * np.exp(-t * 55)
-    y = np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-t * 38)
-    return fade(y * 0.8)
+def SFX_hit():
+    t = T(3.0)
+    y = np.sin(2 * np.pi * np.cumsum(34 + 40 * np.exp(-t * 9)) / SR) * np.exp(-t * 1.6) * np.minimum(1, t / 0.006)
+    y += filt(noise(3.0), 'lowpass', 350) * np.exp(-t * 12) * 0.6
+    l = y + filt(noise(3.0), 'highpass', 3500) * np.exp(-t * 2.6) * 0.16
+    r = y + filt(noise(3.0), 'highpass', 3500) * np.exp(-t * 2.6) * 0.16
+    return fade(l), fade(r)
 
 
-def SFX_tick():
-    t = T(0.08)
-    y = np.sin(2 * np.pi * 2100 * t) * np.exp(-t * 110) + 0.5 * np.sin(2 * np.pi * 1180 * t) * np.exp(-t * 70)
-    return fade(y * 0.55)
-
-
-def SFX_wrong():
-    out = np.zeros(int(0.42 * SR))
-    for o, f, d in ((0.0, 330, 0.13), (0.13, 247, 0.26)):
-        t = T(d)
-        y = sum(np.sin(2 * np.pi * f * k * t) / k for k in (1, 3, 5, 7))
-        y = filt(y, 'lowpass', 1600) * np.exp(-t * 7) * np.minimum(1, t / 0.005)
-        i = int(o * SR)
-        out[i:i + len(y)] += fade(y)
-    return out * 0.45
-
-
-def SFX_thud():
-    t = T(0.35)
-    y = np.sin(2 * np.pi * np.cumsum(45 + 70 * np.exp(-t * 40)) / SR) * np.exp(-t * 12)
-    y += filt(noise(0.35), 'lowpass', 900) * np.exp(-t * 30) * 0.8
-    y += filt(noise(0.35), 'highpass', 3000) * np.exp(-t * 200) * 0.3
-    return fade(y * 0.95)
-
-
-def SFX_ding(): return bell(midi(84), 1.3, 1.0)
-def SFX_ping(): return bell(midi(88), 0.9, 0.8, 1.4)
-
-
-def SFX_bubble():
-    out = np.zeros(int(0.2 * SR))
-    for o, f0 in ((0, 500), (0.06, 800)):
-        t = T(0.1)
-        f = f0 + 700 * (1 - np.exp(-t * 60))
-        y = np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-t * 45)
-        i = int(o * SR)
-        out[i:i + len(y)] += fade(y)
-    return out * 0.6
-
-
-def SFX_scribble(d=0.8):
-    d = max(0.3, d)
+def SFX_riser():
+    d = 4.4
     t = T(d)
-    am = (0.5 + 0.5 * np.sin(2 * np.pi * 9 * t + 3 * np.sin(2 * np.pi * 2.3 * t))) ** 2
-    y = filt(noise(d), 'bandpass', [2500, 7000]) * am
-    return fade(y * 0.22, 0.03, 0.05)
+    x = sweep_noise(d, 200, 7000)
+    ramp = (t / d) ** 2.2
+    y = x * ramp * 0.5
+    y += np.sin(2 * np.pi * np.cumsum(110 * 8 ** (t / d)) / SR) * (t / d) ** 3 * 0.08
+    y *= 1 + 0.25 * np.sin(2 * np.pi * (2 + 14 * t / d) * t)
+    return fade(y, 0.2, 0.015)
 
 
-def SFX_flip():
-    t = T(0.22)
-    env = np.exp(-t * 45) + (t > 0.045) * np.exp(-np.clip(t - 0.045, 0, None) * 30) * 0.8
-    y = filt(noise(0.22), 'bandpass', [1400, 6500]) * env
-    y += np.sin(2 * np.pi * 110 * t) * np.exp(-t * 25) * 0.25
-    return fade(y * 0.7)
+def glass(freqs, d=1.4, g=1.0):
+    t = T(d)
+    y = sum(np.sin(2 * np.pi * f * t) * a for f, a in freqs)
+    return fade(y * np.minimum(1, t / 0.01) * np.exp(-t * 3) * g * 0.22, 0.01, 0.05)
 
 
-def SFX_notif():
-    out = np.zeros(int(1.2 * SR))
-    for o, m in ((0.0, 79), (0.13, 84)):
-        y = mallet(midi(m), 1.0, 1.2)
-        i = int(o * SR)
-        out[i:i + len(y)] += y
-    return out
-
-
-def SFX_click():
-    t = T(0.04)
-    y = filt(noise(0.04), 'highpass', 2500) * np.exp(-t * 350) + np.sin(2 * np.pi * 3200 * t) * np.exp(-t * 300) * 0.5
-    return fade(y * 0.8)
-
-
-def SFX_rise():
-    t = T(1.3)
-    f = 280 * (4.2 ** (t / 1.3))
-    y = np.sin(2 * np.pi * np.cumsum(f) / SR) * (0.6 + 0.4 * np.sin(2 * np.pi * 14 * t))
-    env = np.minimum(1, t / 0.9) * np.where(t > 1.1, np.exp(-(t - 1.1) * 25), 1)
-    y = y * env * 0.18 + filt(noise(1.3), 'highpass', 6000) * env * 0.08
-    return fade(y)
-
-
-def arp_bells(notes, gap, d=0.9, g=1.0, decay=1.6):
-    out = np.zeros(int((gap * len(notes) + d) * SR))
-    for k, m in enumerate(notes):
-        y = bell(midi(m), d, g * (0.8 + 0.2 * k / len(notes)), decay)
-        i = int(k * gap * SR)
-        out[i:i + len(y)] += y
-    return out
-
-
-def SFX_sparkle():
-    y = arp_bells([84, 88, 91, 96, 100, 103], 0.045, 0.8, 0.8, 2.0)
-    t = T(len(y) / SR)
-    y += filt(noise(len(y) / SR), 'highpass', 8000) * np.exp(-t * 5) * 0.06
-    return y
+def SFX_glint(): return glass([(1568, 1), (2349, 0.5), (3136, 0.2)], 1.4)
 
 
 def SFX_shimmer():
-    y = arp_bells([77, 81, 84, 89, 93, 96], 0.07, 1.2, 0.8, 1.2)
-    t = T(len(y) / SR)
-    sw = filt(noise(len(y) / SR), 'highpass', 6000) * np.minimum(1, t / 0.4) * np.exp(-t * 2.5) * 0.08
-    return y + sw
+    t = T(2.2)
+    y = filt(noise(2.2), 'highpass', 6000) * np.minimum(1, t / 0.35) * np.exp(-t * 2.2) * 0.12
+    for f in (1397, 1760, 2093):
+        y += np.sin(2 * np.pi * f * t) * np.minimum(1, t / 0.25) * np.exp(-t * 2) * 0.05 * (1 + 0.3 * np.sin(2 * np.pi * 5 * t))
+    return fade(y)
 
 
-def SFX_success():
+def SFX_tick():
+    t = T(0.05)
+    y = np.sin(2 * np.pi * 1500 * t) * np.exp(-t * 130) + filt(noise(0.05), 'highpass', 4000) * np.exp(-t * 500) * 0.3
+    return fade(y * 0.4)
+
+
+def SFX_click():
+    t = T(0.05)
+    y = filt(noise(0.05), 'highpass', 2000) * np.exp(-t * 600) * 0.6 + np.sin(2 * np.pi * 900 * t) * np.exp(-t * 200) * 0.5
+    return fade(y * 0.5)
+
+
+def SFX_notif():
     out = np.zeros(int(1.6 * SR))
-    for k, m in enumerate((77, 81, 84, 89)):
-        y = mallet(midi(m), 1.2, 1.2)
-        i = int(k * 0.085 * SR)
+    for o, f in ((0.0, 1318.5), (0.14, 1760.0)):
+        y = glass([(f, 1), (f * 2, 0.15)], 1.3, 1.1)
+        i = int(o * SR)
         out[i:i + len(y)] += y
     return out
-
-
-def SFX_impact():
-    t = T(1.6)
-    y = np.zeros_like(t)
-    k = kick(1.2); y[:len(k)] += k
-    c = clap(0.8); y[:len(c)] += c
-    y += filt(noise(1.6), 'highpass', 4500) * np.exp(-t * 2.8) * 0.28
-    y += np.sin(2 * np.pi * 44 * t) * np.exp(-t * 3) * 0.5
-    return fade(y)
 
 
 SFX = {n[4:]: f for n, f in globals().items() if n.startswith('SFX_')}
 
 
 # --------------------------------------------------------------------------- music
-MINOR = [  # (bass midi, pad notes, arp notes)
-    (38, [50, 53, 57, 62], [62, 65, 69, 74]),   # Dm
-    (34, [50, 53, 58, 62], [62, 65, 70, 74]),   # Bb
-    (43, [50, 55, 58, 62], [62, 67, 70, 74]),   # Gm
-    (45, [49, 52, 57, 61], [61, 64, 69, 73]),   # A
+# 120 BPM. Warm electric-piano house groove: Fmaj7 - Am7 - Dm9 - Bbmaj7.
+PROG = [
+    (41, [57, 60, 64, 65]),   # Fmaj7
+    (45, [55, 57, 60, 64]),   # Am7
+    (38, [53, 57, 60, 64]),   # Dm9 (over D)
+    (34, [53, 57, 58, 62]),   # Bbmaj7
 ]
-MAJOR = [
-    (41, [53, 57, 60, 65], [65, 69, 72, 77]),   # F
-    (36, [52, 55, 60, 64], [64, 67, 72, 76]),   # C
-    (38, [53, 57, 62, 65], [62, 65, 69, 74]),   # Dm
-    (34, [53, 58, 62, 65], [62, 65, 70, 74]),   # Bb
-]
-MELODY = [  # per bar: (eighth, midi, length in eighths)
-    [(0, 69, 2), (2, 72, 2), (4, 77, 1), (5, 76, 1), (6, 72, 2)],
-    [(0, 67, 2), (2, 72, 2), (4, 76, 1), (5, 74, 1), (6, 72, 2)],
-    [(0, 65, 2), (2, 69, 2), (4, 74, 1), (5, 72, 1), (6, 69, 2)],
-    [(0, 70, 2), (2, 74, 2), (4, 77, 2), (6, 76, 2)],
-]
-ARP = [0, 1, 2, 3, 1, 2, 3, 2]
+INTRO_PAD = [50, 53, 57, 60, 64]  # Dm9
+
+
+def echo(bus_add, t, y, g, pan, taps=((0.375, 0.35), (0.75, 0.15))):
+    bus_add(t, y, g, pan)
+    for k, (dt, a) in enumerate(taps):
+        bus_add(t + dt, y, g * a, -pan if k % 2 == 0 else pan)
 
 
 def music(dur, drop, end, bpm=120):
     beat = 60 / bpm
     bar = beat * 4
-    e8 = beat / 2
+    e8, e16 = beat / 2, beat / 4
     drums, inst, verb, padL, padR = Bus(dur), Bus(dur), Bus(dur), Bus(dur), Bus(dur)
     kicks = []
 
-    # ---- intro: tense minor, clock ticking, building to the drop
+    # ---- intro: dark Dm9 swell with a sub heartbeat
     n_intro = int(round(drop / bar))
     for b in range(n_intro):
         t0 = b * bar
-        chord = MINOR[[0, 1, 2, 3, 0, 1, 3][b % 7]]
-        l, r = pad(chord[1], bar, 0.8 + 0.1 * b, 900 + 150 * b)
+        l, r = pad(INTRO_PAD, bar, 0.7 + 0.2 * b, 500 + 350 * b)
         padL.add(t0, l); padR.add(t0, r)
-        if b < 4:
-            for k in range(4):
-                inst.add(t0 + k * beat, SFX_tick(), 0.28 if k % 2 == 0 else 0.2, pan=0.3 if k % 2 else -0.3)
+        for k in range(4):
+            tt = t0 + k * beat
+            if tt < drop - 0.3:
+                inst.add(tt, sub(midi(38), 0.3), 0.25 + 0.08 * b)
         if b >= 2:
-            for k in (0, 2):
-                inst.add(t0 + k * beat, bass(midi(chord[0]), beat * 1.8), 0.55)
-        if b >= 3 and b < n_intro - 1:
-            for k in (0, 2):
-                drums.add(t0 + k * beat, kick(0.7)); kicks.append(t0 + k * beat)
-            for k in range(8):
-                drums.add(t0 + k * e8, hat(0.12 + 0.1 * (k % 2)), pan=0.25)
-        if b >= 3:
-            for k in range(8):
-                m = chord[2][ARP[k]]
-                inst.add(t0 + k * e8, pluck(midi(m), 0.5, 0.35 + 0.05 * (b - 3)), pan=-0.3)
-                verb.add(t0 + k * e8, pluck(midi(m), 0.5, 0.2))
-    # riser + snare roll in the last intro bar
-    t0 = (n_intro - 1) * bar
-    for k in range(16):
-        tt = t0 + k * (bar / 16)
-        if tt < drop - e8:
-            drums.add(tt, snare(0.25 + 0.5 * k / 16), pan=0.1)
-    t = T(bar)
-    riser = filt(noise(bar), 'bandpass', [800, 6000]) * (t / bar) ** 2 * 0.25
-    riser += np.sin(2 * np.pi * np.cumsum(200 * 4 ** (t / bar)) / SR) * (t / bar) ** 2 * 0.12
-    inst.add(t0, fade(riser[: int((bar - e8) * SR)], 0.01, 0.02))
+            for k in range(16):
+                tt = t0 + k * e16
+                if tt < drop - 0.3:
+                    drums.add(tt, shaker(0.05 + 0.03 * (k % 2)), pan=0.35)
 
-    # ---- main groove (F - C - Dm - Bb)
+    # ---- main groove
     n_main = int(round((end - drop) / bar))
-    lead_on = lambda tt: (drop <= tt < drop + 4 * bar) or (tt >= 64.0)
     for b in range(n_main):
         t0 = drop + b * bar
-        ci = b % 4
-        root, pad_notes, arp = MAJOR[ci]
-        l, r = pad(pad_notes, bar, 0.75)
+        root, chord = PROG[b % 4]
+        breakdown = 44.0 <= t0 < 46.0
+        arps = t0 >= 40.0
+        l, r = pad(chord, bar, 0.55 if not breakdown else 0.8, 1300)
         padL.add(t0, l); padR.add(t0, r)
-        for pos in (0, 1.5, 2):  # kick: 1, 2&, 3
-            drums.add(t0 + pos * beat, kick(0.85 if pos != 1.5 else 0.6)); kicks.append(t0 + pos * beat)
-        for pos in (1, 3):
-            drums.add(t0 + pos * beat, clap(0.55), pan=-0.05)
-        for k in range(8):
-            drums.add(t0 + k * e8, hat(0.16 if k % 2 == 0 else 0.3), pan=0.28)
-        if b % 2 == 1:
-            drums.add(t0 + 3.5 * beat, hat(0.18, open_=True), pan=0.28)
-        pattern = [0, 0, 12, 0, 0, 7, 12, 0]
-        for k in range(8):
-            if k in (3, 6) and b % 2 == 0:
-                continue
-            inst.add(t0 + k * e8, bass(midi(root + pattern[k]), e8 * 0.9), 0.48)
-        for k in range(8):
-            m = arp[ARP[k]]
-            v = 0.42 if k % 2 == 0 else 0.3
-            inst.add(t0 + k * e8, pluck(midi(m), 0.55, v), pan=-0.35)
-            verb.add(t0 + k * e8, pluck(midi(m), 0.55, v * 0.5))
-        if lead_on(t0):
-            for (e, m, ln) in MELODY[ci]:
-                y = mallet(midi(m + 12), 0.4 + ln * e8, 0.5)
-                inst.add(t0 + e * e8, y, pan=0.15)
-                verb.add(t0 + e * e8, y, 0.8)
+        # electric piano comping: 1 (long), 2& (short), 3& (medium)
+        comp = [(0, 1.4, 1.0), (3, 0.35, 0.7), (5, 0.8, 0.85)] if not breakdown else [(0, 1.9, 1.0)]
+        for e, ln, v in comp:
+            for m in chord:
+                y = ep(midi(m), ln, v * 0.85)
+                inst.add(t0 + e * e8, y, pan=-0.12)
+                verb.add(t0 + e * e8, y, 0.35)
+        if arps:
+            tones = [m + 12 for m in chord]
+            order = [0, 1, 2, 3, 2, 1, 2, 3]
+            for k in range(8):
+                y = soft_pluck(midi(tones[order[k]]), 0.45, 0.5)
+                echo(inst.add, t0 + k * e8, y, 0.55, 0.3)
+                verb.add(t0 + k * e8, y, 0.4)
+        if breakdown:
+            continue
+        for k in range(4):
+            drums.add(t0 + k * beat, deep_kick(0.7)); kicks.append(t0 + k * beat)
+        for k in (1, 3):
+            drums.add(t0 + k * beat, snap(0.3), pan=-0.05)
+            verb.add(t0 + k * beat, snap(0.3), 0.5)
+        for k in range(16):
+            v = 0.11 if k % 4 == 2 else (0.07 if k % 2 else 0.04)
+            drums.add(t0 + k * e16, shaker(v), pan=0.3)
+        for e, semi, ln in ((0, 0, 2.6), (3, 0, 0.8), (4, 0, 1.6), (6, 7, 0.8), (7, 12, 0.8)):
+            inst.add(t0 + e * e8, sub(midi(root + semi), ln * e8), 0.36)
 
-    # ---- ending: final F chord hit that rings out
-    drums.add(end, SFX_impact(), 0.9)
-    l, r = pad([53, 57, 60, 65, 69], 1.2, 1.0, 2200)
+    # ---- ending: Fmaj9 ring-out
+    l, r = pad([53, 57, 60, 64, 67], 1.5, 1.0, 2000)
     padL.add(end, l); padR.add(end, r)
-    inst.add(end, bass(midi(41), 1.6), 0.7)
-    for k, m in enumerate((77, 81, 84, 89)):
-        y = mallet(midi(m), 2.2, 0.55)
-        inst.add(end + k * 0.06, y); verb.add(end + k * 0.06, y, 1.2)
+    for m in (57, 60, 64, 67, 72):
+        y = ep(midi(m), 2.5, 0.6)
+        inst.add(end, y); verb.add(end, y, 0.8)
+    inst.add(end, sub(midi(41), 2.4), 0.6)
 
-    # sidechain duck on pad + bass-ish energy
     n = padL.n
     idx = np.full(n, -10 * SR, dtype=np.int64)
     for k in kicks:
@@ -448,18 +330,18 @@ def music(dur, drop, end, bpm=120):
             idx[i] = i
     last = np.maximum.accumulate(idx)
     since = (np.arange(n) - last) / SR
-    duck = 1 - 0.55 * np.exp(-since * 9)
+    duck = 1 - 0.5 * np.exp(-since * 8)
     L = drums.L + inst.L + padL.L * duck
     R = drums.R + inst.R + padR.R * duck
     return L, R, verb
 
 
-def reverb_ir(d=1.8, rt=1.4):
+def reverb_ir(d=2.4, rt=2.0):
     t = T(d)
     env = np.exp(-6.9 * t / rt)
-    l = filt(noise(d), 'lowpass', 5000) * env
-    r = filt(noise(d), 'lowpass', 5000) * env
-    pre = int(0.012 * SR)
+    l = filt(noise(d), 'lowpass', 4500) * env
+    r = filt(noise(d), 'lowpass', 4500) * env
+    pre = int(0.02 * SR)
     l = np.concatenate([np.zeros(pre), l]); r = np.concatenate([np.zeros(pre), r])
     return l / np.sqrt(np.sum(l ** 2)), r / np.sqrt(np.sum(r ** 2))
 
@@ -474,7 +356,7 @@ def main(cue_path, out_path):
     mL, mR, verb = music(dur, drop, end, mus.get('bpm', 120))
 
     fx = Bus(dur)
-    bell_like = {'ding', 'ping', 'sparkle', 'shimmer', 'success', 'notif'}
+    bell_like = {'glint', 'shimmer', 'notif', 'hit', 'boom'}
     for c in cfg['cues']:
         name = c['name']
         if name not in SFX:
@@ -495,11 +377,11 @@ def main(cue_path, out_path):
     wetR = fftconvolve(wet_src, irr)[: fx.n]
 
     n = int((dur + 0.05) * SR)
-    L = (mL * 0.5 + fx.L * 0.9 + wetL * 0.22)[:n]
-    R = (mR * 0.5 + fx.R * 0.9 + wetR * 0.22)[:n]
+    L = (mL * 0.55 + fx.L * 0.8 + wetL * 0.25)[:n]
+    R = (mR * 0.55 + fx.R * 0.8 + wetR * 0.25)[:n]
     # gentle high-pass on the master and a final fade
     L = filt(L, 'highpass', 30); R = filt(R, 'highpass', 30)
-    fo = int(1.0 * SR)
+    fo = int(1.5 * SR)
     L[-fo:] *= np.linspace(1, 0, fo) ** 2; R[-fo:] *= np.linspace(1, 0, fo) ** 2
     peak = max(np.abs(L).max(), np.abs(R).max())
     L = np.tanh(L / peak * 1.2) / np.tanh(1.2) * 0.89
