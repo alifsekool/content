@@ -27,6 +27,9 @@ const opt = (name, def) => { const i = args.indexOf(`--${name}`); return i >= 0 
 const STILLS = opt('stills', null);
 const WORKERS = +opt('workers', 3);
 const AUDIO_ONLY = args.includes('--audio-only');
+// Supersampling: capture at N x resolution and downscale with an area filter. Sub-pixel motion
+// then becomes smooth anti-aliased movement instead of 1 px steps (the browser snaps to pixels).
+const SS = +opt('ss', 1);
 const RANGE = opt('range', null); // e.g. --range 17,20 renders a silent test clip to build/range.mp4
 const FFMPEG = process.env.FFMPEG || execFileSync('python3', ['-c', 'import imageio_ffmpeg as f; print(f.get_ffmpeg_exe())']).toString().trim();
 
@@ -43,7 +46,7 @@ const URL_ = `http://127.0.0.1:${server.address().port}/src/index.html?render`;
 
 const browser = await chromium.launch();
 async function openPage() {
-  const page = await browser.newPage({ viewport: { width: 1920, height: 1080 }, deviceScaleFactor: 1 });
+  const page = await browser.newPage({ viewport: { width: 1920, height: 1080 }, deviceScaleFactor: SS });
   page.on('pageerror', (e) => console.error('page error:', e.message));
   page.on('console', (m) => m.type() === 'error' && !m.text().includes('404') && console.error('console:', m.text()));
   await page.goto(URL_);
@@ -91,15 +94,19 @@ try {
     const segs = await Promise.all(pages.map(async (page, w) => {
       const a = w * per, b = Math.min(total, a + per);
       const file = path.join(BUILD, `seg${w}.mp4`);
-      const ff = spawn(FFMPEG, ['-y', '-loglevel', 'error', '-f', 'image2pipe', '-framerate', String(fps), '-c:v', 'mjpeg', '-i', '-',
-        '-c:v', 'libx264', '-preset', 'medium', '-tune', 'animation', '-crf', '16', '-pix_fmt', 'yuv420p', '-r', String(fps), file],
-      { stdio: ['pipe', 'inherit', 'inherit'] });
-      const closed = new Promise((res, rej) => ff.on('exit', (c) => (c === 0 ? res() : rej(new Error('ffmpeg segment failed')))));
+      // frames go through render/warp.py, which applies the virtual camera (smooth sub-pixel
+      // push-ins) and encodes with libx264
+      const ff = spawn('python3', [path.join(ROOT, 'render/warp.py'), file, String(fps), FFMPEG], { stdio: ['pipe', 'inherit', 'inherit'] });
+      const closed = new Promise((res, rej) => ff.on('exit', (c) => (c === 0 ? res() : rej(new Error('warp/encode failed')))));
       // seek in order from 0 so every tween records its start values the same way
       await page.evaluate(() => window.SEKOOL.seek(0));
       for (let f = a; f < b; f++) {
-        const buf = await snap(page, (f0 + f) / fps, 'jpeg');
-        if (!ff.stdin.write(buf)) await new Promise((r) => ff.stdin.once('drain', r));
+        const t = (f0 + f) / fps;
+        const buf = await snap(page, t, 'jpeg');
+        const cam = await page.evaluate((t) => window.SEKOOL.camera(t), t);
+        const head = Buffer.alloc(16);
+        head.writeFloatLE(cam.scale, 0); head.writeFloatLE(cam.x, 4); head.writeFloatLE(cam.y, 8); head.writeUInt32LE(buf.length, 12);
+        if (!ff.stdin.write(Buffer.concat([head, buf]))) await new Promise((r) => ff.stdin.once('drain', r));
         if (++done % 150 === 0) console.log(`frames ${done}/${total}  (${((Date.now() - started) / 1000).toFixed(0)}s)`);
       }
       ff.stdin.end();

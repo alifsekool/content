@@ -65,20 +65,23 @@
     let youX, youY;
     { const st = $('#stage').getBoundingClientRect(), k = st.width / 1920, r = $('#s2 .you').getBoundingClientRect();
       youX = (r.left - st.left) / k; youY = (r.top - st.top) / k; }
-    tl = gsap.timeline({ paused: true, defaults: { ease: 'expo.out', duration: 0.9 } });
+    tl = gsap.timeline({ paused: true, defaults: { ease: 'power3.out', duration: 0.9 } });
     const B = (px) => `blur(${px}px)`;
     const show = (sel, a, b) => { tl.set(sel, { autoAlpha: 1 }, a); if (b != null) tl.set(sel, { autoAlpha: 0 }, b); };
+    // Premium motion: short travel, soft blur, power3/power4 ease-outs (expo tails crawl
+    // sub-pixel for too long and tick as they settle).
+    const soft = (v, k = 0.6) => (typeof v === 'number' ? v * k : v);
     const blurIn = (el, t, o = {}) => tl.fromTo(el,
-      { y: o.y ?? 50, x: o.x ?? 0, opacity: 0, filter: B(o.blur ?? 14), scale: o.scale ?? 1 },
-      { y: 0, x: 0, opacity: 1, filter: B(0), scale: 1, duration: o.d ?? 1.0, stagger: o.stagger ?? 0, ease: o.ease ?? 'expo.out' }, t);
+      { y: soft(o.y ?? 50), x: soft(o.x ?? 0), opacity: 0, filter: B((o.blur ?? 14) * 0.7), scale: o.scale ? 1 + (o.scale - 1) * 0.6 : 1 },
+      { y: 0, x: 0, opacity: 1, filter: B(0), scale: 1, duration: (o.d ?? 1.0) * 1.1, stagger: o.stagger ?? 0, ease: o.ease ?? 'power3.out' }, t);
     const blurOut = (el, t, o = {}) => tl.to(el,
       { y: o.y ?? -50, opacity: 0, filter: B(o.blur ?? 14), scale: o.scale ?? 1, duration: o.d ?? 0.45, ease: 'power3.in' }, t);
-    const linesIn = (el, t) => tl.fromTo($$('.lni', $(el)), { yPercent: 110 }, { yPercent: 0, duration: 1.1, stagger: 0.09, ease: 'expo.out' }, t);
+    const linesIn = (el, t) => tl.fromTo($$('.lni', $(el)), { yPercent: 110 }, { yPercent: 0, duration: 1.15, stagger: 0.1, ease: 'power4.out' }, t);
     // Deliberately no slow 'camera drift' on holds: sub-pixel creeping motion steps between
     // pixels and reads as judder. Motion happens in the transitions; holds stay rock-steady.
     const deviceIn = (el, t) => {
-      tl.fromTo(el, { x: 300, rotationY: -26, rotationX: 8, opacity: 0, scale: 0.92 },
-        { x: 0, rotationY: -10, rotationX: 3, opacity: 1, scale: 1, duration: 1.3, ease: 'expo.out' }, t);
+      tl.fromTo(el, { x: 180, rotationY: -20, rotationX: 6, opacity: 0, scale: 0.95 },
+        { x: 0, rotationY: -10, rotationX: 3, opacity: 1, scale: 1, duration: 1.4, ease: 'power3.out' }, t);
     };
     const featureIn = (id, t0) => {
       blurIn(`#${id} .eyebrow`, t0, { y: 30, d: 0.9 });
@@ -87,10 +90,11 @@
       sfx(t0 - 0.15, 'whoosh', 0.55);
     };
     const featureOut = (id, t) => tl.to([`#${id} .ft`, `#${id} .fv`],
-      { y: -90, opacity: 0, filter: B(12), duration: 0.5, ease: 'power3.in', stagger: 0.05 }, t);
+      { y: -50, opacity: 0, filter: B(8), duration: 0.5, ease: 'power2.in', stagger: 0.05 }, t);
 
     // ------------------------------------------------ S1 · Hook (0 – 2.3), fast kinetic type
-    show('#s1', 0, 2.35);
+    gsap.set('#s1', { autoAlpha: 1 }); // visible on the very first frame
+    show('#s1', 0, 7.05); // black backdrop stays up under the (transparent) problem scene
     [['.k1', 0.04, 0.6], ['.k2', 0.66, 1.22]].forEach(([k, a, b]) => {
       blurIn(`#s1 ${k}`, a, { y: 60, blur: 18, scale: 1.08, d: 0.6 });
       blurOut(`#s1 ${k}`, b, { y: -60, blur: 18, d: 0.26 });
@@ -148,7 +152,7 @@
 
     // ------------------------------------------------ S3b · Speed: average -> excellent in 1 month (10.7 – 15.0)
     show('#s3b', 10.65, 15.05);
-    linesIn('#s3b .sp-h', 10.8);
+    linesIn('#s3b .sp-h', 11.1);
     sfx(10.7, 'whoosh', 0.55);
     blurIn('#s3b .sp-track-wrap', 11.65, { y: 30, blur: 10, d: 0.8 });
     const days = { d: 1 }, dayEl = $('#s3b .sp-day b');
@@ -162,7 +166,6 @@
 
     // ------------------------------------------------ feature scenes (slightly relaxed: offsets x K)
     const K = 1.2;
-    const T4 = 14.9, T5 = 20.3, T6 = 26.4, T7 = 31.7, T8 = 37.0, T9 = 41.5;
     const at = (T, x) => T + x * K;
 
     // S4 · 1 to 1 class with Cikgu Sekolah Kebangsaan
@@ -260,8 +263,8 @@
     tl.to('#s8 .cam', { opacity: 0, filter: B(14), scale: 1.06, duration: 0.4, ease: 'power3.in' }, T9 - 0.4);
 
     // S9 · CTA: short and clean
-    show('#s9', T9);
-    tl.fromTo('#s9', { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' }, T9);
+    show('#s9', T9 - 0.2);
+    tl.fromTo('#s9', { opacity: 0 }, { opacity: 1, duration: 0.7, ease: 'sine.inOut' }, T9 - 0.2);
     tl.fromTo('#s9 .cta-glow', { scale: 0.7, opacity: 0 }, { scale: 1, opacity: 1, duration: 3 }, T9 + 0.2);
     linesIn('#s9 .c2', T9 + 0.2);
     sfx(T9 + 0.25, 'hit', 0.6);
@@ -283,7 +286,34 @@
     tl.seek(0, false);
   })();
 
+  // ---------------------------------------------------------------- virtual camera
+  // Slow, subtle push-ins are NOT done in the page: Chromium snaps slowly moving text to the
+  // pixel grid, which reads as shake. Instead the page stays still and the renderer applies
+  // this camera afterwards with sub-pixel image interpolation, like a camera move in an editor.
+  // Each segment: [start, end, scaleFrom, scaleTo]. Resets happen under transitions.
+  const T4 = 14.9, T5 = 20.3, T6 = 26.4, T7 = 31.7, T8 = 37.0, T9 = 41.5;
+  const CAMERA = [
+    [0, 2.1, 1.0, 1.05],
+    [2.1, 6.2, 1.0, 1.025], [6.2, 7.0, 1.025, 1.025],
+    [7.0, 10.95, 1.0, 1.03],
+    [10.95, T4 + 0.02, 1.0, 1.03],
+    [T4 + 0.02, T5 + 0.02, 1.0, 1.03],
+    [T5 + 0.02, T6 + 0.02, 1.0, 1.03],
+    [T6 + 0.02, T7 + 0.02, 1.0, 1.03],
+    [T7 + 0.02, T8 + 0.02, 1.0, 1.03],
+    [T8 + 0.02, T9, 1.0, 1.035],
+    [T9, DURATION, 1.0, 1.035],
+  ];
+  const camera = (t) => {
+    const seg = CAMERA.find(([a, b]) => t >= a && t < b) || CAMERA[CAMERA.length - 1];
+    const [a, b, s0, s1] = seg;
+    const p = Math.min(1, Math.max(0, (t - a) / (b - a)));
+    const e = 1 - Math.pow(1 - p, 1.6); // gentle ease-out so each push settles
+    return { scale: s0 + (s1 - s0) * e, x: 0, y: 0 };
+  };
+
   window.SEKOOL = {
+    camera,
     duration: DURATION,
     fps: FPS,
     cues,

@@ -18,7 +18,8 @@ src/
 audio/
   generate_audio.py music bed + SFX synthesiser (reads cues exported by the page)
 render/
-  render.mjs        Chromium frame capture -> ffmpeg -> output/sekool-explainer.mp4
+  render.mjs        Chromium frame capture -> warp.py -> ffmpeg -> output/sekool-explainer.mp4
+  warp.py           applies the virtual camera (smooth sub-pixel push-ins) and encodes
 output/             rendered video
 ```
 
@@ -26,7 +27,7 @@ output/             rendered video
 
 - Node 18+ and Python 3.10+
 - `npm install`: GSAP, Poppins (via @fontsource) and Playwright
-- `pip install numpy scipy imageio-ffmpeg`, where imageio-ffmpeg provides a static ffmpeg binary. To use your own, set `FFMPEG=/path/to/ffmpeg`.
+- `pip install numpy scipy imageio-ffmpeg opencv-python-headless`, where imageio-ffmpeg provides a static ffmpeg binary. To use your own, set `FFMPEG=/path/to/ffmpeg`.
 - Playwright Chromium, installed with `npx playwright install chromium` if it isn't already present
 
 ## Commands
