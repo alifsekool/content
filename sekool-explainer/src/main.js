@@ -4,6 +4,10 @@
  * declared next to the visuals they belong to and exported for the audio mixer. */
 (() => {
   const RENDER = new URLSearchParams(location.search).has('render');
+  // ?vertical renders the 9:16 (1080x1920) Reels cut from the same timeline and audio
+  const VERT = new URLSearchParams(location.search).has('vertical');
+  const W = VERT ? 1080 : 1920, H = VERT ? 1920 : 1080;
+  if (VERT) document.body.classList.add('vertical');
   if (RENDER) document.body.classList.add('render');
 
   const DURATION = 48;
@@ -77,10 +81,10 @@
     gsap.config({ force3D: true });
     // measure the "your child" dot before any tween offsets the cards
     let youX, youY;
-    { const st = $('#stage').getBoundingClientRect(), k = st.width / 1920, r = $('#s2 .you').getBoundingClientRect();
+    { const st = $('#stage').getBoundingClientRect(), k = st.width / W, r = $('#s2 .you').getBoundingClientRect();
       youX = (r.left - st.left) / k; youY = (r.top - st.top) / k; }
     let c3x, c3y;
-    { const st = $('#stage').getBoundingClientRect(), k = st.width / 1920, r = $('#s2 .tm3').getBoundingClientRect();
+    { const st = $('#stage').getBoundingClientRect(), k = st.width / W, r = $('#s2 .tm3').getBoundingClientRect();
       c3x = (r.left + r.width / 2 - st.left) / k; c3y = (r.top + r.height / 2 - st.top) / k; }
     tl = gsap.timeline({ paused: true, defaults: { ease: 'power3.out', duration: 0.9 } });
     const B = (px) => `blur(${px}px)`;
@@ -151,11 +155,13 @@
     sfx(2.2, 'swish', 0.35); sfx(4.45, 'swish', 0.35);
     sfx(4.9, 'fail', 1.0); sfx(2.6, 'riser', 1);
     // the equation resolves: the first two terms fade away, the result glides to centre and grows
-    const S3X = 1.3, DY = 20;
+    // vertical: the stacked equation is drawn at 62 % (CSS), so translations are in local units
+    const EQS = VERT ? 0.62 : 1, S3X = VERT ? 1.8 : 1.3, DY = 20;
+    const tX = W / 2 - c3x, tY = VERT ? H / 2 - c3y : DY;
     tl.to(['#s2 .tm1', '#s2 .o1', '#s2 .tm2', '#s2 .o2'], { opacity: 0, x: -60, duration: 0.6, ease: 'power2.inOut', stagger: 0.04 }, 5.45);
-    tl.to('#s2 .tm3', { x: 960 - c3x, y: DY, scale: S3X, duration: 0.85, ease: 'power3.inOut' }, 5.45);
+    tl.to('#s2 .tm3', { x: tX / EQS, y: tY / EQS, scale: S3X, duration: 0.85, ease: 'power3.inOut' }, 5.45);
     // then dive into the red dot, which blooms from red into SEKOOL indigo
-    const dX = 960 + (youX - c3x) * S3X, dY = c3y + DY + (youY - c3y) * S3X;
+    const dX = c3x + tX + (youX - c3x) * S3X, dY = c3y + tY + (youY - c3y) * S3X;
     gsap.set('#s2 .zoomer', { left: dX, top: dY, scale: 0, backgroundColor: '#ff3b30' });
     tl.to('#s2 .cam', { scale: 12, transformOrigin: `${dX}px ${dY}px`, duration: 0.75, ease: 'power3.in' }, 6.25);
     tl.to('#s2 .zoomer', { scale: 150, duration: 0.6, ease: 'power3.in' }, 6.4);
@@ -332,6 +338,7 @@
   };
 
   window.SEKOOL = {
+    dims: { W, H },
     camera,
     duration: DURATION,
     fps: FPS,
@@ -345,8 +352,8 @@
   if (!RENDER) {
     const stage = $('#stage');
     const fit = () => {
-      const s = Math.min(innerWidth / 1920, (innerHeight - 48) / 1080);
-      stage.style.transform = `translate(${(innerWidth - 1920 * s) / 2}px, 0) scale(${s})`;
+      const s = Math.min(innerWidth / W, (innerHeight - 48) / H);
+      stage.style.transform = `translate(${(innerWidth - W * s) / 2}px, 0) scale(${s})`;
     };
     addEventListener('resize', fit); fit();
     const playBtn = $('#play'), scrub = $('#scrub'), clk = $('#clock');

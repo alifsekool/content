@@ -5,6 +5,7 @@
 //   node render/render.mjs --stills 3,10   PNG stills at the given seconds -> build/stills/
 //   node render/render.mjs --workers 3     parallel browser pages (default: 3)
 //   node render/render.mjs --audio-only    only regenerate build/soundtrack.wav
+//   node render/render.mjs --vertical      9:16 Reels cut -> output/sekool-explainer-vertical.mp4
 //
 // Pipeline: static server -> Chromium (Playwright) seeks the GSAP timeline frame by
 // frame -> PNGs piped into ffmpeg (one segment per worker) -> concat -> mux the
@@ -27,6 +28,8 @@ const opt = (name, def) => { const i = args.indexOf(`--${name}`); return i >= 0 
 const STILLS = opt('stills', null);
 const WORKERS = +opt('workers', 3);
 const AUDIO_ONLY = args.includes('--audio-only');
+const VERTICAL = args.includes('--vertical'); // 9:16 Reels cut (1080x1920)
+const [W, H] = VERTICAL ? [1080, 1920] : [1920, 1080];
 // Supersampling: capture at N x resolution and downscale with an area filter. Sub-pixel motion
 // then becomes smooth anti-aliased movement instead of 1 px steps (the browser snaps to pixels).
 const SS = +opt('ss', 1);
@@ -42,11 +45,11 @@ const server = http.createServer((req, res) => {
   fs.createReadStream(p).pipe(res);
 });
 await new Promise((r) => server.listen(0, '127.0.0.1', r));
-const URL_ = `http://127.0.0.1:${server.address().port}/src/index.html?render`;
+const URL_ = `http://127.0.0.1:${server.address().port}/src/index.html?render${VERTICAL ? '&vertical' : ''}`;
 
 const browser = await chromium.launch();
 async function openPage() {
-  const page = await browser.newPage({ viewport: { width: 1920, height: 1080 }, deviceScaleFactor: SS });
+  const page = await browser.newPage({ viewport: { width: W, height: H }, deviceScaleFactor: SS });
   page.on('pageerror', (e) => console.error('page error:', e.message));
   page.on('console', (m) => m.type() === 'error' && !m.text().includes('404') && console.error('console:', m.text()));
   await page.goto(URL_);
@@ -55,7 +58,7 @@ async function openPage() {
 }
 const snap = async (page, t, type = 'png') => {
   await page.evaluate((t) => window.SEKOOL.seek(t), t);
-  return page.screenshot({ type, ...(type === 'jpeg' ? { quality: 95 } : {}), clip: { x: 0, y: 0, width: 1920, height: 1080 } });
+  return page.screenshot({ type, ...(type === 'jpeg' ? { quality: 95 } : {}), clip: { x: 0, y: 0, width: W, height: H } });
 };
 
 const run = (cmd, a) => new Promise((res, rej) => {
@@ -93,10 +96,10 @@ try {
     const pages = [first, ...(await Promise.all(Array.from({ length: WORKERS - 1 }, openPage)))];
     const segs = await Promise.all(pages.map(async (page, w) => {
       const a = w * per, b = Math.min(total, a + per);
-      const file = path.join(BUILD, `seg${w}.mp4`);
+      const file = path.join(BUILD, `seg${VERTICAL ? 'v' : ''}${w}.mp4`);
       // frames go through render/warp.py, which applies the virtual camera (smooth sub-pixel
       // push-ins) and encodes with libx264
-      const ff = spawn('python3', [path.join(ROOT, 'render/warp.py'), file, String(fps), FFMPEG], { stdio: ['pipe', 'inherit', 'inherit'] });
+      const ff = spawn('python3', [path.join(ROOT, 'render/warp.py'), file, String(fps), FFMPEG, String(W), String(H)], { stdio: ['pipe', 'inherit', 'inherit'] });
       const closed = new Promise((res, rej) => ff.on('exit', (c) => (c === 0 ? res() : rej(new Error('warp/encode failed')))));
       // seek in order from 0 so every tween records its start values the same way
       await page.evaluate(() => window.SEKOOL.seek(0));
@@ -124,7 +127,7 @@ try {
     // 3) concat + mux + loudness normalise
     const list = path.join(BUILD, 'segments.txt');
     fs.writeFileSync(list, segs.map((s) => `file '${s}'`).join('\n'));
-    const out = path.join(OUT, 'sekool-explainer.mp4');
+    const out = path.join(OUT, VERTICAL ? 'sekool-explainer-vertical.mp4' : 'sekool-explainer.mp4');
     await run(FFMPEG, ['-y', '-loglevel', 'error', '-f', 'concat', '-safe', '0', '-i', list, '-i', path.join(BUILD, 'soundtrack.wav'),
       '-map', '0:v', '-map', '1:a', '-c:v', 'copy', '-af', 'loudnorm=I=-16:TP=-1.5:LRA=11', '-c:a', 'aac', '-b:a', '192k', '-ar', '48000',
       '-t', String(duration), '-movflags', '+faststart', out]);

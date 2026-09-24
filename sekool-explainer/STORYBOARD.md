@@ -28,6 +28,14 @@ The hook is fast. From the problem scene onward the pacing is about 20% more rel
 - **Device frame:** every device is centred at x≈1390, at least 180 px from the text column, and at least 110 px from the frame edge. Devices are solid within 0.35 s, rise 40 px, and keep a fixed 3D angle (no swing). The headline leads; the device follows 0.25 s later.
 - **Sound:** scene whooshes, the "stuck" sting, the brand hit and the CTA hit, plus **demo sounds only where something happens**: soft glassy ticks that follow the Day 1→30 and 0→85% counters (rising in pitch), a soft tap when an answer or notification is pressed, a two-note success chime for each correct answer (a fourth higher for the TP4→TP5 level-up), and a soft page flick on the roadmap. Each sits about 6–18 dB above the music in its frequency band.
 
+## 9:16 vertical cut (Reels)
+
+`output/sekool-explainer-vertical.mp4` is 1080×1920 at 60 fps and 48 s. It uses the same timeline, music and sound effects, re-laid out (the `body.vertical` rules in `styles.css`):
+- The equation stacks top to bottom, then the result card glides to the centre at 1.8×.
+- Feature scenes put the text on top and the device below, both centred.
+- The recap is a single column of tiles, and the CTA is stacked and centred.
+- Key content stays inside the Reels safe area (below ~250 px from the top, above ~380 px from the bottom).
+
 ## Notes
 
 - **Real material:** the Learning Roadmap scene uses actual pages from `STAGE 2 Learning Roadmap.pdf`. The logos are vector traces of the official files.

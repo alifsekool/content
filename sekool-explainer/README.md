@@ -2,7 +2,8 @@
 
 A 48-second, 1080p / 60 fps premium motion-graphics explainer for **SEKOOL.my** (1-to-1 online classes for primary school, KSSR/KSSM, UASA & MPT4 prep), aimed at parents.
 
-- **Final video:** [`output/sekool-explainer.mp4`](output/sekool-explainer.mp4)
+- **Final video (16:9):** [`output/sekool-explainer.mp4`](output/sekool-explainer.mp4)
+- **Reels / TikTok / Shorts (9:16):** [`output/sekool-explainer-vertical.mp4`](output/sekool-explainer-vertical.mp4)
 - **Script and scene breakdown:** [`STORYBOARD.md`](STORYBOARD.md)
 
 Everything is code: the animation is an HTML page driven by a GSAP timeline, rendered frame by frame in headless Chromium. The music and sound effects are synthesised in Python, so there are no stock assets and no licensing to worry about.
@@ -34,12 +35,13 @@ output/             rendered video
 
 ```bash
 npm run render                 # full render -> output/sekool-explainer.mp4 (about 4 min on 4 cores)
+node render/render.mjs --vertical     # 9:16 cut (1080x1920) -> output/sekool-explainer-vertical.mp4
 npm run stills -- 3,16,36      # PNG stills at those seconds -> build/stills/
 node render/render.mjs --audio-only   # regenerate build/soundtrack.wav only
 npm run preview                # then open http://localhost:8080/src/index.html
 ```
 
-The preview page has play/pause (space bar) and a scrubber. It plays `build/soundtrack.wav` in sync once that file has been generated. Add `?t=36` to the URL to jump to a given second.
+Add `?vertical` to the preview URL to see the 9:16 layout. The preview page has play/pause (space bar) and a scrubber. It plays `build/soundtrack.wav` in sync once that file has been generated. Add `?t=36` to the URL to jump to a given second.
 
 ## Common edits
 

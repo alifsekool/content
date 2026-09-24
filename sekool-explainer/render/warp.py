@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Applies the virtual camera to captured frames and encodes them.
 
-    python3 render/warp.py <out.mp4> <fps> <ffmpeg>
+    python3 render/warp.py <out.mp4> <fps> <ffmpeg> [width height]
 
 stdin carries one record per frame: little-endian float32 scale, float32 x, float32 y,
 uint32 length, then `length` bytes of JPEG. Each frame is scaled about the centre with
@@ -16,7 +16,7 @@ import cv2
 import numpy as np
 
 out, fps, ffmpeg = sys.argv[1], sys.argv[2], sys.argv[3]
-W, H = 1920, 1080
+W, H = (int(sys.argv[4]), int(sys.argv[5])) if len(sys.argv) > 5 else (1920, 1080)
 enc = subprocess.Popen(
     [ffmpeg, '-y', '-loglevel', 'error', '-f', 'rawvideo', '-pix_fmt', 'bgr24', '-s', f'{W}x{H}', '-r', fps, '-i', '-',
      '-c:v', 'libx264', '-preset', 'medium', '-tune', 'animation', '-crf', '16', '-pix_fmt', 'yuv420p', '-r', fps, out],

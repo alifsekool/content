@@ -301,3 +301,43 @@ svg.ic { width: 1em; height: 1em; display: block; }
 #controls input { flex: 1; }
 #controls button { padding: 6px 14px; border-radius: 6px; border: 0; background: #4f46e5; color: #fff; font-weight: 600; }
 body.render #controls { display: none; }
+
+/* ================================================================ 9:16 vertical (Reels) cut
+   Same scenes, timeline and audio; re-laid out for 1080x1920. Key content stays inside the
+   Reels safe area (~250 px under the top, ~380 px above the bottom where the UI sits). */
+body.vertical #stage { width: 1080px; height: 1920px; }
+/* hook */
+body.vertical .kin { font-size: 150px; }
+body.vertical .k3 { font-size: 132px; }
+/* equation: stacked top-to-bottom, drawn at 62 % */
+body.vertical .eqn { top: 0; bottom: 0; flex-direction: column; justify-content: center; align-items: center; gap: 12px;
+  transform: scale(0.62); transform-origin: 540px 960px; }
+body.vertical .op { width: 120px; height: 110px; }
+body.vertical .term { display: flex; flex-direction: column; align-items: center; }
+body.vertical .term p { font-size: 56px; margin-top: 24px; width: max-content; }
+/* brand */
+body.vertical .lockup { top: 610px; }
+body.vertical .lockup .wordmark { width: 800px; height: 166px; margin: -83px 0 0 -400px; }
+body.vertical .s3-tag { top: 1000px; font-size: 46px; }
+body.vertical .s3-tag2 { top: 1076px; font-size: 46px; }
+/* speed */
+body.vertical .sp-h { top: 600px; font-size: 92px; }
+body.vertical .sp-track-wrap { left: 110px; right: 110px; top: 1080px; }
+/* feature scenes: text on top, device below, both centred on the frame */
+body.vertical .ft { left: 90px; right: 90px; width: auto; top: 330px; bottom: auto; justify-content: flex-start; }
+body.vertical .h { font-size: 104px; }
+body.vertical .p { font-size: 36px; }
+body.vertical .fv { left: 0; right: 0; top: 900px; bottom: 0; }
+body.vertical .laptop-box { left: 107px; top: 120px; transform: scale(0.76); }
+body.vertical .ipad-box { left: 310px; top: 40px; transform: scale(0.72); }
+body.vertical .pg-cap { left: 240px; top: 690px; }
+body.vertical .win-box { left: 140px; top: 110px; transform: scale(0.8); }
+body.vertical .iphone-box { left: 372px; top: 40px; transform: scale(0.78); }
+/* recap: one column of tiles */
+body.vertical .bento-h { top: 330px; font-size: 68px; }
+body.vertical .bento { left: 90px; right: 90px; top: 600px; grid-template-columns: 1fr; gap: 22px; }
+body.vertical .tile-b { height: 200px; padding: 30px 40px; }
+/* CTA */
+body.vertical .c2 { top: 700px; font-size: 104px; }
+body.vertical .btn { top: 1030px; font-size: 42px; }
+body.vertical .endlock { bottom: 470px; }
