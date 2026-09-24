@@ -65,6 +65,9 @@
     let youX, youY;
     { const st = $('#stage').getBoundingClientRect(), k = st.width / 1920, r = $('#s2 .you').getBoundingClientRect();
       youX = (r.left - st.left) / k; youY = (r.top - st.top) / k; }
+    let c3x, c3y;
+    { const st = $('#stage').getBoundingClientRect(), k = st.width / 1920, r = $('#s2 .tm3').getBoundingClientRect();
+      c3x = (r.left + r.width / 2 - st.left) / k; c3y = (r.top + r.height / 2 - st.top) / k; }
     tl = gsap.timeline({ paused: true, defaults: { ease: 'power3.out', duration: 0.9 } });
     const B = (px) => `blur(${px}px)`;
     const show = (sel, a, b) => { tl.set(sel, { autoAlpha: 1 }, a); if (b != null) tl.set(sel, { autoAlpha: 0 }, b); };
@@ -116,39 +119,44 @@
     });
     blurIn('#s2 .tm2 p', 3.6, { y: 20, blur: 10, d: 0.7 });
     blurIn('#s2 .o2', 4.35, { y: 0, scale: 0.6, blur: 10, d: 0.6 });
-    blurIn('#s2 .tm3 .card-d', 4.55, { y: 50, blur: 16, d: 0.8 });
-    tl.fromTo('#s2 .bell', { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 0.9, ease: 'power2.inOut' }, 4.65);
-    blurIn($$('#s2 .c-lbl'), 4.9, { y: 10, blur: 6, stagger: 0.06, d: 0.5 });
-    tl.fromTo('#s2 .you i', { y: 140, scale: 0.4, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.9 }, 5.05);
-    blurIn('#s2 .you span', 5.35, { y: 12, blur: 6, d: 0.5 });
-    blurIn('#s2 .tm3 p', 5.2, { y: 20, blur: 10, d: 0.7 });
-    tl.fromTo('#s2 .you .pulse', { scale: 1, opacity: 0.9 }, { scale: 3.2, opacity: 0, duration: 0.9, ease: 'power2.out', repeat: 1 }, 5.35);
-    tl.to('#s2 .tm3 .card-d', { boxShadow: 'inset 0 0 0 2px rgba(255,59,48,.55), 0 0 60px -10px rgba(255,59,48,.35)', duration: 0.6, ease: 'power2.out' }, 5.3);
-    tl.to('#s2 .bell', { stroke: '#5a5a5f', duration: 0.6 }, 5.3);
-    tl.to(['#s2 .tm1', '#s2 .tm2', '#s2 .o1', '#s2 .o2'], { opacity: 0.25, duration: 0.5, ease: 'power2.out' }, 5.85);
-    sfx(2.2, 'swish', 0.4); sfx(3.15, 'tick', 0.5); sfx(3.35, 'swish', 0.4); sfx(4.35, 'tick', 0.5); sfx(4.55, 'swish', 0.4);
-    sfx(5.05, 'fail', 1.0); sfx(2.6, 'riser', 1);
-    // dive into "your child"
-    gsap.set('#s2 .zoomer', { left: youX, top: youY, scale: 0 });
-    tl.to('#s2 .cam', { scale: 12, transformOrigin: `${youX}px ${youY}px`, duration: 0.8, ease: 'power3.in' }, 6.2);
-    tl.to('#s2 .zoomer', { scale: 150, duration: 0.65, ease: 'power3.in' }, 6.35);
+    blurIn('#s2 .tm3 .card-d', 4.45, { y: 50, blur: 16, d: 0.8 });
+    tl.fromTo('#s2 .bell', { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 0.8, ease: 'power2.inOut' }, 4.55);
+    blurIn($$('#s2 .c-lbl'), 4.75, { y: 10, blur: 6, stagger: 0.06, d: 0.5 });
+    tl.fromTo('#s2 .you i', { y: 140, scale: 0.4, opacity: 0 }, { y: 0, scale: 1, opacity: 1, duration: 0.8 }, 4.9);
+    blurIn('#s2 .you span', 5.15, { y: 12, blur: 6, d: 0.5 });
+    blurIn('#s2 .tm3 p', 5.0, { y: 20, blur: 10, d: 0.7 });
+    tl.fromTo('#s2 .you .pulse', { scale: 1, opacity: 0.9 }, { scale: 3.2, opacity: 0, duration: 0.9, ease: 'power2.out', repeat: 1 }, 5.15);
+    tl.to('#s2 .tm3 .card-d', { boxShadow: 'inset 0 0 0 2px rgba(255,59,48,.55), 0 0 60px -10px rgba(255,59,48,.35)', duration: 0.6, ease: 'power2.out' }, 5.1);
+    tl.to('#s2 .bell', { stroke: '#5a5a5f', duration: 0.6 }, 5.1);
+    sfx(2.2, 'swish', 0.4); sfx(3.15, 'tick', 0.5); sfx(3.35, 'swish', 0.4); sfx(4.35, 'tick', 0.5); sfx(4.45, 'swish', 0.4);
+    sfx(4.9, 'fail', 1.0); sfx(2.6, 'riser', 1);
+    // the equation resolves: the first two terms fade away, the result glides to centre and grows
+    const S3X = 1.3, DY = 20;
+    tl.to(['#s2 .tm1', '#s2 .o1', '#s2 .tm2', '#s2 .o2'], { opacity: 0, x: -80, filter: B(10), duration: 0.6, ease: 'power2.inOut', stagger: 0.04 }, 5.45);
+    tl.to('#s2 .tm3', { x: 960 - c3x, y: DY, scale: S3X, duration: 0.85, ease: 'power3.inOut' }, 5.45);
+    sfx(5.45, 'swish', 0.35);
+    // then dive into the red dot, which blooms from red into SEKOOL indigo
+    const dX = 960 + (youX - c3x) * S3X, dY = c3y + DY + (youY - c3y) * S3X;
+    gsap.set('#s2 .zoomer', { left: dX, top: dY, scale: 0, backgroundColor: '#ff3b30' });
+    tl.to('#s2 .cam', { scale: 12, transformOrigin: `${dX}px ${dY}px`, duration: 0.75, ease: 'power3.in' }, 6.25);
+    tl.to('#s2 .zoomer', { scale: 150, duration: 0.6, ease: 'power3.in' }, 6.4);
+    tl.to('#s2 .zoomer', { backgroundColor: '#4f46e5', duration: 0.6, ease: 'sine.inOut' }, 6.4);
 
-    // ------------------------------------------------ S3 · Brand (7.0 – 10.9)
+    // ------------------------------------------------ S3 · Brand (7.0 – 10.9): sk turns into SEKOOL
     show('#s3', 6.98, 11.3);
     const mark = $('#s3 .mark'), wm = $('#s3 .wordmark');
-    gsap.set(mark, { x: 960 - (mark.offsetLeft + mark.offsetWidth / 2) });
     tl.fromTo(mark, { scale: 2, opacity: 0, filter: B(30) }, { scale: 1, opacity: 1, filter: B(0), duration: 1.0 }, 7.0);
-    tl.to(mark, { x: 0, duration: 0.85, ease: 'expo.inOut' }, 7.5);
+    tl.to(mark, { scale: 0.55, opacity: 0, filter: B(12), duration: 0.5, ease: 'power2.in' }, 7.75);
     const letters = $$('.lt', wm).length ? $$('.lt', wm) : [wm];
-    tl.fromTo(letters, { opacity: 0, x: -6 }, { opacity: 1, x: 0, duration: 0.9, stagger: 0.045 }, 7.8);
+    tl.fromTo(wm, { scale: 1.12 }, { scale: 1, duration: 1.2, ease: 'power3.out' }, 7.95);
+    tl.fromTo(letters, { opacity: 0, filter: B(8) }, { opacity: 1, filter: B(0), duration: 0.8, ease: 'power2.out', stagger: { each: 0.05, from: 'center' } }, 7.95);
     tl.fromTo('#s3 .glow', { scale: 0.6, opacity: 0 }, { scale: 1.1, opacity: 1, duration: 3, ease: 'power2.out' }, 7.0);
-    blurIn('#s3 .s3-tag', 8.35, { y: 30, d: 0.8 });
-    blurIn('#s3 .s3-tag2', 8.75, { y: 30, d: 0.8 });
-    tl.fromTo('#s3 .s3-tag2 b', { backgroundColor: 'rgba(255,255,255,0)', color: '#ffffff' }, { backgroundColor: 'rgba(255,255,255,1)', color: '#4f46e5', duration: 0.5, ease: 'power2.out' }, 9.35);
-    blurIn('#s3 .s3-meta', 9.6, { y: 24, d: 0.8 });
+    blurIn('#s3 .s3-tag', 8.6, { y: 30, d: 0.8 });
+    blurIn('#s3 .s3-tag2', 8.95, { y: 30, d: 0.8 });
+    tl.fromTo('#s3 .s3-tag2 b', { backgroundColor: 'rgba(255,255,255,0)', color: '#ffffff' }, { backgroundColor: 'rgba(255,255,255,1)', color: '#4f46e5', duration: 0.5, ease: 'power2.out' }, 9.55);
     tl.to('#s3 .cam', { opacity: 0, filter: B(12), duration: 0.35, ease: 'power3.in' }, 10.6);
     tl.to('#s3', { yPercent: -100, duration: 0.65, ease: 'expo.inOut' }, 10.65);
-    sfx(7.0, 'hit', 1); sfx(7.8, 'shimmer', 0.6); sfx(9.35, 'glint', 0.5);
+    sfx(7.0, 'hit', 1); sfx(7.95, 'shimmer', 0.6); sfx(9.55, 'glint', 0.5);
 
     // ------------------------------------------------ S3b · Speed: average -> excellent in 1 month (10.7 – 15.0)
     show('#s3b', 10.65, 15.05);
@@ -317,7 +325,7 @@
     duration: DURATION,
     fps: FPS,
     cues,
-    music: { bpm: 120, drop: 7.0, end: 45.0, breakdown: [41.0, 43.0], arps: 37.0, duck: [[4.95, 6.2]] },
+    music: { bpm: 120, drop: 7.0, end: 45.0, breakdown: [41.0, 43.0], arps: 37.0, duck: [[4.85, 6.3]] },
     ready,
     seek: (t) => { tl.seek(t, false); },
   };

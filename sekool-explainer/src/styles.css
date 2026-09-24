@@ -73,13 +73,12 @@ svg.ic { width: 1em; height: 1em; display: block; }
 /* ---------- S3 brand ---------- */
 .glow { position: absolute; left: 50%; top: 45%; width: 1600px; height: 1600px; margin: -800px 0 0 -800px; border-radius: 50%;
   background: radial-gradient(circle, rgba(255, 255, 255, .22), rgba(255, 255, 255, 0) 60%); }
-.lockup { position: absolute; left: 0; right: 0; top: 330px; height: 200px; display: flex; justify-content: center;
-  align-items: center; gap: 56px; color: #fff; }
-.lockup .mark { width: 280px; height: 198px; }
-.lockup .wordmark { width: 760px; height: 158px; }
-.s3-tag { position: absolute; top: 590px; width: 100%; text-align: center; font-size: 52px; font-weight: 500;
+.lockup { position: absolute; left: 0; right: 0; top: 250px; height: 300px; color: #fff; }
+.lockup .mark { position: absolute; left: 50%; top: 50%; width: 300px; height: 212px; margin: -106px 0 0 -150px; }
+.lockup .wordmark { position: absolute; left: 50%; top: 50%; width: 900px; height: 187px; margin: -94px 0 0 -450px; }
+.s3-tag { position: absolute; top: 610px; width: 100%; text-align: center; font-size: 52px; font-weight: 500;
   letter-spacing: -0.02em; }
-.s3-tag2 { position: absolute; top: 670px; width: 100%; text-align: center; font-size: 46px; font-weight: 500;
+.s3-tag2 { position: absolute; top: 690px; width: 100%; text-align: center; font-size: 46px; font-weight: 500;
   letter-spacing: -0.02em; color: rgba(255, 255, 255, .85); }
 .s3-tag2 b { font-weight: 600; color: var(--accent); background: #fff; padding: 2px 22px 6px; border-radius: 16px; margin-left: 8px; }
 .s3-meta { position: absolute; top: 790px; width: 100%; display: flex; justify-content: center; align-items: center; gap: 26px;

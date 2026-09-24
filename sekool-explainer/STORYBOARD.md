@@ -1,4 +1,4 @@
-# SEKOOL.my: Explainer Storyboard (v7)
+# SEKOOL.my: Explainer Storyboard (v8)
 
 **Format:** 1920×1080, **60 fps**, 48 s · **Language:** English · **Audience:** parents
 **Look:** Apple-keynote style: big semibold type, black / white / indigo scenes, floating device mockups, soft blur-and-slide transitions. A slow, subtle camera push-in on every scene is applied after capture with sub-pixel interpolation, because in-browser drift snaps to pixels and shakes. Scenes cross-fade with no hard cuts, and entrances use short travel with soft ease-outs. No cartoon characters.
@@ -9,8 +9,8 @@
 | # | Time | Scene | On-screen text | Visuals |
 |---|------|-------|----------------|---------|
 | 1 | 0:00–0:02 | **Hook** (black) | "Struggling" → "to score in" → "**UASA & MPT4?**" | Fast kinetic type with a sub boom on each phrase |
-| 2 | 0:02–0:07 | **Problem as an equation** (black) | **Big Tuition Classes** + **Same Pace for Everyone** = **Your Child Stays** **Average.** | Three cards: a packed grid of students **+** students moving in lockstep **=** a bell curve where "Your child · Stuck" is a **red** warning dot at *Average* (the card glows red). A dark, sinking "stuck" sting plays as the dot lands, with the music dipping under it. The camera then dives into the red dot and SEKOOL indigo blooms out of it: problem → solution. |
-| 3 | 0:07–0:11 | **Brand** (indigo) | **sk SEKOOL** · "**Personalized 1 to 1 Online Learning** with **Cikgu Sekolah Kebangsaan**" · Year 1 – Year 6 · KSSR / KSSM · UASA & MPT4 Prep | The logo resolves from a blur and the music drops. "Cikgu Sekolah Kebangsaan" turns into a white highlight. |
+| 2 | 0:02–0:07 | **Problem as an equation** (black) | **Big Tuition Classes** + **Same Pace for Everyone** = **Your Child Stays** **Average.** | Three cards: a packed grid of students **+** students moving in lockstep **=** a bell curve where "Your child · Stuck" is a **red** warning dot at *Average* (the card glows red). A dark, sinking "stuck" sting plays as the dot lands, with the music dipping under it. The first two terms then fade away while the result card glides to the centre and grows. The camera dives into the red dot, which blooms smoothly from red into SEKOOL indigo: problem → solution. |
+| 3 | 0:07–0:11 | **Brand** (indigo) | **SEKOOL** · "**Personalized 1 to 1 Online Learning** with **Cikgu Sekolah Kebangsaan**" | The sk mark resolves from a blur and turns into the SEKOOL wordmark (never side by side), and the music drops. "Cikgu Sekolah Kebangsaan" turns into a white highlight. |
 | 4 | 0:11–0:15 | **Speed** | "Stop Being Average. **In Just 1 Month.**" | A Week 1 → Week 4 bar fills from *Average* to *Excellent* while the counter runs from Day 1 to Day 30 |
 | 5 | 0:15–0:20 | **Live 1 to 1 Classes** | "One Cikgu. One Child." · "Every class is taught live by an experienced **Cikgu Sekolah Kebangsaan**." · "No part-timers. No university students." | Laptop with a live class. A "✓ Cikgu Sekolah Kebangsaan" badge sits on the teacher tile, and a fractions problem is solved. |
 | 6 | 0:20–0:26 | **Learning Roadmap** · FREE | "Your Child's Own Roadmap." | iPad scrolling the **real Stage 2 roadmap PDF** with callouts, and a red FREE sticker |
