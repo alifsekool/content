@@ -1,4 +1,4 @@
-# SEKOOL.my: Explainer Storyboard (v8)
+# SEKOOL.my: Explainer Storyboard (v9: polish pass)
 
 **Format:** 1920×1080, **60 fps**, 48 s · **Language:** English · **Audience:** parents
 **Look:** Apple-keynote style: big semibold type, black / white / indigo scenes, floating device mockups, soft blur-and-slide transitions. A slow, subtle camera push-in on every scene is applied after capture with sub-pixel interpolation, because in-browser drift snaps to pixels and shakes. Scenes cross-fade with no hard cuts, and entrances use short travel with soft ease-outs. No cartoon characters.
@@ -12,14 +12,21 @@
 | 2 | 0:02–0:07 | **Problem as an equation** (black) | **Big Tuition Classes** + **Same Pace for Everyone** = **Your Child Stays** **Average.** | Three cards: a packed grid of students **+** students moving in lockstep **=** a bell curve where "Your child · Stuck" is a **red** warning dot at *Average* (the card glows red). A dark, sinking "stuck" sting plays as the dot lands, with the music dipping under it. The first two terms then fade away while the result card glides to the centre and grows. The camera dives into the red dot, which blooms smoothly from red into SEKOOL indigo: problem → solution. |
 | 3 | 0:07–0:11 | **Brand** (indigo) | **SEKOOL** · "**Personalized 1 to 1 Online Learning** with **Cikgu Sekolah Kebangsaan**" | The sk mark resolves from a blur and turns into the SEKOOL wordmark (never side by side), and the music drops. "Cikgu Sekolah Kebangsaan" turns into a white highlight. |
 | 4 | 0:11–0:15 | **Speed** | "Stop Being Average. **In Just 1 Month.**" | A Week 1 → Week 4 bar fills from *Average* to *Excellent* while the counter runs from Day 1 to Day 30 |
-| 5 | 0:15–0:20 | **Live 1 to 1 Classes** | "One Cikgu. One Child." · "Every class is taught live by an experienced **Cikgu Sekolah Kebangsaan**." · "No part-timers. No university students." | Laptop with a live class. A "✓ Cikgu Sekolah Kebangsaan" badge sits on the teacher tile, and a fractions problem is solved. |
-| 6 | 0:20–0:26 | **Learning Roadmap** · FREE | "Your Child's Own Roadmap." | iPad scrolling the **real Stage 2 roadmap PDF** with callouts, and a red FREE sticker |
+| 5 | 0:15–0:20 | **Live 1 to 1 Classes** | "One Cikgu. One Child." · "Every class is taught live by an experienced **Cikgu Sekolah Kebangsaan**." · "No part-timers. No university students." | Laptop with a live class. A "✓ Cikgu Sekolah Kebangsaan" badge sits on the teacher tile and a fractions problem is solved (no subject chips, no blinking UI) |
+| 6 | 0:20–0:26 | **Learning Roadmap** · FREE | "Your Child's Own Roadmap." | iPad scrolling the **real Stage 2 roadmap PDF**, with one quiet grey caption under it that follows the pages |
 | 7 | 0:26–0:32 | **Monthly Test** | "Tested. Every Month." | Answer picked and marked correct, then an 85% ring, TP4 and the topic breakdown |
 | 8 | 0:32–0:37 | **Progress Reports** | "Never Miss a Milestone." | Phone notification opens the March report: TP5 (+1 level), subject rings, Cikgu's note |
 | 9 | 0:37–0:41 | **Recap** | "From Average to Excellent. **In Just 1 Month.**" | Bento grid; the first tile reads "1 to 1 Live Classes · With Cikgu Sekolah Kebangsaan" |
 | 10 | 0:41–0:48 | **CTA** (black) | "Free Personalized Learning Roadmap." · "Get it free at **sekool.my**" | Plain white headline, a sheen across the button, the SEKOOL wordmark only (no sk mark); the music ends on an Fmaj9 chord |
 
 The hook is fast. From the problem scene onward the pacing is about 20% more relaxed than v3, and each feature still cuts about 1 second after its demo finishes.
+
+## Motion & layout system (polish pass)
+
+- **Three motion primitives:** headlines slide up behind a mask; supporting content fades in with a small rise (no blur); scenes lift out. Blur is used only for hero moments (hook words, the sk → SEKOOL morph). The dive is the one signature transition. After the logo, indigo dissolves to white; after the recap, the video cuts to black on the beat.
+- **Type scale:** 200 (hook) / 128 (speed, CTA) / 100 (feature + recap headlines) / 48 (tagline) / 40 (equation captions, tile titles) / 32 (body) / 24 (labels). Body copy breaks by hand into 2 balanced lines, and "Cikgu Sekolah Kebangsaan" never splits.
+- **Device frame:** every device is centred at x≈1390, at least 180 px from the text column, and at least 110 px from the frame edge. Devices are solid within 0.35 s, rise 40 px, and keep a fixed 3D angle (no swing). The headline leads; the device follows 0.25 s later.
+- **Sound:** 18 cues (was 34). Scene whooshes, the "stuck" sting, the brand hit, the notification and the CTA hit, with no UI ticks.
 
 ## Notes
 

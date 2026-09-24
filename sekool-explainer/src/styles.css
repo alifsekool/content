@@ -32,19 +32,19 @@ html, body { height: 100%; overflow: hidden; background: #000; }
 svg.ic { width: 1em; height: 1em; display: block; }
 .grad { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .grad-lite { background: linear-gradient(100deg, #8b85ff, #c4b5fd); -webkit-background-clip: text; background-clip: text; color: transparent; }
-.ln { display: block; overflow: hidden; padding-bottom: .08em; margin-bottom: -.08em; }
+.ln { display: block; clip-path: inset(-100% -100% 0 -100%); padding-bottom: .08em; margin-bottom: -.08em; } /* mask only the bottom edge: lines rise into view, nothing clipped sideways */
 .lni { display: block; white-space: nowrap; }
 [data-logo] > svg { display: block; width: 100%; height: 100%; }
 
 /* ---------- S1 kinetic type ---------- */
 .kin { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
-  font-size: 210px; font-weight: 600; letter-spacing: -0.05em; line-height: 1; white-space: nowrap; }
-.k3 { font-size: 196px; }
+  font-size: 200px; font-weight: 600; letter-spacing: -0.05em; line-height: 1; white-space: nowrap; padding-right: 0.05em; }
+.k3 { font-size: 200px; }
 
 /* ---------- S2 problem equation ---------- */
 .eqn { position: absolute; left: 0; right: 0; top: 230px; display: flex; justify-content: center; align-items: flex-start; gap: 36px; }
 .term { width: 440px; text-align: center; }
-.term p { margin-top: 34px; font-size: 36px; font-weight: 600; letter-spacing: -0.03em; white-space: nowrap; }
+.term p { margin-top: 34px; font-size: 40px; font-weight: 600; letter-spacing: -0.03em; white-space: nowrap; }
 .term p .dim { color: #8e8e93; }
 .card-d { position: relative; width: 440px; height: 440px; border-radius: 44px; background: #111114;
   box-shadow: inset 0 0 0 1px #2a2a2f; overflow: hidden; }
@@ -63,7 +63,7 @@ svg.ic { width: 1em; height: 1em; display: block; }
 .you { position: absolute; left: 220px; top: 110px; width: 0; height: 0; }
 .you i { position: absolute; left: -16px; top: -16px; width: 32px; height: 32px; border-radius: 50%; background: var(--red);
   box-shadow: 0 0 30px 8px rgba(255, 59, 48, .75); display: block; z-index: 1; }
-.you .pulse { position: absolute; left: -16px; top: -16px; width: 32px; height: 32px; border-radius: 50%; border: 3px solid var(--red); display: block; }
+.you .pulse { opacity: 0; position: absolute; left: -16px; top: -16px; width: 32px; height: 32px; border-radius: 50%; border: 3px solid var(--red); display: block; }
 .you span { position: absolute; left: 0; top: -66px; transform: translateX(-50%); white-space: nowrap; font-size: 20px; font-weight: 600;
   color: #fff; background: var(--red); padding: 4px 12px; border-radius: 8px; }
 .term p .bad { color: var(--red); }
@@ -76,9 +76,9 @@ svg.ic { width: 1em; height: 1em; display: block; }
 .lockup { position: absolute; left: 0; right: 0; top: 250px; height: 300px; color: #fff; }
 .lockup .mark { position: absolute; left: 50%; top: 50%; width: 300px; height: 212px; margin: -106px 0 0 -150px; }
 .lockup .wordmark { position: absolute; left: 50%; top: 50%; width: 900px; height: 187px; margin: -94px 0 0 -450px; }
-.s3-tag { position: absolute; top: 610px; width: 100%; text-align: center; font-size: 52px; font-weight: 500;
+.s3-tag { position: absolute; top: 612px; width: 100%; text-align: center; font-size: 48px; font-weight: 500;
   letter-spacing: -0.02em; }
-.s3-tag2 { position: absolute; top: 690px; width: 100%; text-align: center; font-size: 46px; font-weight: 500;
+.s3-tag2 { position: absolute; top: 688px; width: 100%; text-align: center; font-size: 48px; font-weight: 500;
   letter-spacing: -0.02em; color: rgba(255, 255, 255, .85); }
 .s3-tag2 b { font-weight: 600; color: var(--accent); background: #fff; padding: 2px 22px 6px; border-radius: 16px; margin-left: 8px; }
 .s3-meta { position: absolute; top: 790px; width: 100%; display: flex; justify-content: center; align-items: center; gap: 26px;
@@ -104,12 +104,10 @@ svg.ic { width: 1em; height: 1em; display: block; }
 /* ---------- feature template ---------- */
 .ft { position: absolute; left: 150px; top: 0; bottom: 0; width: 700px; display: flex; flex-direction: column;
   justify-content: center; }
-.eyebrow { display: flex; align-items: center; gap: 18px; font-size: 30px; font-weight: 600; letter-spacing: -0.01em; }
-.h { font-size: 100px; font-weight: 600; letter-spacing: -0.05em; line-height: 1.02; margin: 20px 0 30px; }
-.p { font-size: 34px; line-height: 1.42; color: var(--grey); max-width: 620px; letter-spacing: -0.01em; }
-.chips { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 40px; }
-.chips span { font-size: 24px; font-weight: 500; padding: 10px 22px; border-radius: 999px; background: var(--fill); }
-.note { display: flex; align-items: center; gap: 12px; margin-top: 26px; font-size: 26px; font-weight: 500; }
+.eyebrow { display: flex; align-items: center; gap: 18px; height: 44px; font-size: 30px; font-weight: 600; letter-spacing: -0.01em; }
+.h { font-size: 100px; font-weight: 600; letter-spacing: -0.05em; line-height: 1.02; margin: 18px 0 30px -0.03em; }
+.p { font-size: 32px; line-height: 1.45; color: var(--grey); white-space: nowrap; letter-spacing: -0.01em; }
+.note { display: flex; align-items: center; gap: 12px; margin-top: 36px; font-size: 24px; font-weight: 500; }
 .p .ink { color: var(--ink); font-weight: 600; }
 .note span { width: 36px; height: 36px; border-radius: 50%; background: var(--accent); color: #fff; display: flex;
   align-items: center; justify-content: center; }
@@ -125,7 +123,12 @@ svg.ic { width: 1em; height: 1em; display: block; }
 .light-app { background: #fff; }
 
 /* ---------- S4 laptop ---------- */
-.laptop { position: absolute; left: -30px; top: 205px; width: 1020px; transform-style: preserve-3d; }
+.devbox { position: absolute; transform-origin: 0 0; transform-style: preserve-3d; }
+.laptop-box { left: 90px; top: 290px; width: 1140px; transform: scale(0.75); }
+.ipad-box { left: 248px; top: 92px; transform: scale(0.88); }
+.win-box { left: 110px; top: 250px; transform: scale(0.84); }
+.iphone-box { left: 315px; top: 100px; }
+.laptop { position: relative; left: 60px; top: 0; width: 1020px; transform-style: preserve-3d; }
 .lid { position: relative; width: 1020px; height: 640px; background: #0b0b0c; border-radius: 30px 30px 8px 8px;
   padding: 16px; box-shadow: var(--shadow-xl); }
 .lid .app { position: absolute; inset: 16px; }
@@ -174,22 +177,17 @@ svg.ic { width: 1em; height: 1em; display: block; }
 .controls .end { background: #ff453a; width: 64px; border-radius: 23px; color: #fff; }
 
 /* ---------- S5 iPad showing the real Learning Roadmap PDF ---------- */
-.ipad { position: absolute; left: 330px; top: 92px; width: 640px; height: 880px; background: #0b0b0c; border-radius: 52px;
+.ipad { position: relative; left: 0; top: 0; width: 640px; height: 880px; background: #0b0b0c; border-radius: 52px;
   padding: 18px; box-shadow: var(--shadow-xl), inset 0 0 0 2px #2a2a2e; transform-style: preserve-3d; }
 .ipad .app { position: absolute; inset: 18px; border-radius: 36px; background: #d8d8de; }
 .pages { display: flex; flex-direction: column; gap: 14px; }
 .pages img { display: block; width: 604px; height: 854px; }
-.callout { position: absolute; left: 40px; top: 470px; display: flex; align-items: center; gap: 16px; padding: 16px 30px 16px 16px;
-  background: rgba(255, 255, 255, .92); border-radius: 999px; font-size: 27px; font-weight: 600; letter-spacing: -0.02em;
-  box-shadow: 0 30px 60px -24px rgba(20, 20, 40, .35), 0 0 0 1px rgba(0, 0, 0, .05); white-space: nowrap; }
-.callout span { width: 52px; height: 52px; border-radius: 50%; background: var(--grad); color: #fff; display: flex;
-  align-items: center; justify-content: center; }
-.callout svg { width: 26px; height: 26px; }
-.sticker { position: absolute; left: 800px; top: 56px; background: var(--red); color: #fff; font-size: 46px; font-weight: 700;
-  letter-spacing: .06em; padding: 10px 30px; border-radius: 18px; box-shadow: 0 24px 40px -16px rgba(255, 59, 48, .6); }
+.pg-cap { position: absolute; left: 230px; width: 600px; top: 900px; height: 36px; text-align: center; font-size: 24px;
+  font-weight: 500; color: var(--grey); }
+.pg-cap span { position: absolute; left: 0; right: 0; top: 0; opacity: 0; }
 
 /* ---------- S6 test window ---------- */
-.win { position: absolute; left: 30px; top: 190px; width: 1000px; height: 690px; background: #fff; border-radius: 26px;
+.win { position: relative; left: 0; top: 0; width: 1000px; height: 690px; background: #fff; border-radius: 26px;
   overflow: hidden; box-shadow: var(--shadow-xl), 0 0 0 1px rgba(0, 0, 0, .06); transform-style: preserve-3d; }
 .win-bar { height: 52px; background: var(--fill); display: flex; align-items: center; gap: 9px; padding: 0 20px;
   border-bottom: 1px solid var(--line); }
@@ -232,7 +230,7 @@ svg.ic { width: 1em; height: 1em; display: block; }
 .r-row em.o { color: #c2410c; }
 
 /* ---------- S7 iPhone ---------- */
-.iphone { position: absolute; left: 330px; top: 100px; width: 430px; height: 880px; border-radius: 72px; background: #0b0b0c;
+.iphone { position: relative; left: 0; top: 0; width: 430px; height: 880px; border-radius: 72px; background: #0b0b0c;
   padding: 14px; box-shadow: var(--shadow-xl), inset 0 0 0 2px #2a2a2e; transform-style: preserve-3d; }
 .island { position: absolute; left: 50%; top: 30px; width: 124px; height: 36px; margin-left: -62px; border-radius: 20px; background: #000; z-index: 5; }
 .ios { position: relative; width: 100%; height: 100%; border-radius: 58px; overflow: hidden; background: #f2f2f7; }
@@ -270,7 +268,7 @@ svg.ic { width: 1em; height: 1em; display: block; }
 .cnote .rp-k { margin-bottom: 4px; }
 
 /* ---------- S8 bento ---------- */
-.bento-h { position: absolute; top: 120px; width: 100%; text-align: center; font-size: 84px; font-weight: 600;
+.bento-h { position: absolute; top: 96px; width: 100%; text-align: center; font-size: 100px; font-weight: 600;
   letter-spacing: -0.05em; line-height: 1.05; }
 .bento { position: absolute; left: 210px; right: 210px; top: 400px; display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
 .tile-b { background: var(--fill); border-radius: 40px; padding: 38px 44px; height: 260px; display: flex; flex-direction: column; }
@@ -278,16 +276,17 @@ svg.ic { width: 1em; height: 1em; display: block; }
   justify-content: center; margin-bottom: auto; }
 .b-ic svg { width: 32px; height: 32px; }
 .tile-b h3 { font-size: 40px; font-weight: 600; letter-spacing: -0.035em; display: flex; align-items: center; }
-.tile-b p { font-size: 25px; color: var(--grey); margin-top: 4px; }
+.tile-b p { font-size: 24px; color: var(--grey); margin-top: 4px; }
 
 /* ---------- S9 CTA ---------- */
 .cta-glow { position: absolute; left: 50%; top: 52%; width: 1800px; height: 1100px; margin: -550px 0 0 -900px;
   background: radial-gradient(ellipse at center, rgba(79, 70, 229, .45), rgba(79, 70, 229, 0) 62%); }
-.c2 { position: absolute; top: 230px; width: 100%; text-align: center; font-size: 140px; font-weight: 600;
+.c2 { position: absolute; top: 250px; width: 100%; text-align: center; font-size: 128px; font-weight: 600;
   letter-spacing: -0.05em; line-height: 1.04; }
 .c2 .ln { display: block; }
-.btn { position: absolute; left: 50%; top: 640px; transform: translateX(-50%); display: flex; align-items: center; gap: 14px;
-  background: #fff; color: #000; font-size: 40px; font-weight: 500; padding: 26px 50px; border-radius: 999px; white-space: nowrap; }
+.sp-h .lni, .bento-h .lni, .c2 .lni { padding-right: 0.05em; } /* optical centring with -0.05em tracking */
+.btn { position: absolute; left: 50%; top: 630px; transform: translateX(-50%); display: flex; align-items: center; gap: 14px;
+  background: #fff; color: #000; font-size: 44px; font-weight: 500; padding: 26px 52px; border-radius: 999px; white-space: nowrap; }
 .btn b { font-weight: 700; color: var(--accent); }
 .btn { overflow: hidden; }
 .sheen { position: absolute; top: 0; bottom: 0; left: -40%; width: 30%; background: linear-gradient(100deg, transparent, rgba(79, 70, 229, .18), transparent); }
