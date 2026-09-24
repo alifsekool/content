@@ -5,8 +5,9 @@
  *          or `pan` [from, to] to slide across the photo during the scene.
  *          `zoom` [from, to] with `origin` animates a slow push-in across the scene.
  *   card   landscape photo as a rounded card over its own blurred copy (photos/N-bg.jpg).
- *   cta    SEKOOL indigo end card: logo, headline `lines`, optional `sub`, then a
- *          "Click down below" pill with an arrow pointing at the ad's link button.
+ *   cta    SEKOOL indigo end card: logo (or an envelope with `mail`), headline `lines`
+ *          (<em> = white highlight), optional `sub`, then a pill (`button`, default
+ *          "Click down below") with an arrow pointing at the ad's link button.
  * A photo scene can pop in `insert`: a close-up (photos/<src>.jpg, made by
  * prepare_photos.py) at `at` s, `y` px from the top, rotated `rot` degrees.
  * Captions: [start (s, relative to the scene), html, size ('xl' | 'l' | 'm')].
@@ -14,8 +15,11 @@
  *
  * Keep captions between y = 260 and y = 1250: Reels and Stories cover the top ~14%
  * and bottom ~35% of the frame with their own UI. */
-// the same end card on every ad
+// end cards
 const CTA = { type: 'cta', fast: true, lines: ['1 to 1 with', 'Cikgu Sekolah', 'Kebangsaan.'] };
+// same offer as the explainer-roadmap video: get the Learning Roadmap test by email
+const ROADMAP_CTA = { type: 'cta', fast: true, mail: true, button: 'Klik link di bawah',
+  lines: ['Kami akan hantar', '<em>Ujian Roadmap</em>', 'di email untuk', 'pelajar jawab.'] };
 
 window.ADS = {
   // 17 s · the class-at-home moment
@@ -47,7 +51,7 @@ window.ADS = {
         captions: [[0.3, 'Appreciation day.', 'xl'], [1.1, '<b>No. 1 Dalam Kelas</b>', 'l']] },
       { type: 'photo', src: 6, from: 6.7, to: 10.0, pos: '100% 50%', zoom: [1, 1.15], origin: '72% 78%',
         captions: [[0.3, 'Awards day.', 'xl'], [1.1, '<b>Anugerah Kecemerlangan Akademik</b>', 'm']] },
-      { ...CTA, from: 9.8, to: 14 },
+      { ...ROADMAP_CTA, from: 9.8, to: 14 },
     ],
   },
 

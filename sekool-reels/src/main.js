@@ -18,7 +18,7 @@
   const caps = (list) => `<div class="caps">${list.map(([, html, size]) => `<div class="cap ${size}">${html}</div>`).join('')}</div>`;
   AD.scenes.forEach((s, i) => {
     const el = document.createElement('section');
-    el.className = `scene t-${s.type}${s.fast ? ' fast' : ''}`;
+    el.className = `scene t-${s.type}${s.fast ? ' fast' : ''}${s.mail ? ' mail' : ''}`;
     el.id = `s${i}`;
     if (s.type === 'photo') {
       const ins = s.insert ? `<div class="insert" style="top:${s.insert.y}px;transform:rotate(${s.insert.rot}deg)"><img src="${photo(s.insert.src)}"></div>` : '';
@@ -27,10 +27,11 @@
       el.innerHTML = `<img class="bg" src="${photo(s.src, true)}"><div class="card"><img src="${photo(s.src)}"></div>${caps(s.captions)}`;
     } else {
       el.innerHTML = `<div class="glow"></div><div class="c-stack">
-        <div class="lockup c-el"><div class="mark" data-logo="mark"></div><div class="wordmark" data-logo="wordmark"></div></div>
+        ${s.mail ? `<div class="env"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 6.5l8.5 6.5 8.5-6.5"/></svg></div>`
+    : '<div class="lockup c-el"><div class="mark" data-logo="mark"></div><div class="wordmark" data-logo="wordmark"></div></div>'}
         <h2 class="c-h">${s.lines.map((l) => `<span class="c-el">${l}</span>`).join('')}</h2>
         ${s.sub ? `<p class="c-sub c-el">${s.sub}</p>` : ''}
-        <div class="btn c-el">Click down below<i class="sheen"></i></div>
+        <div class="btn c-el">${s.button || 'Click down below'}<i class="sheen"></i></div>
         <svg class="arrow c-el" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v15M5.5 12.5 12 19l6.5-6.5"/></svg></div>`;
     }
     stage.appendChild(el);
@@ -74,6 +75,10 @@
         // the arrow keeps nudging down toward the ad's link button
         const arrowAt = from + 0.35 * k + 0.12 * k * ($$(`${el} .c-el`).length - 1) + 0.9;
         tl.to(`${el} .arrow`, { y: 16, duration: 0.45, ease: 'sine.inOut', repeat: Math.floor((to - arrowAt) / 0.45) - 1, yoyo: true, immediateRender: false }, arrowAt);
+        if (s.mail) {
+          tl.fromTo(`${el} .env`, { y: -300, rotation: -20, opacity: 0 }, { y: 0, rotation: 0, opacity: 1, duration: 0.8, ease: 'back.out(1.6)' }, from + 0.2);
+          sfx(from + 0.4, 'notif', 0.9);
+        }
         sfx(from - 0.1, 'whoosh', 0.6); sfx(from + 0.35 * k, 'hit', 0.7); sfx(btnAt, 'glint', 0.7);
         return;
       }

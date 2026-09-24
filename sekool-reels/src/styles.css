@@ -58,6 +58,11 @@ html, body { height: 100%; overflow: hidden; background: #000; }
 .arrow { width: 64px; height: 64px; margin-top: 28px; color: #fff; }
 .t-cta.fast .c-stack { top: 460px; }
 .t-cta.fast .c-h { font-size: 110px; }
+.c-h em { font-style: normal; color: var(--accent); background: #fff; padding: 0 .18em .04em; border-radius: .18em; }
+.env { width: 240px; height: 240px; color: #fff; margin-bottom: 40px; }
+.env svg { display: block; width: 100%; height: 100%; }
+.t-cta.mail .c-stack { top: 330px; }
+.t-cta.mail .c-h { font-size: 90px; line-height: 1.14; }
 
 /* preview controls */
 #controls { position: fixed; left: 0; right: 0; bottom: 0; height: 48px; display: flex; gap: 14px; align-items: center;
