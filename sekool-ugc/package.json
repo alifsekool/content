@@ -1,0 +1,18 @@
+{
+  "name": "sekool-ugc",
+  "version": "1.0.0",
+  "description": "SEKOOL.my green-screen UGC reel (1080x1920): GSAP backgrounds + captions, chroma-keyed avatar",
+  "scripts": {
+    "render": "node render/render.mjs",
+    "stills": "node render/render.mjs --stills",
+    "preview": "npx http-server -c-1 -p 8080 ."
+  },
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@fontsource/poppins": "^5.3.0",
+    "gsap": "^3.15.0",
+    "playwright": "^1.56.1"
+  },
+  "type": "module",
+  "private": true
+}

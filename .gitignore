@@ -1,4 +1,5 @@
 node_modules/
 sekool-explainer/build/
+sekool-ugc/build/
 __pycache__/
 .DS_Store
