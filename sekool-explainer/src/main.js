@@ -6,7 +6,7 @@
   const RENDER = new URLSearchParams(location.search).has('render');
   if (RENDER) document.body.classList.add('render');
 
-  const DURATION = 53;
+  const DURATION = 42;
   const FPS = 60;
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -52,7 +52,7 @@
   $('.btn').insertAdjacentHTML('beforeend', '<i class="sheen"></i>');
 
   // ---------------------------------------------------------------- headline lines
-  $$('.h, .bento-h').forEach((h) => {
+  $$('.h, .bento-h, .sp-h').forEach((h) => {
     h.innerHTML = h.innerHTML.split(/<br\s*\/?>/).map((l) => `<span class="ln"><span class="lni">${l}</span></span>`).join('');
   });
 
@@ -97,160 +97,178 @@
     const featureOut = (id, t) => tl.to([`#${id} .ft`, `#${id} .fv`],
       { y: -90, opacity: 0, filter: B(12), duration: 0.5, ease: 'power3.in', stagger: 0.05 }, t);
 
-    // ------------------------------------------------ S1 · Hook (0 – 3.9)
-    show('#s1', 0, 3.95);
-    drift('s1', 0, 3.95, 1.05);
-    [['.k1', 0.12, 1.02], ['.k2', 1.17, 2.12]].forEach(([k, a, b]) => {
-      blurIn(`#s1 ${k}`, a, { y: 70, blur: 22, scale: 1.08, d: 0.95 });
-      blurOut(`#s1 ${k}`, b, { y: -70, blur: 22 });
+    // ------------------------------------------------ S1 · Hook (0 – 2.3), fast kinetic type
+    show('#s1', 0, 2.35);
+    drift('s1', 0, 2.35, 1.06);
+    [['.k1', 0.04, 0.6], ['.k2', 0.66, 1.22]].forEach(([k, a, b]) => {
+      blurIn(`#s1 ${k}`, a, { y: 60, blur: 18, scale: 1.08, d: 0.6 });
+      blurOut(`#s1 ${k}`, b, { y: -60, blur: 18, d: 0.26 });
     });
-    blurIn('#s1 .k3', 2.27, { y: 40, blur: 26, scale: 1.14, d: 1.2 });
-    tl.to('#s1 .k3', { scale: 1.3, opacity: 0, filter: B(26), duration: 0.5, ease: 'power3.in' }, 3.45);
-    sfx(0.12, 'boom', 0.55); sfx(1.17, 'boom', 0.55); sfx(2.27, 'boom', 0.85);
+    blurIn('#s1 .k3', 1.28, { y: 40, blur: 22, scale: 1.14, d: 0.8 });
+    tl.to('#s1 .k3', { scale: 1.3, opacity: 0, filter: B(24), duration: 0.35, ease: 'power3.in' }, 1.98);
+    sfx(0.04, 'boom', 0.5); sfx(0.66, 'boom', 0.5); sfx(1.28, 'boom', 0.85);
 
-    // ------------------------------------------------ S2 · Problem (3.6 – 8.0)
-    show('#s2', 3.6, 8.05);
+    // ------------------------------------------------ S2 · Problem (2.1 – 6.0)
+    show('#s2', 2.1, 6.05);
     const dist = (i) => Math.hypot((i % COLS) - HC, Math.floor(i / COLS) - HR);
-    tl.fromTo(dots, { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.7, ease: 'expo.out', stagger: (i) => dist(i) * 0.022 }, 3.6);
-    tl.fromTo('#s2 .dots', { scale: 1.35 }, { scale: 1, duration: 3.6, ease: 'power2.out' }, 3.6);
-    [['.t1', 3.85, 4.9], ['.t2', 5.0, 6.0], ['.t3', 6.1, 7.2]].forEach(([k, a, b]) => {
-      blurIn(`#s2 ${k}`, a, { y: 40, blur: 16, d: 0.9 });
-      blurOut(`#s2 ${k}`, b, { y: -40 });
+    tl.fromTo(dots, { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.6, ease: 'expo.out', stagger: (i) => dist(i) * 0.018 }, 2.1);
+    tl.fromTo('#s2 .dots', { scale: 1.35 }, { scale: 1, duration: 3.0, ease: 'power2.out' }, 2.1);
+    [['.t1', 2.3, 3.05], ['.t2', 3.15, 3.9], ['.t3', 4.0, 5.1]].forEach(([k, a, b]) => {
+      blurIn(`#s2 ${k}`, a, { y: 40, blur: 16, d: 0.65 });
+      blurOut(`#s2 ${k}`, b, { y: -40, d: 0.3 });
     });
-    tl.to(dots.filter((d) => d !== hero), { opacity: 0.35, duration: 0.6, ease: 'power2.out' }, 6.3);
-    tl.to(hero, { backgroundColor: '#4f46e5', scale: 2, boxShadow: '0 0 30px 10px rgba(79,70,229,.85)', duration: 0.7 }, 6.35);
-    tl.to('#s2 .dots', { scale: 16, duration: 0.85, ease: 'power3.in' }, 7.15);
+    tl.to(dots.filter((d) => d !== hero), { opacity: 0.35, duration: 0.5, ease: 'power2.out' }, 4.1);
+    tl.to(hero, { backgroundColor: '#4f46e5', scale: 2, boxShadow: '0 0 30px 10px rgba(79,70,229,.85)', duration: 0.6 }, 4.15);
+    tl.to('#s2 .dots', { scale: 16, duration: 0.8, ease: 'power3.in' }, 5.2);
     gsap.set('.zoomer', { scale: 0 });
-    tl.to('.zoomer', { scale: 150, duration: 0.65, ease: 'power3.in' }, 7.35);
-    sfx(3.6, 'riser', 1); sfx(6.35, 'glint', 0.7);
+    tl.to('.zoomer', { scale: 150, duration: 0.65, ease: 'power3.in' }, 5.35);
+    sfx(1.6, 'riser', 1); sfx(4.15, 'glint', 0.7);
 
-    // ------------------------------------------------ S3 · Brand (8.0 – 11.9)
-    show('#s3', 7.98, 11.95);
-    drift('s3', 8.0, 11.95, 1.03);
+    // ------------------------------------------------ S3 · Brand (6.0 – 8.9)
+    show('#s3', 5.98, 9.3);
+    drift('s3', 6.0, 9.3, 1.03);
     const mark = $('#s3 .mark'), wm = $('#s3 .wordmark');
     gsap.set(mark, { x: 960 - (mark.offsetLeft + mark.offsetWidth / 2) });
-    tl.fromTo(mark, { scale: 2, opacity: 0, filter: B(30) }, { scale: 1, opacity: 1, filter: B(0), duration: 1.2 }, 8.0);
-    tl.to(mark, { x: 0, duration: 1.0, ease: 'expo.inOut' }, 8.7);
+    tl.fromTo(mark, { scale: 2, opacity: 0, filter: B(30) }, { scale: 1, opacity: 1, filter: B(0), duration: 1.0 }, 6.0);
+    tl.to(mark, { x: 0, duration: 0.85, ease: 'expo.inOut' }, 6.5);
     const letters = $$('.lt', wm).length ? $$('.lt', wm) : [wm];
-    tl.fromTo(letters, { opacity: 0, x: -6 }, { opacity: 1, x: 0, duration: 1.0, stagger: 0.05 }, 9.05);
-    tl.fromTo('#s3 .glow', { scale: 0.6, opacity: 0 }, { scale: 1.1, opacity: 1, duration: 3.5, ease: 'power2.out' }, 8.0);
-    blurIn('#s3 .s3-tag', 9.75, { y: 30 });
-    blurIn('#s3 .s3-meta', 10.1, { y: 24 });
-    tl.to('#s3 .cam', { opacity: 0, filter: B(12), duration: 0.45, ease: 'power3.in' }, 11.3);
-    tl.to('#s3', { yPercent: -100, duration: 0.75, ease: 'expo.inOut' }, 11.35);
-    sfx(8.0, 'hit', 1); sfx(9.05, 'shimmer', 0.6);
+    tl.fromTo(letters, { opacity: 0, x: -6 }, { opacity: 1, x: 0, duration: 0.9, stagger: 0.045 }, 6.8);
+    tl.fromTo('#s3 .glow', { scale: 0.6, opacity: 0 }, { scale: 1.1, opacity: 1, duration: 3, ease: 'power2.out' }, 6.0);
+    blurIn('#s3 .s3-tag', 7.35, { y: 30, d: 0.8 });
+    blurIn('#s3 .s3-meta', 7.6, { y: 24, d: 0.8 });
+    tl.to('#s3 .cam', { opacity: 0, filter: B(12), duration: 0.35, ease: 'power3.in' }, 8.6);
+    tl.to('#s3', { yPercent: -100, duration: 0.65, ease: 'expo.inOut' }, 8.65);
+    sfx(6.0, 'hit', 1); sfx(6.8, 'shimmer', 0.6);
 
-    // ------------------------------------------------ S4 · 1-to-1 class (11.4 – 18.6)
-    show('#s4', 11.35, 18.7);
-    drift('s4', 11.35, 18.7, 1.03);
-    featureIn('s4', 11.6);
-    deviceIn('#s4 .laptop', 11.5, 18.1);
-    blurIn($$('#s4 .chips span'), 12.3, { y: 20, blur: 8, stagger: 0.06, d: 0.8 });
-    blurIn('#s4 .note', 12.7, { y: 20, blur: 8, d: 0.8 });
-    tl.to('#s4 .live i', { opacity: 0.2, duration: 0.5, repeat: 12, yoyo: true, ease: 'sine.inOut' }, 12.0);
+    // ------------------------------------------------ S3b · Speed: average -> excellent in 1 month (8.7 – 12.3)
+    show('#s3b', 8.65, 12.45);
+    drift('s3b', 8.65, 12.45, 1.04);
+    linesIn('#s3b .sp-h', 8.8);
+    sfx(8.7, 'whoosh', 0.55);
+    blurIn('#s3b .sp-track-wrap', 9.5, { y: 30, blur: 10, d: 0.8 });
+    const days = { d: 1 }, dayEl = $('#s3b .sp-day b');
+    tl.fromTo('#s3b .sp-fill', { scaleX: 0.02 }, { scaleX: 1, duration: 1.3, ease: 'expo.inOut' }, 9.9);
+    tl.fromTo('#s3b .sp-head', { left: '1%' }, { left: '100%', duration: 1.3, ease: 'expo.inOut' }, 9.9);
+    tl.to(days, { d: 30, duration: 1.3, ease: 'expo.inOut', onUpdate: () => { dayEl.textContent = Math.round(days.d); } }, 9.9);
+    tl.to('#s3b .sp-from', { opacity: 0.35, duration: 0.4 }, 10.3);
+    tl.fromTo('#s3b .sp-to', { scale: 0.85, opacity: 0.4 }, { scale: 1, opacity: 1, duration: 0.7 }, 11.1);
+    sfx(9.9, 'swish', 0.5); sfx(11.15, 'glint', 0.8);
+    tl.to('#s3b .cam', { y: -90, opacity: 0, filter: B(12), duration: 0.4, ease: 'power3.in' }, 12.0);
+
+    // ------------------------------------------------ feature scenes: tight, cut ~1 s after each demo lands
+    const T4 = 12.3, T5 = 16.75, T6 = 21.85, T7 = 26.25, T8 = 30.6, T9 = 34.4;
+
+    // S4 · 1-to-1 class
+    show('#s4', T4 - 0.05, T5 + 0.1);
+    drift('s4', T4 - 0.05, T5 + 0.1, 1.03);
+    featureIn('s4', T4 + 0.1);
+    deviceIn('#s4 .laptop', T4, T5 - 0.4);
+    blurIn($$('#s4 .chips span'), T4 + 0.6, { y: 20, blur: 8, stagger: 0.05, d: 0.7 });
+    blurIn('#s4 .note', T4 + 0.9, { y: 20, blur: 8, d: 0.7 });
+    tl.to('#s4 .live i', { opacity: 0.2, duration: 0.5, repeat: 8, yoyo: true, ease: 'sine.inOut' }, T4 + 0.3);
     $$('#s4 .wave i').forEach((b, i) => {
-      tl.fromTo(b, { scaleY: 0.3 }, { scaleY: [0.9, 0.55, 1, 0.7, 0.85][i], duration: [0.28, 0.34, 0.22, 0.3, 0.26][i], repeat: 19, yoyo: true, ease: 'sine.inOut' }, 12.2);
+      tl.fromTo(b, { scaleY: 0.3 }, { scaleY: [0.9, 0.55, 1, 0.7, 0.85][i], duration: [0.28, 0.34, 0.22, 0.3, 0.26][i], repeat: 13, yoyo: true, ease: 'sine.inOut' }, T4 + 0.5);
     });
     const clock = { s: 12 * 60 + 40 };
     const timer = $('#s4 .timer');
-    tl.to(clock, { s: 12 * 60 + 47, duration: 7, ease: 'none', onUpdate: () => {
+    tl.to(clock, { s: 12 * 60 + 45, duration: 4.4, ease: 'none', onUpdate: () => {
       const s = Math.floor(clock.s); timer.textContent = `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
-    } }, 11.5);
-    [['.e1', 12.9, 0.7], ['.e2', 13.75, 0.6], ['.e3', 14.5, 0.4]].forEach(([c, t, d]) => {
+    } }, T4);
+    [['.e1', T4 + 1.0, 0.5], ['.e2', T4 + 1.6, 0.45], ['.e3', T4 + 2.15, 0.35]].forEach(([c, t, d]) => {
       tl.fromTo(`#s4 .eq${c}`, { clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0% 0 0)', duration: d, ease: 'power1.inOut' }, t);
     });
-    tl.fromTo('#s4 .eq.e3 .ok', { scale: 0.4, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.6 }, 14.95);
-    sfx(14.95, 'tick', 0.8);
-    featureOut('s4', 18.1);
+    tl.fromTo('#s4 .eq.e3 .ok', { scale: 0.4, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.5 }, T4 + 2.55);
+    sfx(T4 + 2.55, 'tick', 0.8);
+    featureOut('s4', T5 - 0.45);
 
-    // ------------------------------------------------ S5 · Roadmap: the real PDF (18.3 – 26.0)
-    show('#s5', 18.25, 26.1);
-    drift('s5', 18.25, 26.1, 1.03);
-    featureIn('s5', 18.5);
-    deviceIn('#s5 .ipad', 18.4, 25.5);
-    tl.fromTo('#s5 .free-pill', { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.8 }, 18.95);
-    tl.fromTo('#s5 .sticker', { scale: 1.5, rotation: -24, opacity: 0, filter: B(10) }, { scale: 1, rotation: -8, opacity: 1, filter: B(0), duration: 0.8 }, 19.3);
-    sfx(19.3, 'boom', 0.45);
+    // S5 · Roadmap: the real PDF
+    show('#s5', T5 - 0.05, T6 + 0.1);
+    drift('s5', T5 - 0.05, T6 + 0.1, 1.03);
+    featureIn('s5', T5 + 0.1);
+    deviceIn('#s5 .ipad', T5, T6 - 0.4);
+    tl.fromTo('#s5 .free-pill', { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.7 }, T5 + 0.4);
+    tl.fromTo('#s5 .sticker', { scale: 1.5, rotation: -24, opacity: 0, filter: B(10) }, { scale: 1, rotation: -8, opacity: 1, filter: B(0), duration: 0.7 }, T5 + 0.7);
+    sfx(T5 + 0.7, 'boom', 0.45);
     const PAGE = 854 + 14;
-    [[19.7, 1], [21.7, 2], [23.7, 3]].forEach(([t, n]) => {
-      tl.to('#s5 .pages', { y: -PAGE * n, duration: 0.9, ease: 'expo.inOut' }, t);
+    [[T5 + 1.0, 1], [T5 + 2.3, 2], [T5 + 3.6, 3]].forEach(([t, n]) => {
+      tl.to('#s5 .pages', { y: -PAGE * n, duration: 0.7, ease: 'expo.inOut' }, t);
       sfx(t, 'swish', 0.35);
     });
-    [['.co1', 20.3, 21.55], ['.co2', 22.3, 23.55], ['.co3', 24.3, null]].forEach(([c, a, b]) => {
-      blurIn(`#s5 ${c}`, a, { x: -30, y: 0, blur: 10, d: 0.8 });
-      if (b) blurOut(`#s5 ${c}`, b, { y: -20, d: 0.35 });
+    [['.co1', T5 + 1.4, T5 + 2.2], ['.co2', T5 + 2.7, T5 + 3.5], ['.co3', T5 + 4.0, null]].forEach(([c, a, b]) => {
+      blurIn(`#s5 ${c}`, a, { x: -30, y: 0, blur: 10, d: 0.6 });
+      if (b) blurOut(`#s5 ${c}`, b, { y: -20, d: 0.3 });
     });
-    featureOut('s5', 25.55);
+    featureOut('s5', T6 - 0.45);
 
-    // ------------------------------------------------ S6 · Monthly test (25.7 – 33.3)
-    show('#s6', 25.65, 33.4);
-    drift('s6', 25.65, 33.4, 1.03);
-    featureIn('s6', 25.9);
-    deviceIn('#s6 .win', 25.8, 32.8);
-    tl.fromTo('#s6 .q-prog i', { scaleX: 0.6 }, { scaleX: 1, duration: 1.0 }, 26.5);
-    blurIn($$('#s6 .opt'), 26.6, { y: 24, blur: 6, stagger: 0.06, d: 0.8 });
-    tl.to('#s6 .opt.pick', { borderColor: '#4f46e5', backgroundColor: '#eef0fd', duration: 0.3, ease: 'power2.out' }, 27.7);
-    tl.to('#s6 .opt.pick b', { backgroundColor: '#4f46e5', color: '#ffffff', duration: 0.3, ease: 'power2.out' }, 27.7);
-    sfx(27.7, 'click', 0.8);
-    tl.fromTo('#s6 .opt .ok', { scale: 0.4, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.6 }, 28.1);
-    tl.to('#s6 .opt.pick', { borderColor: '#22c55e', backgroundColor: '#f0fdf4', duration: 0.3, ease: 'power2.out' }, 28.1);
-    tl.to('#s6 .opt.pick b', { backgroundColor: '#22c55e', duration: 0.3, ease: 'power2.out' }, 28.1);
-    sfx(28.1, 'glint', 0.6);
-    tl.to('#s6 .q-state', { x: -140, opacity: 0, filter: B(10), duration: 0.5, ease: 'power3.in' }, 28.75);
-    tl.fromTo('#s6 .r-state', { x: 140, opacity: 0, filter: B(10) }, { x: 0, opacity: 1, filter: B(0), duration: 1.0 }, 29.05);
-    sfx(28.8, 'swish', 0.4);
-    tl.fromTo('#s6 .ring-fg', { strokeDashoffset: 1 }, { strokeDashoffset: 0.15, duration: 1.6, ease: 'expo.out' }, 29.2);
+    // S6 · Monthly test
+    show('#s6', T6 - 0.05, T7 + 0.1);
+    drift('s6', T6 - 0.05, T7 + 0.1, 1.03);
+    featureIn('s6', T6 + 0.1);
+    deviceIn('#s6 .win', T6, T7 - 0.4);
+    tl.fromTo('#s6 .q-prog i', { scaleX: 0.6 }, { scaleX: 1, duration: 0.8 }, T6 + 0.5);
+    blurIn($$('#s6 .opt'), T6 + 0.55, { y: 24, blur: 6, stagger: 0.05, d: 0.6 });
+    tl.to('#s6 .opt.pick', { borderColor: '#4f46e5', backgroundColor: '#eef0fd', duration: 0.25, ease: 'power2.out' }, T6 + 1.35);
+    tl.to('#s6 .opt.pick b', { backgroundColor: '#4f46e5', color: '#ffffff', duration: 0.25, ease: 'power2.out' }, T6 + 1.35);
+    sfx(T6 + 1.35, 'click', 0.8);
+    tl.fromTo('#s6 .opt .ok', { scale: 0.4, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.5 }, T6 + 1.65);
+    tl.to('#s6 .opt.pick', { borderColor: '#22c55e', backgroundColor: '#f0fdf4', duration: 0.25, ease: 'power2.out' }, T6 + 1.65);
+    tl.to('#s6 .opt.pick b', { backgroundColor: '#22c55e', duration: 0.25, ease: 'power2.out' }, T6 + 1.65);
+    sfx(T6 + 1.65, 'glint', 0.6);
+    tl.to('#s6 .q-state', { x: -140, opacity: 0, filter: B(10), duration: 0.4, ease: 'power3.in' }, T6 + 2.1);
+    tl.fromTo('#s6 .r-state', { x: 140, opacity: 0, filter: B(10) }, { x: 0, opacity: 1, filter: B(0), duration: 0.8 }, T6 + 2.35);
+    sfx(T6 + 2.15, 'swish', 0.4);
+    tl.fromTo('#s6 .ring-fg', { strokeDashoffset: 1 }, { strokeDashoffset: 0.15, duration: 1.2, ease: 'expo.out' }, T6 + 2.45);
     const pct = { v: 0 }, pctEl = $('#s6 .pct');
-    tl.to(pct, { v: 85, duration: 1.6, ease: 'expo.out', onUpdate: () => { pctEl.textContent = `${Math.round(pct.v)}%`; } }, 29.2);
-    blurIn('#s6 .r-lvl', 29.6, { y: 20, blur: 8 });
-    blurIn($$('#s6 .r-row'), 29.9, { y: 20, blur: 8, stagger: 0.1, d: 0.8 });
-    featureOut('s6', 32.85);
+    tl.to(pct, { v: 85, duration: 1.2, ease: 'expo.out', onUpdate: () => { pctEl.textContent = `${Math.round(pct.v)}%`; } }, T6 + 2.45);
+    blurIn('#s6 .r-lvl', T6 + 2.7, { y: 20, blur: 8, d: 0.7 });
+    blurIn($$('#s6 .r-row'), T6 + 2.9, { y: 20, blur: 8, stagger: 0.08, d: 0.6 });
+    featureOut('s6', T7 - 0.45);
 
-    // ------------------------------------------------ S7 · Progress report (33.0 – 40.6)
-    show('#s7', 32.95, 40.7);
-    drift('s7', 32.95, 40.7, 1.03);
-    featureIn('s7', 33.2);
-    deviceIn('#s7 .iphone', 33.1, 40.1);
-    tl.fromTo('#s7 .notif', { y: -70, scale: 0.92, opacity: 0, filter: B(8) }, { y: 0, scale: 1, opacity: 1, filter: B(0), duration: 0.9 }, 34.0);
-    sfx(34.0, 'notif', 0.8);
-    tl.to('#s7 .notif', { scale: 0.96, duration: 0.12, yoyo: true, repeat: 1, ease: 'power2.inOut' }, 35.05);
-    sfx(35.05, 'click', 0.6);
-    tl.to('#s7 .lock', { scale: 1.08, opacity: 0, filter: B(10), duration: 0.6, ease: 'power3.inOut' }, 35.25);
-    tl.fromTo('#s7 .report', { scale: 0.86, opacity: 0, borderRadius: 60 }, { scale: 1, opacity: 1, borderRadius: 0, duration: 0.8 }, 35.3);
+    // S7 · Progress report
+    show('#s7', T7 - 0.05, T8 + 0.1);
+    drift('s7', T7 - 0.05, T8 + 0.1, 1.03);
+    featureIn('s7', T7 + 0.1);
+    deviceIn('#s7 .iphone', T7, T8 - 0.4);
+    tl.fromTo('#s7 .notif', { y: -70, scale: 0.92, opacity: 0, filter: B(8) }, { y: 0, scale: 1, opacity: 1, filter: B(0), duration: 0.7 }, T7 + 0.6);
+    sfx(T7 + 0.6, 'notif', 0.8);
+    tl.to('#s7 .notif', { scale: 0.96, duration: 0.1, yoyo: true, repeat: 1, ease: 'power2.inOut' }, T7 + 1.35);
+    sfx(T7 + 1.35, 'click', 0.6);
+    tl.to('#s7 .lock', { scale: 1.08, opacity: 0, filter: B(10), duration: 0.5, ease: 'power3.inOut' }, T7 + 1.5);
+    tl.fromTo('#s7 .report', { scale: 0.86, opacity: 0, borderRadius: 60 }, { scale: 1, opacity: 1, borderRadius: 0, duration: 0.7 }, T7 + 1.55);
     const tp = { n: 4 }, tpEl = $('#s7 .tp-n');
-    tl.to(tp, { n: 5, duration: 0.01, onUpdate: () => { tpEl.textContent = Math.round(tp.n); } }, 36.25);
-    tl.fromTo('#s7 .rp-tp', { scale: 1 }, { scale: 1.06, duration: 0.2, yoyo: true, repeat: 1, ease: 'power2.inOut', transformOrigin: '0% 50%' }, 36.2);
-    tl.fromTo('#s7 .up', { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.6 }, 36.35);
-    sfx(36.25, 'tick', 0.7);
-    tl.fromTo('#s7 .spark polyline', { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 1.2, ease: 'expo.out' }, 35.9);
+    tl.to(tp, { n: 5, duration: 0.01, onUpdate: () => { tpEl.textContent = Math.round(tp.n); } }, T7 + 2.3);
+    tl.fromTo('#s7 .rp-tp', { scale: 1 }, { scale: 1.06, duration: 0.18, yoyo: true, repeat: 1, ease: 'power2.inOut', transformOrigin: '0% 50%' }, T7 + 2.25);
+    tl.fromTo('#s7 .up', { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.5 }, T7 + 2.4);
+    sfx(T7 + 2.3, 'tick', 0.7);
+    tl.fromTo('#s7 .spark polyline', { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 1.0, ease: 'expo.out' }, T7 + 2.0);
     $$('#s7 .mini-ring .fg').forEach((c, i) => {
-      tl.fromTo(c, { strokeDashoffset: 1 }, { strokeDashoffset: 1 - +c.dataset.v, duration: 1.2, ease: 'expo.out' }, 36.4 + i * 0.12);
+      tl.fromTo(c, { strokeDashoffset: 1 }, { strokeDashoffset: 1 - +c.dataset.v, duration: 1.0, ease: 'expo.out' }, T7 + 2.3 + i * 0.08);
     });
-    blurIn('#s7 .rp-card.cnote', 37.1, { y: 20, blur: 8, d: 0.8 });
-    featureOut('s7', 40.15);
+    blurIn('#s7 .rp-card.cnote', T7 + 2.8, { y: 20, blur: 8, d: 0.6 });
+    featureOut('s7', T8 - 0.45);
 
-    // ------------------------------------------------ S8 · Bento recap (40.3 – 45.4)
-    show('#s8', 40.25, 45.45);
-    drift('s8', 40.25, 45.45, 1.04);
-    linesIn('#s8 .bento-h', 40.4);
-    blurIn($$('#s8 .tile-b'), 40.85, { y: 80, blur: 10, stagger: 0.09, d: 1.1 });
-    sfx(40.3, 'whoosh', 0.55);
-    tl.to('#s8 .cam', { opacity: 0, filter: B(14), scale: 1.06, duration: 0.5, ease: 'power3.in' }, 44.95);
+    // S8 · Bento recap: average -> excellent in 1 month
+    show('#s8', T8 - 0.05, T9 + 0.1);
+    drift('s8', T8 - 0.05, T9 + 0.1, 1.04);
+    linesIn('#s8 .bento-h', T8 + 0.1);
+    blurIn($$('#s8 .tile-b'), T8 + 0.5, { y: 80, blur: 10, stagger: 0.07, d: 0.9 });
+    sfx(T8 - 0.1, 'whoosh', 0.55);
+    tl.to('#s8 .cam', { opacity: 0, filter: B(14), scale: 1.06, duration: 0.4, ease: 'power3.in' }, T9 - 0.4);
 
-    // ------------------------------------------------ S9 · CTA (45.1 – 53)
-    show('#s9', 45.1);
-    tl.fromTo('#s9', { opacity: 0 }, { opacity: 1, duration: 0.5, ease: 'power2.out' }, 45.1);
-    drift('s9', 45.1, DURATION, 1.03);
-    tl.fromTo('#s9 .cta-glow', { scale: 0.7, opacity: 0 }, { scale: 1, opacity: 1, duration: 3 }, 45.3);
-    blurIn('#s9 .c1', 45.35, { y: 30 });
-    tl.fromTo('#s9 .free-big', { scale: 1.35, opacity: 0, filter: B(24) }, { scale: 1, opacity: 1, filter: B(0), duration: 1.1 }, 45.7);
-    blurIn('#s9 .c2r', 45.85, { x: 40, y: 0, blur: 16 });
-    sfx(45.7, 'hit', 0.65);
-    blurIn('#s9 .c3', 46.6, { y: 24 });
-    tl.fromTo('#s9 .btn', { y: 30, opacity: 0, filter: B(10) }, { y: 0, opacity: 1, filter: B(0), duration: 1.0 }, 47.1);
-    blurIn('#s9 .endlock', 47.8, { y: 20 });
-    tl.fromTo('#s9 .sheen', { left: '-40%' }, { left: '120%', duration: 1.1, ease: 'power2.inOut' }, 48.6);
-    tl.fromTo('#s9 .sheen', { left: '-40%' }, { left: '120%', duration: 1.1, ease: 'power2.inOut', immediateRender: false }, 50.6);
+    // S9 · CTA
+    show('#s9', T9);
+    tl.fromTo('#s9', { opacity: 0 }, { opacity: 1, duration: 0.4, ease: 'power2.out' }, T9);
+    drift('s9', T9, DURATION, 1.03);
+    tl.fromTo('#s9 .cta-glow', { scale: 0.7, opacity: 0 }, { scale: 1, opacity: 1, duration: 3 }, T9 + 0.2);
+    blurIn('#s9 .c1', T9 + 0.2, { y: 30, d: 0.8 });
+    tl.fromTo('#s9 .free-big', { scale: 1.35, opacity: 0, filter: B(24) }, { scale: 1, opacity: 1, filter: B(0), duration: 1.0 }, T9 + 0.6);
+    blurIn('#s9 .c2r', T9 + 0.75, { x: 40, y: 0, blur: 16, d: 0.9 });
+    sfx(T9 + 0.6, 'hit', 0.65);
+    blurIn('#s9 .c3', T9 + 1.3, { y: 24, d: 0.8 });
+    tl.fromTo('#s9 .btn', { y: 30, opacity: 0, filter: B(10) }, { y: 0, opacity: 1, filter: B(0), duration: 0.9 }, T9 + 1.7);
+    blurIn('#s9 .endlock', T9 + 2.2, { y: 20, d: 0.8 });
+    tl.fromTo('#s9 .sheen', { left: '-40%' }, { left: '120%', duration: 1.0, ease: 'power2.inOut' }, T9 + 2.8);
+    tl.fromTo('#s9 .sheen', { left: '-40%' }, { left: '120%', duration: 1.0, ease: 'power2.inOut', immediateRender: false }, T9 + 4.8);
 
     tl.set({}, {}, DURATION);
   }
@@ -269,7 +287,7 @@
     duration: DURATION,
     fps: FPS,
     cues,
-    music: { bpm: 120, drop: 8.0, end: 50.0 },
+    music: { bpm: 120, drop: 6.0, end: 40.0, breakdown: [34.0, 36.0], arps: 30.0 },
     ready,
     seek: (t) => { tl.seek(t, false); },
   };

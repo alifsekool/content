@@ -8,7 +8,7 @@ effect lands exactly on the frame that triggers it. Everything here is synthesis
 from scratch (no samples), so the audio is royalty-free by construction.
 
 Music: 120 BPM, premium and understated. A dark Dm9 swell with a sub heartbeat under
-the hook, a riser into the brand reveal (drop at 8 s), then a warm electric-piano
+the hook, a riser into the brand reveal (drop at 6 s), then a warm electric-piano
 house groove (Fmaj7 - Am7 - Dm9 - Bbmaj7) with deep sub bass, a short breakdown for
 the call to action, and an Fmaj9 ring-out. Sound effects are cinematic (sub booms,
 air whooshes, soft glass tones) rather than cartoon pops.
@@ -255,7 +255,7 @@ def echo(bus_add, t, y, g, pan, taps=((0.375, 0.35), (0.75, 0.15))):
         bus_add(t + dt, y, g * a, -pan if k % 2 == 0 else pan)
 
 
-def music(dur, drop, end, bpm=120):
+def music(dur, drop, end, bpm=120, breakdown=(34.0, 36.0), arps_from=30.0):
     beat = 60 / bpm
     bar = beat * 4
     e8, e16 = beat / 2, beat / 4
@@ -283,12 +283,12 @@ def music(dur, drop, end, bpm=120):
     for b in range(n_main):
         t0 = drop + b * bar
         root, chord = PROG[b % 4]
-        breakdown = 44.0 <= t0 < 46.0
-        arps = t0 >= 40.0
-        l, r = pad(chord, bar, 0.55 if not breakdown else 0.8, 1300)
+        in_break = breakdown[0] <= t0 < breakdown[1]
+        arps = t0 >= arps_from
+        l, r = pad(chord, bar, 0.55 if not in_break else 0.8, 1300)
         padL.add(t0, l); padR.add(t0, r)
         # electric piano comping: 1 (long), 2& (short), 3& (medium)
-        comp = [(0, 1.4, 1.0), (3, 0.35, 0.7), (5, 0.8, 0.85)] if not breakdown else [(0, 1.9, 1.0)]
+        comp = [(0, 1.4, 1.0), (3, 0.35, 0.7), (5, 0.8, 0.85)] if not in_break else [(0, 1.9, 1.0)]
         for e, ln, v in comp:
             for m in chord:
                 y = ep(midi(m), ln, v * 0.85)
@@ -301,7 +301,7 @@ def music(dur, drop, end, bpm=120):
                 y = soft_pluck(midi(tones[order[k]]), 0.45, 0.5)
                 echo(inst.add, t0 + k * e8, y, 0.55, 0.3)
                 verb.add(t0 + k * e8, y, 0.4)
-        if breakdown:
+        if in_break:
             continue
         for k in range(4):
             drums.add(t0 + k * beat, deep_kick(0.7)); kicks.append(t0 + k * beat)
@@ -353,7 +353,7 @@ def main(cue_path, out_path):
     mus = cfg.get('music', {})
     drop, end = mus.get('drop', 14.0), mus.get('end', dur - 2)
 
-    mL, mR, verb = music(dur, drop, end, mus.get('bpm', 120))
+    mL, mR, verb = music(dur, drop, end, mus.get('bpm', 120), tuple(mus.get('breakdown', (34.0, 36.0))), mus.get('arps', 30.0))
 
     fx = Bus(dur)
     bell_like = {'glint', 'shimmer', 'notif', 'hit', 'boom'}

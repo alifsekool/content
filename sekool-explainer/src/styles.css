@@ -63,6 +63,22 @@ svg.ic { width: 1em; height: 1em; display: block; }
   font-size: 30px; font-weight: 500; color: rgba(255, 255, 255, .72); }
 .s3-meta i, .c3 i { width: 6px; height: 6px; border-radius: 50%; background: currentColor; display: block; opacity: .7; }
 
+/* ---------- S3b speed ---------- */
+.sp-h { position: absolute; top: 190px; width: 100%; text-align: center; font-size: 128px; font-weight: 600;
+  letter-spacing: -0.05em; line-height: 1.04; }
+.sp-h .ln { display: block; }
+.sp-track-wrap { position: absolute; left: 360px; right: 360px; top: 660px; }
+.sp-labels { display: flex; justify-content: space-between; font-size: 30px; font-weight: 600; margin-bottom: 22px; }
+.sp-from { color: var(--grey); }
+.sp-to { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; transform-origin: 100% 50%; }
+.sp-track { position: relative; height: 16px; border-radius: 8px; background: var(--fill); }
+.sp-fill { position: absolute; inset: 0; border-radius: 8px; background: var(--grad); transform-origin: left; }
+.sp-head { position: absolute; top: 50%; width: 36px; height: 36px; margin: -18px 0 0 -18px; border-radius: 50%; background: #fff;
+  box-shadow: 0 6px 20px rgba(79, 70, 229, .45), 0 0 0 6px rgba(79, 70, 229, .15); }
+.sp-day { position: absolute; left: 50%; top: 52px; transform: translateX(-50%); font-size: 22px; font-weight: 600; color: var(--accent);
+  white-space: nowrap; font-variant-numeric: tabular-nums; }
+.sp-weeks { display: flex; justify-content: space-between; margin-top: 70px; font-size: 20px; color: var(--grey-2); font-weight: 500; }
+
 /* ---------- feature template ---------- */
 .ft { position: absolute; left: 150px; top: 0; bottom: 0; width: 700px; display: flex; flex-direction: column;
   justify-content: center; }
@@ -240,7 +256,7 @@ svg.ic { width: 1em; height: 1em; display: block; }
 /* ---------- S9 CTA ---------- */
 .cta-glow { position: absolute; left: 50%; top: 52%; width: 1800px; height: 1100px; margin: -550px 0 0 -900px;
   background: radial-gradient(ellipse at center, rgba(79, 70, 229, .45), rgba(79, 70, 229, 0) 62%); }
-.c1 { position: absolute; top: 250px; width: 100%; text-align: center; font-size: 54px; font-weight: 500; color: #a1a1a6;
+.c1 { position: absolute; top: 250px; white-space: nowrap; width: 100%; text-align: center; font-size: 54px; font-weight: 500; color: #a1a1a6;
   letter-spacing: -0.02em; }
 .c2 { position: absolute; top: 340px; width: 100%; text-align: center; font-size: 132px; font-weight: 600;
   letter-spacing: -0.05em; line-height: 1.1; white-space: nowrap; }
