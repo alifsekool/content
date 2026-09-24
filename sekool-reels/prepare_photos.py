@@ -3,11 +3,12 @@
 
     python3 prepare_photos.py /path/to/originals
 
-The originals (1.webp ... 5.webp) are real photos of children, so they and every
+The originals (1.webp ... 7.webp) are real photos of children, so they and every
 file made from them stay out of git (see the root .gitignore). This script:
 
-  - blurs identifying text: school names and crests on the results slip (1) and
-    the child's full name, school name and crest on the plaque (4)
+  - blurs identifying text: school names and crests on the results slip (1),
+    the child's full name, school name and crest on the plaque (4), and the
+    school name and crests on the stage, trophy and uniform (6)
   - saves every photo as photos/N.jpg, plus close-ups used as inserts (photos/1-slip.jpg)
   - saves a heavily blurred, darkened copy (photos/N-bg.jpg) for the landscape
     photos, used as the 9:16 background behind the photo card
@@ -26,6 +27,12 @@ REDACT = {
     4: [(618, 922, 824, 988),    # child's full name
         (606, 996, 838, 1064),   # school name
         (646, 736, 746, 834)],   # school crest
+    6: [(122, 426, 476, 490),    # stage banner: school name (the line slants up to the right)
+        (446, 410, 524, 454),    # stage banner: end of the school name
+        (278, 318, 342, 394),    # stage banner crest
+        (784, 240, 844, 470),    # side banner crest and text
+        (572, 1072, 744, 1202),  # trophy crest and school name
+        (914, 1144, 994, 1256)], # crest on the uniform pocket
 }
 LANDSCAPE = (2, 3)
 # close-ups shown as inserts: name -> (photo, crop box)
@@ -33,7 +40,7 @@ CLOSEUPS = {'1-slip': (1, (566, 1064, 1044, 1336))}   # marks table on the resul
 
 
 def redact(im, boxes):
-    blurred = im.filter(ImageFilter.GaussianBlur(12))
+    blurred = im.filter(ImageFilter.GaussianBlur(20))
     mask = Image.new('L', im.size, 0)
     d = ImageDraw.Draw(mask)
     for b in boxes:
@@ -45,7 +52,7 @@ def redact(im, boxes):
 def main(src):
     src = Path(src)
     OUT.mkdir(exist_ok=True)
-    for n in range(1, 6):
+    for n in range(1, 8):
         im = Image.open(src / f'{n}.webp').convert('RGB')
         if n in REDACT:
             im = redact(im, REDACT[n])

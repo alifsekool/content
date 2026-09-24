@@ -22,17 +22,17 @@
     el.id = `s${i}`;
     if (s.type === 'photo') {
       const ins = s.insert ? `<div class="insert" style="top:${s.insert.y}px;transform:rotate(${s.insert.rot}deg)"><img src="${photo(s.insert.src)}"></div>` : '';
-      el.innerHTML = `<div class="cam"><img class="ph" src="${photo(s.src)}" style="object-position:${s.pos}"></div><div class="shade"></div>${ins}${caps(s.captions)}`;
+      el.innerHTML = `<div class="cam"><img class="ph" src="${photo(s.src)}" style="object-position:${s.pan ? s.pan[0] : s.pos}"></div><div class="shade"></div>${ins}${caps(s.captions)}`;
     } else if (s.type === 'card') {
       el.innerHTML = `<img class="bg" src="${photo(s.src, true)}"><div class="card"><img src="${photo(s.src)}"></div>${caps(s.captions)}`;
     } else {
-      const meta = s.meta ? `<p class="c-meta c-el">${s.meta.join('<i></i>')}</p>` : '';
       el.innerHTML = `<div class="glow"></div><div class="c-stack">
         <div class="lockup c-el"><div class="mark" data-logo="mark"></div><div class="wordmark" data-logo="wordmark"></div></div>
         <h2 class="c-h">${s.lines.map((l) => `<span class="c-el">${l}</span>`).join('')}</h2>
-        ${s.sub ? `<p class="c-sub c-el">${s.sub}</p>` : ''}${meta}
+        ${s.sub ? `<p class="c-sub c-el">${s.sub}</p>` : ''}
         <div class="btn c-el">${s.button}<i class="sheen"></i></div>
-        <p class="url c-el">sekool.my</p></div>`;
+        <p class="link c-el">Click link down below</p>
+        <svg class="arrow c-el" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v15M5.5 12.5 12 19l6.5-6.5"/></svg></div>`;
     }
     stage.appendChild(el);
   });
@@ -72,6 +72,9 @@
         tl.fromTo(`${el} .btn`, { scale: 0.85 }, { scale: 1, duration: 0.7, ease: 'back.out(2.2)', immediateRender: false }, btnAt);
         tl.fromTo(`${el} .sheen`, { left: '-40%' }, { left: '120%', duration: 1.0, ease: 'power2.inOut' }, btnAt + 0.7);
         tl.fromTo(`${el} .sheen`, { left: '-40%' }, { left: '120%', duration: 1.0, ease: 'power2.inOut', immediateRender: false }, btnAt + 2.2);
+        // the arrow keeps nudging down toward the ad's link button
+        const arrowAt = from + 0.35 * k + 0.12 * k * ($$(`${el} .c-el`).length - 1) + 0.9;
+        tl.to(`${el} .arrow`, { y: 16, duration: 0.45, ease: 'sine.inOut', repeat: Math.floor((to - arrowAt) / 0.45) - 1, yoyo: true, immediateRender: false }, arrowAt);
         sfx(from - 0.1, 'whoosh', 0.6); sfx(from + 0.35 * k, 'hit', 0.7); sfx(btnAt, 'glint', 0.7);
         return;
       }
@@ -88,6 +91,7 @@
       }
       // slow push-in on the photo
       const target = s.type === 'photo' ? `${el} .ph` : `${el} .card img`;
+      if (s.pan) tl.fromTo(target, { objectPosition: s.pan[0] }, { objectPosition: s.pan[1], duration: to - from, ease: 'sine.inOut' }, from);
       tl.fromTo(target, { scale: s.zoom[0] }, { scale: s.zoom[1], duration: to - from, ease: 'sine.inOut', transformOrigin: s.origin }, from);
       if (s.insert) {
         tl.fromTo(`${el} .insert`, { scale: 0.5, opacity: 0, filter: B(10) },
