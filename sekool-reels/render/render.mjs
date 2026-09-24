@@ -4,6 +4,7 @@
 //   node render/render.mjs                          every ad
 //   node render/render.mjs --ad quick-cut           one ad
 //   node render/render.mjs --ad quick-cut --stills 0.5,5.5   PNG stills -> build/stills/
+//   node render/render.mjs --page explainers       the motion-graphics explainers (src/explainers.js)
 //
 // Pipeline: static server -> Chromium (Playwright) seeks the GSAP timeline frame by
 // frame -> JPEGs piped into ffmpeg -> mux the soundtrack made by the explainer's
@@ -42,7 +43,8 @@ const server = http.createServer((req, res) => {
   fs.createReadStream(p).pipe(res);
 });
 await new Promise((r) => server.listen(0, '127.0.0.1', r));
-const base = `http://127.0.0.1:${server.address().port}/src/index.html`;
+// --page explainers renders src/explainers.html (the motion-graphics explainers) instead of the photo ads
+const base = `http://127.0.0.1:${server.address().port}/src/${opt('page', 'index')}.html`;
 
 const run = (cmd, a) => new Promise((res, rej) => {
   const p = spawn(cmd, a, { stdio: ['ignore', 'inherit', 'inherit'] });

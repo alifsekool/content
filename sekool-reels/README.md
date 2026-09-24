@@ -10,6 +10,24 @@ Short 9:16 video ads (1080×1920, 30 fps, sound on) built from real SEKOOL custo
 
 All three end on the same simple indigo card: the SEKOOL logo, "1 to 1 with Cikgu Sekolah Kebangsaan.", then a white "Click down below" pill with a bouncing arrow pointing at the ad's own link button. The captions stay between y = 260 and y = 1250, so the Reels and Stories interface doesn't cover them.
 
+## Explainer Reels (Bahasa Melayu)
+
+Two motion-graphics explainers in the same 9:16 format, built from SEKOOL's ad copy. They have music and sound effects but no voiceover, so all the copy is on screen.
+
+| Video | Length | Story |
+|-------|--------|-------|
+| `explainer-sekool-class` | 48 s | Darjah 2 – 6 lemah Matematik → diagnose (Concept, Calculation, Problem Statement, Application) → learning steps → Personal Teacher dari Sekolah Kebangsaan, skor A → 5+ students naik pentas (photos 6 and 4) → elak gagal / kelas pemulihan → SEKOOL Class: Ujian Roadmap → Trial Class → only 6 new students per week → "Join Free 1 to 1 Trial Class" |
+| `explainer-roadmap` | 39 s | Lemah Matematik? → 3 things to know, each shown with the real Learning Roadmap pages (`src/assets/roadmap/`) → "Good news?" Learning Roadmap → Darjah 1 – 6, isi details → Ujian Roadmap sent by email |
+
+The copy and timing for each scene are in `src/explainers.js`, and the styles are in `src/explainers.css`.
+
+```bash
+node render/render.mjs --page explainers                      # both -> output/explainer-*.mp4
+node render/render.mjs --page explainers --ad explainer-roadmap --stills 12.5
+```
+
+In preview, open `http://localhost:8081/src/explainers.html?ad=explainer-roadmap`.
+
 ## Photos stay out of git
 
 This repository is public and the photos show real children, so the photos and the rendered videos are git-ignored (`photos/`, `output/`, `build/`). Only the code is committed. Keep the originals somewhere private, such as Google Drive.
