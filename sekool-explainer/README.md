@@ -1,6 +1,6 @@
 # SEKOOL.my Explainer Video
 
-A 42-second, 1080p / 60 fps premium motion-graphics explainer for **SEKOOL.my** (1-to-1 online classes for primary school, KSSR/KSSM, UASA & MPT4 prep), aimed at parents.
+A 50-second, 1080p / 60 fps premium motion-graphics explainer for **SEKOOL.my** (1-to-1 online classes for primary school, KSSR/KSSM, UASA & MPT4 prep), aimed at parents.
 
 - **Final video:** [`output/sekool-explainer.mp4`](output/sekool-explainer.mp4)
 - **Script and scene breakdown:** [`STORYBOARD.md`](STORYBOARD.md)

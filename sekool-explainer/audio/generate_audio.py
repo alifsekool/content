@@ -8,7 +8,7 @@ effect lands exactly on the frame that triggers it. Everything here is synthesis
 from scratch (no samples), so the audio is royalty-free by construction.
 
 Music: 120 BPM, premium and understated. A dark Dm9 swell with a sub heartbeat under
-the hook, a riser into the brand reveal (drop at 6 s), then a warm electric-piano
+the hook, a riser into the brand reveal (the drop), then a warm electric-piano
 house groove (Fmaj7 - Am7 - Dm9 - Bbmaj7) with deep sub bass, a short breakdown for
 the call to action, and an Fmaj9 ring-out. Sound effects are cinematic (sub booms,
 air whooshes, soft glass tones) rather than cartoon pops.
@@ -263,10 +263,10 @@ def music(dur, drop, end, bpm=120, breakdown=(34.0, 36.0), arps_from=30.0):
     kicks = []
 
     # ---- intro: dark Dm9 swell with a sub heartbeat
-    n_intro = int(round(drop / bar))
+    n_intro = int(np.ceil(drop / bar - 1e-9))
     for b in range(n_intro):
         t0 = b * bar
-        l, r = pad(INTRO_PAD, bar, 0.7 + 0.2 * b, 500 + 350 * b)
+        l, r = pad(INTRO_PAD, min(bar, drop - t0), 0.7 + 0.2 * b, 500 + 350 * b)
         padL.add(t0, l); padR.add(t0, r)
         for k in range(4):
             tt = t0 + k * beat

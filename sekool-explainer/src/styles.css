@@ -39,16 +39,31 @@ svg.ic { width: 1em; height: 1em; display: block; }
   font-size: 210px; font-weight: 600; letter-spacing: -0.05em; line-height: 1; white-space: nowrap; }
 .k3 { font-size: 196px; }
 
-/* ---------- S2 dots ---------- */
-.dots { position: absolute; inset: 0; transform-origin: 1158px 606px; }
-.dot { position: absolute; width: 10px; height: 10px; margin: -5px 0 0 -5px; border-radius: 50%; background: #3a3a3c; }
-.dot.hero { background: #fff; }
-.zoomer { position: absolute; left: 1158px; top: 606px; width: 40px; height: 40px; margin: -20px 0 0 -20px;
-  border-radius: 50%; background: var(--accent); }
-.s2t { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
-  font-size: 120px; font-weight: 600; letter-spacing: -0.045em; white-space: nowrap;
-  text-shadow: 0 0 60px #000, 0 0 30px #000; }
-.s2t .dim { color: #6e6e73; }
+/* ---------- S2 problem equation ---------- */
+.eqn { position: absolute; left: 0; right: 0; top: 230px; display: flex; justify-content: center; align-items: flex-start; gap: 36px; }
+.term { width: 440px; text-align: center; }
+.term p { margin-top: 34px; font-size: 36px; font-weight: 600; letter-spacing: -0.03em; white-space: nowrap; }
+.term p .dim { color: #8e8e93; }
+.card-d { position: relative; width: 440px; height: 440px; border-radius: 44px; background: #111114;
+  box-shadow: inset 0 0 0 1px #2a2a2f; overflow: hidden; }
+.op { width: 90px; height: 440px; display: flex; align-items: center; justify-content: center; font-size: 120px;
+  font-weight: 300; color: #6e6e73; }
+.crowd { display: grid; grid-template-columns: repeat(7, 1fr); padding: 58px; gap: 0; place-items: center; }
+.crowd i { width: 22px; height: 22px; border-radius: 50%; background: #48484a; display: block; }
+.pace { display: flex; flex-direction: column; justify-content: center; gap: 46px; padding: 0 56px; }
+.lane { position: relative; height: 2px; background: #2c2c30; }
+.lane i { position: absolute; left: 0; top: -11px; width: 24px; height: 24px; border-radius: 50%; background: #8e8e93; display: block; }
+.curve svg { position: absolute; left: 40px; top: 70px; width: 360px; height: 260px; overflow: visible; }
+.curve .axis { stroke: #2c2c30; stroke-width: 2; fill: none; }
+.curve .bell { stroke: #8e8e93; stroke-width: 5; fill: none; stroke-linecap: round; stroke-dasharray: 1 2; stroke-dashoffset: 1; }
+.c-lbl { position: absolute; top: 352px; font-size: 20px; font-weight: 500; color: #6e6e73; }
+.c-lbl.l { left: 40px; } .c-lbl.r { right: 40px; } .c-lbl.m { left: 50%; transform: translateX(-50%); color: #d1d1d6; }
+.you { position: absolute; left: 220px; top: 110px; width: 0; height: 0; }
+.you i { position: absolute; left: -16px; top: -16px; width: 32px; height: 32px; border-radius: 50%; background: var(--accent);
+  box-shadow: 0 0 30px 8px rgba(79, 70, 229, .8); display: block; }
+.you span { position: absolute; left: 0; top: -66px; transform: translateX(-50%); white-space: nowrap; font-size: 20px; font-weight: 600;
+  color: #fff; background: var(--accent); padding: 4px 12px; border-radius: 8px; }
+.zoomer { position: absolute; left: 0; top: 0; width: 40px; height: 40px; margin: -20px 0 0 -20px; border-radius: 50%; background: var(--accent); }
 
 /* ---------- S3 brand ---------- */
 .glow { position: absolute; left: 50%; top: 45%; width: 1600px; height: 1600px; margin: -800px 0 0 -800px; border-radius: 50%;
@@ -57,9 +72,12 @@ svg.ic { width: 1em; height: 1em; display: block; }
   align-items: center; gap: 56px; color: #fff; }
 .lockup .mark { width: 280px; height: 198px; }
 .lockup .wordmark { width: 760px; height: 158px; }
-.s3-tag { position: absolute; top: 620px; width: 100%; text-align: center; font-size: 52px; font-weight: 500;
+.s3-tag { position: absolute; top: 590px; width: 100%; text-align: center; font-size: 52px; font-weight: 500;
   letter-spacing: -0.02em; }
-.s3-meta { position: absolute; top: 720px; width: 100%; display: flex; justify-content: center; align-items: center; gap: 26px;
+.s3-tag2 { position: absolute; top: 670px; width: 100%; text-align: center; font-size: 46px; font-weight: 500;
+  letter-spacing: -0.02em; color: rgba(255, 255, 255, .85); }
+.s3-tag2 b { font-weight: 600; color: var(--accent); background: #fff; padding: 2px 22px 6px; border-radius: 16px; margin-left: 8px; }
+.s3-meta { position: absolute; top: 790px; width: 100%; display: flex; justify-content: center; align-items: center; gap: 26px;
   font-size: 30px; font-weight: 500; color: rgba(255, 255, 255, .72); }
 .s3-meta i, .c3 i { width: 6px; height: 6px; border-radius: 50%; background: currentColor; display: block; opacity: .7; }
 
@@ -88,6 +106,7 @@ svg.ic { width: 1em; height: 1em; display: block; }
 .chips { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 40px; }
 .chips span { font-size: 24px; font-weight: 500; padding: 10px 22px; border-radius: 999px; background: var(--fill); }
 .note { display: flex; align-items: center; gap: 12px; margin-top: 26px; font-size: 26px; font-weight: 500; }
+.p .ink { color: var(--ink); font-weight: 600; }
 .note span { width: 36px; height: 36px; border-radius: 50%; background: var(--accent); color: #fff; display: flex;
   align-items: center; justify-content: center; }
 .note svg { width: 20px; height: 20px; }
@@ -124,6 +143,10 @@ svg.ic { width: 1em; height: 1em; display: block; }
   background: rgba(255, 255, 255, .16); border: 2px solid rgba(255, 255, 255, .3); display: flex; align-items: center;
   justify-content: center; font-size: 58px; font-weight: 600; letter-spacing: -0.02em; color: #fff; }
 .avatar.sm { width: 64px; height: 64px; margin: -32px 0 0 -32px; font-size: 26px; top: 46%; }
+.sk-badge { position: absolute; left: 14px; top: 14px; display: flex; align-items: center; gap: 8px; background: #fff; color: var(--ink);
+  font-size: 15px; font-weight: 600; padding: 6px 12px 6px 6px; border-radius: 999px; }
+.sk-badge span { width: 22px; height: 22px; border-radius: 50%; background: var(--accent); color: #fff; display: flex; align-items: center; justify-content: center; }
+.sk-badge svg { width: 13px; height: 13px; }
 .name { position: absolute; left: 14px; bottom: 14px; font-size: 16px; font-weight: 500; background: rgba(0, 0, 0, .4);
   padding: 4px 12px; border-radius: 8px; color: #fff; }
 .name.sm { font-size: 12px; left: 8px; bottom: 8px; padding: 2px 8px; }
