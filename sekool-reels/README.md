@@ -28,6 +28,15 @@ node render/render.mjs --page explainers --ad explainer-roadmap --stills 12.5
 
 In preview, open `http://localhost:8081/src/explainers.html?ad=explainer-roadmap`.
 
+## Image ads (static)
+
+Seven 1080×1350 (4:5) feed images, one for each angle in the **Copywriting SEKOOL** Google Doc: `diagnose-dulu`, `kisah-parent`, `kalau-dibiarkan`, `kajian-1-to-1`, `parent-penat` (photo 7), `naik-pentas` (photos 6 and 4) and `tuisyen-vs-sekool`. The design is in `src/statics.js` and `src/statics.css`. The caption for each image is in [`STATIC-ADS.md`](STATIC-ADS.md).
+
+```bash
+node render/statics.mjs              # all -> output/statics/<name>.png
+node render/statics.mjs naik-pentas  # one
+```
+
 ## Photos stay out of git
 
 This repository is public and the photos show real children, so the photos and the rendered videos are git-ignored (`photos/`, `output/`, `build/`). Only the code is committed. Keep the originals somewhere private, such as Google Drive.
