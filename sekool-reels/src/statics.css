@@ -33,11 +33,13 @@ h1 em { font-style: normal; color: var(--accent); }
 .sub { margin-top: 44px; font-size: 42px; font-weight: 500; line-height: 1.4; letter-spacing: -0.015em; color: var(--grey); }
 .dark .sub { color: rgba(255, 255, 255, .72); }
 .indigo .sub { color: rgba(255, 255, 255, .85); }
+.by { margin-top: 30px; font-size: 28px; font-weight: 700; color: var(--grey); letter-spacing: 0; }
+.indigo .by { color: rgba(255, 255, 255, .7); }
 
 /* photo layout: photo on top, headline + subheadline below */
 .photo { position: absolute; left: 0; top: 0; width: 1080px; height: 780px; object-fit: cover; }
-.photos { position: absolute; left: 0; top: 0; width: 1080px; height: 780px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; background: #fff; }
+.photos { position: absolute; left: 0; top: 0; width: 1080px; height: 780px; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 100%; gap: 8px; overflow: hidden; background: #fff; }
 .photos img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.text.low { top: 780px; bottom: 60px; }
+.text.low { top: 810px; bottom: 60px; }
 .text.low h1 { font-size: 70px; }
 .text.low .sub { margin-top: 26px; font-size: 36px; }

@@ -4,50 +4,52 @@
  * render/statics.mjs saves them all as PNGs. Captions are in ../STATIC-ADS.md. */
 (() => {
   const logo = (cls = '') => `<div class="logo ${cls}" data-logo="wordmark"></div>`;
-  const text = (h, sub, cls = '') => `<div class="text ${cls}">${cls ? '' : '<div class="bar"></div>'}<h1>${h}</h1><p class="sub">${sub}</p></div>`;
+  // `by` is an optional small attribution line (who said it, or the source of a figure)
+  const keep = (t) => t.replace(/1 to 1/g, '1&nbsp;to&nbsp;1'); // never split "1 to 1" across lines
+  const text = (h, sub, cls = '', by = '') => keep(`<div class="text ${cls}">${cls ? '' : '<div class="bar"></div>'}<h1>${h}</h1><p class="sub">${sub}</p>${by ? `<p class="by">${by}</p>` : ''}</div>`);
 
   const STATICS = {
     // Positioning: diagnose first
     'diagnose-dulu': {
       bg: '',
       html: logo() + text('Kami kenal pasti <em>kelemahan anak</em> dulu, baru mula mengajar.',
-        '1 to 1 Online Class Matematik untuk anak Darjah 1 – 6.'),
+        'Ujian Roadmap tunjuk di mana anak lemah dan kenapa, sebelum kelas bermula.'),
     },
     // Proof: the parent's story
     'kisah-parent': {
       bg: 'lav',
       html: logo() + text('“Markah Matematik anak saya naik dari <em>59 ke 82</em> dalam 3 bulan.”',
-        'Parent pelajar SEKOOL'),
+        'Setiap kali dia salah, cikgu terangkan kenapa sampai dia betul-betul faham.', '', 'Parent pelajar SEKOOL'),
     },
     // Priority: act before it gets worse
     'kalau-dibiarkan': {
       bg: 'dark',
       html: logo() + text('Anak lemah Matematik? Bantu dia <em>sebelum masuk kelas pemulihan.</em>',
-        '1 to 1 Online Class dengan Personal Teacher untuk anak Darjah 1 – 6.'),
+        'Kalau dibiarkan, anak boleh gagal ujian, turun kelas dan hilang minat belajar.'),
     },
     // Authority: EEF research
     'kajian-1-to-1': {
       bg: 'indigo',
       html: logo() + text('Pelajar kelas 1 to 1 capai purata <em>5 bulan</em> kemajuan tambahan.',
-        'Menurut kajian Education Endowment Foundation (EEF).'),
+        'Sebab cikgu fokus pada seorang pelajar sahaja, ikut pace dia.', '', 'Sumber: Education Endowment Foundation (EEF)'),
     },
     // Pain: the tired working parent (photo 7)
     'parent-penat': {
       bg: '',
       html: `<img class="photo" src="../photos/7.jpg" style="object-position:50% 62%">${logo('chip')}` +
-        text('Tak sempat teman anak buat homework <em>Matematik?</em>', 'Personal Teacher SEKOOL ajar anak 1 to 1, secara online dari rumah.', 'low'),
+        text('Tak sempat teman anak buat homework <em>Matematik?</em>', 'Personal Teacher SEKOOL boleh temankan dia, 1 to 1 secara online dari rumah.', 'low'),
     },
     // Proof: awards (photos 6 and 4)
     'naik-pentas': {
       bg: '',
       html: `<div class="photos"><img src="../photos/6.jpg" style="object-position:72% 55%"><img src="../photos/4.jpg" style="object-position:45% 60%"></div>${logo('chip')}` +
-        text('Tahun lepas, <em>5+ pelajar SEKOOL</em> terima Anugerah Akademik.', 'Kelas Matematik 1 to 1 untuk anak Darjah 1 – 6.', 'low'),
+        text('Tahun lepas, <em>5+ pelajar SEKOOL</em> terima Anugerah Akademik.', 'Mereka belajar 1 to 1 dengan Personal Teacher yang ajar ikut tahap mereka.', 'low'),
     },
     // Positioning: a class that fits how the child learns
     'ikut-cara-belajar': {
       bg: 'lav',
       html: logo() + text('Anak tak perlukan lebih banyak kelas. Dia perlukan kelas yang <em>ikut cara dia belajar.</em>',
-        'SEKOOL: 1 to 1 Online Class dengan Personal Teacher.'),
+        'Di SEKOOL, Personal Teacher ajar 1 to 1 ikut tahap dan pace anak anda.'),
     },
   };
   window.STATICS = STATICS;
