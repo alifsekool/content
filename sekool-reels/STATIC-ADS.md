@@ -222,19 +222,23 @@ Each image below has the text to paste into Ads Manager. Only the first ~125 cha
 
 ## 12. `document-demonstrate-duplicate`: Method (from the sekool.my Threads post)
 
+The image shows the post up to "Document, Demonstrate, Duplicate." and then says "Baca caption", so the caption carries the explanation.
+
 **Primary text**
 
-> The most underrated way untuk mengajar student:
+> The most underrated way untuk mengajar student: Document, Demonstrate, Duplicate.
 >
-> 1. Cikgu listkan cara untuk jawab soalan
-> 2. Cikgu guna list tu untuk jawab soalan depan pelajar
-> 3. Pelajar guna list yang sama untuk jawab soalan depan cikgu
+> Kenapa cara ni berkesan?
 >
-> Document, Demonstrate, Duplicate.
+> 📝 Document: Cikgu listkan langkah untuk jawab soalan. Anak ada panduan yang jelas, bukan sekadar tengok dan cuba ingat.
 >
-> Anak bukan sekadar tengok cikgu jawab. Dia belajar cara, kemudian buktikan dia boleh buat sendiri.
+> 👀 Demonstrate: Cikgu guna list tu untuk jawab soalan depan anak, supaya anak nampak macam mana setiap langkah digunakan.
 >
-> Semuanya bermula dengan FREE Learning Roadmap: kami kenal pasti di mana anak lemah dulu, supaya Personal Teacher tahu cara apa yang perlu diajar.
+> 🔁 Duplicate: Anak guna list yang sama untuk jawab soalan depan cikgu. Kalau silap, cikgu nampak terus di langkah mana.
+>
+> Pro tip: kalau cikgu sendiri tak ikut list masa jawab, list tu perlu dibuat semula.
+>
+> Di SEKOOL, semuanya bermula dengan FREE Learning Roadmap: kami kenal pasti di mana anak lemah dulu, supaya Personal Teacher tahu langkah apa yang perlu diajar.
 >
 > Klik link di bawah dan isi details anda. Kami akan hantar Ujian Roadmap di email untuk anak jawab.
 
