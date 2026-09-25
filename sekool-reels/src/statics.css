@@ -39,7 +39,7 @@ h1 em { font-style: normal; color: var(--accent); }
 .indigo .by { color: rgba(255, 255, 255, .7); }
 
 /* document-demonstrate-duplicate */
-.ddd { margin-top: 50px; font-size: 60px; font-weight: 700; line-height: 1.15; letter-spacing: -0.035em; color: #c7c4ff; }
+.ddd { margin-top: 50px; font-size: 60px; font-weight: 700; line-height: 1.15; letter-spacing: -0.035em; color: #fff; }
 .readcap { position: absolute; left: 90px; bottom: 90px; display: flex; align-items: center; gap: 12px; font-size: 34px; font-weight: 600;
   color: rgba(255, 255, 255, .85); }
 .readcap svg { width: 36px; height: 36px; }

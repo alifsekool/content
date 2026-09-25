@@ -80,7 +80,7 @@
       bg: 'indigo',
       // hook + the 3D line, then a pointer to the caption (steps and Pro Tips live in the caption)
       html: logo() + `<div class="text" style="bottom:200px"><div class="bar"></div>
-        <h1>The most underrated way untuk mengajar student Darjah 1&nbsp;–&nbsp;6.</h1>
+        <h1>The most underrated way untuk mengajar <em>student Darjah 1&nbsp;–&nbsp;6.</em></h1>
         <p class="ddd">Document, Demonstrate, Duplicate.</p></div>
         <p class="readcap">Baca caption <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v15M5.5 12.5L12 19l6.5-6.5"/></svg></p>`,
     },
