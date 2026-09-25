@@ -75,6 +75,18 @@
       html: logo() + text('Rasa bersalah <em>tak sempat ajar anak?</em>',
         'Mula dengan <b>FREE Learning Roadmap</b>: tahu di mana anak lemah, dan cara yang sesuai untuk bantu&nbsp;dia.'),
     },
+    // Method (from the sekool.my Threads post): the 3D teaching method
+    'document-demonstrate-duplicate': {
+      bg: 'indigo',
+      html: logo() + text('Document. Demonstrate. <em>Duplicate.</em>',
+        'Cikgu tulis cara jawab soalan, tunjuk cara guna, kemudian anak jawab sendiri depan&nbsp;cikgu.'),
+    },
+    // Method, framed as the benefit for parents
+    'cara-jawab-soalan': {
+      bg: '',
+      html: logo() + text('Anak belajar <em>cara jawab soalan</em>, bukan hafal jawapan.',
+        'Cikgu tulis langkah-langkahnya, tunjuk cara guna, dan anak cuba sendiri sampai&nbsp;boleh.'),
+    },
   };
   window.STATICS = STATICS;
 

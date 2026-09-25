@@ -1,6 +1,6 @@
 # SEKOOL image ads: captions
 
-Eleven 1080×1350 (4:5) image ads for Facebook and Instagram feeds, one for each angle in the **Copywriting SEKOOL** Google Doc. Each image has one clear headline and one short subheadline, the SEKOOL wordmark, and no CTA; the ad's own button handles that. The images are made by `src/statics.js` and saved to `output/statics/<name>.png` by `node render/statics.mjs`.
+Thirteen 1080×1350 (4:5) image ads for Facebook and Instagram feeds, one for each angle in the **Copywriting SEKOOL** Google Doc. Each image has one clear headline and one short subheadline, the SEKOOL wordmark, and no CTA; the ad's own button handles that. The images are made by `src/statics.js` and saved to `output/statics/<name>.png` by `node render/statics.mjs`.
 
 Each image below has the text to paste into Ads Manager. Only the first ~125 characters of the primary text show before "See more", so each caption opens with its hook. For every ad, use **Sign Up** as the CTA button and point it at the lead form.
 
@@ -219,3 +219,39 @@ Each image below has the text to paste into Ads Manager. Only the first ~125 cha
 > Klik link di bawah dan isi details anda. Kami akan hantar Ujian Roadmap di email untuk anak jawab.
 
 **Headline:** Mula Dengan Learning Roadmap · **Description:** Percuma, Darjah 1 – 6
+
+## 12. `document-demonstrate-duplicate`: Method (from the sekool.my Threads post)
+
+**Primary text**
+
+> Cara SEKOOL mengajar pelajar: Document, Demonstrate, Duplicate.
+>
+> 1. Cikgu listkan cara untuk jawab soalan
+> 2. Cikgu guna list tu untuk jawab soalan depan pelajar
+> 3. Pelajar guna list yang sama untuk jawab soalan depan cikgu
+>
+> Anak bukan sekadar tengok cikgu jawab. Dia belajar cara, kemudian buktikan dia boleh buat sendiri.
+>
+> Semuanya bermula dengan FREE Learning Roadmap: kami kenal pasti di mana anak lemah dulu, supaya Personal Teacher tahu cara apa yang perlu diajar.
+>
+> Klik link di bawah dan isi details anda. Kami akan hantar Ujian Roadmap di email untuk anak jawab.
+
+**Headline:** Document. Demonstrate. Duplicate. · **Description:** FREE Learning Roadmap
+
+## 13. `cara-jawab-soalan`: Method, parent benefit
+
+**Primary text**
+
+> Anak hafal jawapan, tapi bila soalan ditukar sikit, terus tak boleh jawab?
+>
+> Di SEKOOL, anak belajar cara jawab soalan, bukan hafal jawapan:
+> 1. Cikgu tulis langkah-langkah untuk jawab soalan
+> 2. Cikgu tunjuk cara guna langkah tu
+> 3. Anak cuba sendiri depan cikgu, sampai boleh
+>
+> Mula dengan FREE Learning Roadmap untuk tahu di mana anak lemah, kemudian Personal Teacher bantu dia dalam Personal Online Class.
+>
+> Klik link di bawah dan isi details anda. Kami akan hantar Ujian Roadmap di email untuk anak jawab.
+
+**Headline:** Cara Jawab, Bukan Hafal · **Description:** FREE Learning Roadmap
+
