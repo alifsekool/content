@@ -1,6 +1,6 @@
 # SEKOOL image ads: captions
 
-Seven 1080×1350 (4:5) image ads for Facebook and Instagram feeds, one for each angle in the **Copywriting SEKOOL** Google Doc. Each image has one clear headline and one short subheadline, the SEKOOL wordmark, and no CTA; the ad's own button handles that. The images are made by `src/statics.js` and saved to `output/statics/<name>.png` by `node render/statics.mjs`.
+Eleven 1080×1350 (4:5) image ads for Facebook and Instagram feeds, one for each angle in the **Copywriting SEKOOL** Google Doc. Each image has one clear headline and one short subheadline, the SEKOOL wordmark, and no CTA; the ad's own button handles that. The images are made by `src/statics.js` and saved to `output/statics/<name>.png` by `node render/statics.mjs`.
 
 Each image below has the text to paste into Ads Manager. Only the first ~125 characters of the primary text show before "See more", so each caption opens with its hook. For every ad, use **Sign Up** as the CTA button and point it at the lead form.
 
@@ -151,3 +151,63 @@ Each image below has the text to paste into Ads Manager. Only the first ~125 cha
 > Klik link di bawah dan isi details anda untuk Free 1 to 1 Trial Class.
 
 **Headline:** Kelas Ikut Cara Anak Belajar · **Description:** Free 1 to 1 Trial Class
+
+## 8. `house-chores`: Pain
+
+**Primary text**
+
+> Tak sempat nak pantau anak sebab kena settlekan house chores?
+>
+> Masak, basuh baju, kemas rumah. Bila semua dah siap, anak pula dah tak ada mood nak belajar.
+>
+> Dengan SEKOOL Class, Personal Teacher ajar dan pantau anak anda 1 to 1, secara online dari rumah. Kalau anak tak faham, dia boleh tanya cikgu terus.
+>
+> Klik link di bawah dan isi details anda untuk Free 1 to 1 Trial Class.
+
+**Headline:** Biar Cikgu Yang Pantau · **Description:** 1 to 1 dari rumah
+
+## 9. `free-roadmap`: Offer
+
+**Primary text**
+
+> FREE Learning Roadmap untuk anak Darjah 1 – 6.
+>
+> Untuk bantu anak skor A dalam Matematik, anda perlu tahu 3 perkara:
+> 1. Di mana kelemahan anak
+> 2. Kenapa anak lemah
+> 3. Cara pembelajaran yang sesuai untuk improve
+>
+> Learning Roadmap SEKOOL jelaskan ketiga-tiganya, berdasarkan tahap penguasaan anak anda.
+>
+> Klik link di bawah dan isi details anda. Kami akan hantar Ujian Roadmap di email untuk anak jawab.
+
+**Headline:** FREE Learning Roadmap · **Description:** Untuk Darjah 1 – 6
+
+## 10. `main-fon`: Pain
+
+**Primary text**
+
+> Penat nak jerit suruh anak berhenti main fon?
+>
+> Ramai parents alami benda yang sama. Makin dipaksa, makin anak melawan.
+>
+> Dengan SEKOOL Class, anak belajar 1 to 1 bersama Personal Teacher ikut jadual yang tetap. Lama-lama, anak tahu bila masa untuk belajar, tanpa perlu dipaksa.
+>
+> Klik link di bawah dan isi details anda untuk Free 1 to 1 Trial Class.
+
+**Headline:** Anak Tahu Bila Masa Belajar · **Description:** Free 1 to 1 Trial Class
+
+## 11. `rasa-bersalah`: Pain
+
+**Primary text**
+
+> Rasa bersalah tak sempat ajar anak?
+>
+> Balik kerja dah penat, dan masa dengan anak pun terhad. Itu bukan salah anda.
+>
+> Anda tak perlu buat semuanya seorang diri. Personal Teacher SEKOOL ajar anak 1 to 1 secara online, ikut tahap dia, dan pantau perkembangan dia untuk anda.
+>
+> Klik link di bawah dan isi details anda untuk Free 1 to 1 Trial Class.
+
+**Headline:** Anda Tak Perlu Buat Seorang Diri · **Description:** 1 to 1 dengan Cikgu SK
+

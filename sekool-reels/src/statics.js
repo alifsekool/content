@@ -51,6 +51,30 @@
       html: logo() + text('Anak tak perlukan lebih banyak kelas. Dia perlukan kelas yang <em>ikut cara dia belajar.</em>',
         'Di SEKOOL, Personal Teacher ajar 1 to 1 ikut tahap dan pace anak anda.'),
     },
+    // Pain: no time to watch over the child because of house chores
+    'house-chores': {
+      bg: 'lav',
+      html: logo() + text('Tak sempat nak <em>pantau anak</em> sebab kena settlekan house chores?',
+        'Personal Teacher SEKOOL pantau pembelajaran anak, 1 to 1 secara online dari rumah.'),
+    },
+    // Offer: the free Learning Roadmap
+    'free-roadmap': {
+      bg: 'indigo',
+      html: logo() + text('<em>FREE Learning Roadmap</em> untuk Darjah 1 – 6',
+        'Tahu di mana anak lemah dalam Matematik, kenapa, dan cara yang sesuai untuk improve.'),
+    },
+    // Pain: phone time
+    'main-fon': {
+      bg: 'dark',
+      html: logo() + text('Penat nak jerit suruh anak <em>berhenti main&nbsp;fon?</em>',
+        'Dengan kelas 1 to 1 bersama Personal Teacher, anak tahu bila masa untuk belajar.'),
+    },
+    // Pain: parent guilt
+    'rasa-bersalah': {
+      bg: '',
+      html: logo() + text('Rasa bersalah <em>tak sempat ajar anak?</em>',
+        'Anda tak perlu buat seorang diri. Personal Teacher SEKOOL ajar anak 1 to 1, ikut&nbsp;tahap&nbsp;dia.'),
+    },
   };
   window.STATICS = STATICS;
 

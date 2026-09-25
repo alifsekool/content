@@ -30,7 +30,7 @@ In preview, open `http://localhost:8081/src/explainers.html?ad=explainer-roadmap
 
 ## Image ads (static)
 
-Seven 1080×1350 (4:5) feed images, one for each angle in the **Copywriting SEKOOL** Google Doc: `diagnose-dulu`, `kisah-parent`, `kalau-dibiarkan`, `kajian-1-to-1`, `parent-penat` (photo 7), `naik-pentas` (photos 6 and 4) and `ikut-cara-belajar`. Each is one clear headline and one short subheadline with the SEKOOL wordmark and no CTA. The design is in `src/statics.js` and `src/statics.css`. The caption for each image is in [`STATIC-ADS.md`](STATIC-ADS.md).
+Eleven 1080×1350 (4:5) feed images. Seven follow the angles in the **Copywriting SEKOOL** Google Doc: `diagnose-dulu`, `kisah-parent`, `kalau-dibiarkan`, `kajian-1-to-1`, `parent-penat` (photo 7), `naik-pentas` (photos 6 and 4) and `ikut-cara-belajar`. Four are pain-point and offer headlines: `house-chores`, `free-roadmap`, `main-fon` and `rasa-bersalah`. Each is one clear headline and one short subheadline with the SEKOOL wordmark and no CTA. The design is in `src/statics.js` and `src/statics.css`. The caption for each image is in [`STATIC-ADS.md`](STATIC-ADS.md).
 
 ```bash
 node render/statics.mjs              # all -> output/statics/<name>.png
