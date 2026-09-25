@@ -33,6 +33,8 @@ h1 em { font-style: normal; color: var(--accent); }
 .sub { margin-top: 44px; font-size: 42px; font-weight: 500; line-height: 1.4; letter-spacing: -0.015em; color: var(--grey); }
 .dark .sub { color: rgba(255, 255, 255, .72); }
 .indigo .sub { color: rgba(255, 255, 255, .85); }
+.sub b { font-weight: 700; color: var(--ink); }
+.dark .sub b, .indigo .sub b { color: #fff; }
 .by { margin-top: 30px; font-size: 28px; font-weight: 700; color: var(--grey); letter-spacing: 0; }
 .indigo .by { color: rgba(255, 255, 255, .7); }
 

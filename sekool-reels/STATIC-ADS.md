@@ -152,19 +152,24 @@ Each image below has the text to paste into Ads Manager. Only the first ~125 cha
 
 **Headline:** Kelas Ikut Cara Anak Belajar · **Description:** Free 1 to 1 Trial Class
 
-## 8. `house-chores`: Pain
+## 8. `house-chores`: Pain → Learning Roadmap
 
 **Primary text**
 
 > Tak sempat nak pantau anak sebab kena settlekan house chores?
 >
-> Masak, basuh baju, kemas rumah. Bila semua dah siap, anak pula dah tak ada mood nak belajar.
+> Masak, basuh baju, kemas rumah. Bila semua dah siap, dah tak ada masa nak duduk sebelah anak dan tengok di mana dia lemah.
 >
-> Dengan SEKOOL Class, Personal Teacher ajar dan pantau anak anda 1 to 1, secara online dari rumah. Kalau anak tak faham, dia boleh tanya cikgu terus.
+> Mula dengan FREE Learning Roadmap. Anak jawab Ujian Roadmap, dan anda dapat tahu:
+> 1. Di mana kelemahan anak dalam Matematik
+> 2. Kenapa dia lemah
+> 3. Cara pembelajaran yang sesuai untuk improve
 >
-> Klik link di bawah dan isi details anda untuk Free 1 to 1 Trial Class.
+> Lepas tu, kalau anda perlukan bantuan, Personal Teacher SEKOOL boleh bantu anak dalam Personal Online Class, ikut apa yang Roadmap tunjuk.
+>
+> Klik link di bawah dan isi details anda. Kami akan hantar Ujian Roadmap di email untuk anak jawab.
 
-**Headline:** Biar Cikgu Yang Pantau · **Description:** 1 to 1 dari rumah
+**Headline:** FREE Learning Roadmap · **Description:** Untuk Darjah 1 – 6
 
 ## 9. `free-roadmap`: Offer
 
@@ -177,27 +182,29 @@ Each image below has the text to paste into Ads Manager. Only the first ~125 cha
 > 2. Kenapa anak lemah
 > 3. Cara pembelajaran yang sesuai untuk improve
 >
-> Learning Roadmap SEKOOL jelaskan ketiga-tiganya, berdasarkan tahap penguasaan anak anda.
+> Learning Roadmap SEKOOL jelaskan ketiga-tiganya, berdasarkan tahap penguasaan anak anda. Lepas tu, Personal Teacher boleh bantu anak dalam Personal Online Class, ikut apa yang Roadmap tunjuk.
 >
 > Klik link di bawah dan isi details anda. Kami akan hantar Ujian Roadmap di email untuk anak jawab.
 
 **Headline:** FREE Learning Roadmap · **Description:** Untuk Darjah 1 – 6
 
-## 10. `main-fon`: Pain
+## 10. `main-fon`: Pain → Learning Roadmap
 
 **Primary text**
 
 > Penat nak jerit suruh anak berhenti main fon?
 >
-> Ramai parents alami benda yang sama. Makin dipaksa, makin anak melawan.
+> Kadang-kadang anak bukan malas. Dia lari dari subjek yang dia tak faham.
 >
-> Dengan SEKOOL Class, anak belajar 1 to 1 bersama Personal Teacher ikut jadual yang tetap. Lama-lama, anak tahu bila masa untuk belajar, tanpa perlu dipaksa.
+> FREE Learning Roadmap tunjuk di mana anak lemah dalam Matematik, kenapa, dan cara pembelajaran yang sesuai untuk dia.
 >
-> Klik link di bawah dan isi details anda untuk Free 1 to 1 Trial Class.
+> Bila dah tahu puncanya, Personal Teacher SEKOOL boleh bantu anak dalam Personal Online Class, ikut tahap dia.
+>
+> Klik link di bawah dan isi details anda. Kami akan hantar Ujian Roadmap di email untuk anak jawab.
 
-**Headline:** Anak Tahu Bila Masa Belajar · **Description:** Free 1 to 1 Trial Class
+**Headline:** Kenal Pasti Punca Dulu · **Description:** FREE Learning Roadmap
 
-## 11. `rasa-bersalah`: Pain
+## 11. `rasa-bersalah`: Pain → Learning Roadmap
 
 **Primary text**
 
@@ -205,9 +212,10 @@ Each image below has the text to paste into Ads Manager. Only the first ~125 cha
 >
 > Balik kerja dah penat, dan masa dengan anak pun terhad. Itu bukan salah anda.
 >
-> Anda tak perlu buat semuanya seorang diri. Personal Teacher SEKOOL ajar anak 1 to 1 secara online, ikut tahap dia, dan pantau perkembangan dia untuk anda.
+> Mula dengan FREE Learning Roadmap. Ia tunjuk di mana anak lemah dalam Matematik, kenapa, dan cara yang sesuai untuk bantu dia, supaya masa yang ada digunakan dengan betul.
 >
-> Klik link di bawah dan isi details anda untuk Free 1 to 1 Trial Class.
+> Kalau perlukan bantuan lagi, Personal Teacher SEKOOL boleh ajar anak dalam Personal Online Class, ikut apa yang Roadmap tunjuk.
+>
+> Klik link di bawah dan isi details anda. Kami akan hantar Ujian Roadmap di email untuk anak jawab.
 
-**Headline:** Anda Tak Perlu Buat Seorang Diri · **Description:** 1 to 1 dengan Cikgu SK
-
+**Headline:** Mula Dengan Learning Roadmap · **Description:** Percuma, Darjah 1 – 6

@@ -55,7 +55,7 @@
     'house-chores': {
       bg: 'lav',
       html: logo() + text('Tak sempat nak <em>pantau anak</em> sebab kena settlekan house chores?',
-        'Personal Teacher SEKOOL pantau pembelajaran anak, 1 to 1 secara online dari rumah.'),
+        'Mula dengan <b>FREE Learning Roadmap</b>. Anda tahu di mana anak lemah tanpa perlu pantau setiap hari.'),
     },
     // Offer: the free Learning Roadmap
     'free-roadmap': {
@@ -67,13 +67,13 @@
     'main-fon': {
       bg: 'dark',
       html: logo() + text('Penat nak jerit suruh anak <em>berhenti main&nbsp;fon?</em>',
-        'Dengan kelas 1 to 1 bersama Personal Teacher, anak tahu bila masa untuk belajar.'),
+        'Mungkin dia lari dari subjek yang dia tak faham. <b>FREE Learning Roadmap</b> tunjuk di mana dia lemah.'),
     },
     // Pain: parent guilt
     'rasa-bersalah': {
       bg: '',
       html: logo() + text('Rasa bersalah <em>tak sempat ajar anak?</em>',
-        'Anda tak perlu buat seorang diri. Personal Teacher SEKOOL ajar anak 1 to 1, ikut&nbsp;tahap&nbsp;dia.'),
+        'Mula dengan <b>FREE Learning Roadmap</b>: tahu di mana anak lemah, dan cara yang sesuai untuk bantu&nbsp;dia.'),
     },
   };
   window.STATICS = STATICS;
