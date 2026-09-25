@@ -78,11 +78,9 @@
     // Method (from the sekool.my Threads post): the 3D teaching method
     'document-demonstrate-duplicate': {
       bg: 'indigo',
-      // the post itself, up to "Document, Demonstrate, Duplicate.", then a pointer to the caption
+      // hook + the 3D line, then a pointer to the caption (steps and Pro Tips live in the caption)
       html: logo() + `<div class="text" style="bottom:200px"><div class="bar"></div>
-        <h1 style="font-size:78px">The most underrated way untuk <em>mengajar student:</em></h1>
-        <ol class="list3">${['Cikgu listkan cara untuk jawab soalan', 'Cikgu guna list untuk jawab soalan depan student',
-          'Student guna list untuk jawab soalan depan cikgu'].map((t, k) => `<li><i>${k + 1}</i>${t}</li>`).join('')}</ol>
+        <h1>The most underrated way untuk mengajar student Darjah 1&nbsp;–&nbsp;6.</h1>
         <p class="ddd">Document, Demonstrate, Duplicate.</p></div>
         <p class="readcap">Baca caption <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v15M5.5 12.5L12 19l6.5-6.5"/></svg></p>`,
     },
