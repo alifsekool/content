@@ -224,11 +224,13 @@ Each image below has the text to paste into Ads Manager. Only the first ~125 cha
 
 **Primary text**
 
-> Cara SEKOOL mengajar pelajar: Document, Demonstrate, Duplicate.
+> The most underrated way untuk mengajar student:
 >
 > 1. Cikgu listkan cara untuk jawab soalan
 > 2. Cikgu guna list tu untuk jawab soalan depan pelajar
 > 3. Pelajar guna list yang sama untuk jawab soalan depan cikgu
+>
+> Document, Demonstrate, Duplicate.
 >
 > Anak bukan sekadar tengok cikgu jawab. Dia belajar cara, kemudian buktikan dia boleh buat sendiri.
 >
@@ -236,7 +238,7 @@ Each image below has the text to paste into Ads Manager. Only the first ~125 cha
 >
 > Klik link di bawah dan isi details anda. Kami akan hantar Ujian Roadmap di email untuk anak jawab.
 
-**Headline:** Document. Demonstrate. Duplicate. · **Description:** FREE Learning Roadmap
+**Headline:** Document, Demonstrate, Duplicate · **Description:** FREE Learning Roadmap
 
 ## 13. `cara-jawab-soalan`: Method, parent benefit
 

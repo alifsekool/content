@@ -78,8 +78,8 @@
     // Method (from the sekool.my Threads post): the 3D teaching method
     'document-demonstrate-duplicate': {
       bg: 'indigo',
-      html: logo() + text('Document. Demonstrate. <em>Duplicate.</em>',
-        'Cikgu tulis cara jawab soalan, tunjuk cara guna, kemudian anak jawab sendiri depan&nbsp;cikgu.'),
+      html: logo() + text('The most underrated way untuk <em>mengajar student.</em>',
+        '<b>Document, Demonstrate, Duplicate:</b> cikgu tulis dan tunjuk cara jawab soalan, kemudian anak jawab sendiri depan&nbsp;cikgu.'),
     },
     // Method, framed as the benefit for parents
     'cara-jawab-soalan': {
