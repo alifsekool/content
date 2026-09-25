@@ -30,7 +30,7 @@
     // Authority: EEF research
     'kajian-1-to-1': {
       bg: 'indigo',
-      html: logo() + text('Pelajar kelas 1 to 1 capai purata <em>5 bulan</em> kemajuan tambahan.',
+      html: logo() + text('Pelajar 1 to 1 progres <em>5 bulan lebih laju</em> berbanding pelajar kelas biasa.',
         'Sebab cikgu fokus pada seorang pelajar sahaja, ikut pace dia.', '', 'Sumber: Education Endowment Foundation (EEF)'),
     },
     // Pain: the tired working parent (photo 7)
