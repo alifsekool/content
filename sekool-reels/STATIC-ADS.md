@@ -1,12 +1,12 @@
 # SEKOOL image ads: captions
 
-Seven 1080×1350 (4:5) image ads for Facebook and Instagram feeds, one for each angle in the **Copywriting SEKOOL** Google Doc. The images are made by `src/statics.js` and saved to `output/statics/<name>.png` by `node render/statics.mjs`.
+Seven 1080×1350 (4:5) image ads for Facebook and Instagram feeds, one for each angle in the **Copywriting SEKOOL** Google Doc. Each image has one clear headline and one short subheadline, the SEKOOL wordmark, and no CTA; the ad's own button handles that. The images are made by `src/statics.js` and saved to `output/statics/<name>.png` by `node render/statics.mjs`.
 
 Each image below has the text to paste into Ads Manager. Only the first ~125 characters of the primary text show before "See more", so each caption opens with its hook. For every ad, use **Sign Up** as the CTA button and point it at the lead form.
 
 ## Check before running
 
-- **Who teaches:** the Copywriting doc says "Cikgu Sekolah Kebangsaan & Private School", but the videos say you only accept Cikgu Sekolah Kebangsaan. Pick one and use it everywhere. These ads follow the doc, and the only image that mentions it is `tuisyen-vs-sekool`.
+- **Who teaches:** the Copywriting doc says "Cikgu Sekolah Kebangsaan & Private School", but the videos say you only accept Cikgu Sekolah Kebangsaan. Pick one and use it everywhere. The images don't mention it; the captions follow the doc.
 - **`kisah-parent`** quotes a real parent (marks 59 → 82). Use it only with their permission.
 - **"5+ pelajar naik pentas" and "6 tempat baru setiap minggu"** must be accurate. `naik-pentas` also uses photos of real children, so you need their parents' permission for that too.
 - **`kajian-1-to-1`** uses the EEF Teaching and Learning Toolkit figure for one-to-one tuition (+5 months on average). The doc's "42–67% lebih baik" figure is left out because it has no source.
@@ -133,7 +133,7 @@ Each image below has the text to paste into Ads Manager. Only the first ~125 cha
 
 **Headline:** 5+ Pelajar Naik Pentas · **Description:** Ujian Roadmap percuma
 
-## 7. `tuisyen-vs-sekool`: Positioning (comparison)
+## 7. `ikut-cara-belajar`: Positioning
 
 **Primary text**
 
